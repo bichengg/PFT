@@ -1,0 +1,30 @@
+<!-- list -->
+<ul class="nav">
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span>功能菜单</span>
+  </li>
+  <li ng-repeat="v in nav" ng-class="{active:$state.includes('app.{{v.key}}')}">
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="fa {{v.icon}} icon text-primary-dker"></i>
+      <span>{{v.name}}</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span>{{v.name}}</span>
+        </a>
+      </li>
+      <li ui-sref-active="active" ng-repeat="vv in v.child">
+        <a ui-sref="app.{{v.key}}.{{vv.key}}">
+          <span>{{vv.name}}</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+</ul>
+<!-- / list -->
