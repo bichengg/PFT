@@ -6,7 +6,7 @@ app
     .controller('TeacherCtrl', ['$scope', '$modal', '$log', '$state', function ($scope, $modal, $log, $state) {
         $scope.userlist = [{
             'id': '651002199101296309',
-            'name': '艾利扎提.艾沙江',
+            'name': '艾利扎提',
             'sex': '男',
             'old': 33,
             'status': '已超期',
