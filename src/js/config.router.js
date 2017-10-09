@@ -36,7 +36,7 @@ app
                         resolve: {
                             deps: ['$ocLazyLoad',
                                 function ($ocLazyLoad) {
-                                    return $ocLazyLoad.load(['src/js/controllers/app/teacher.js']);
+                                    return $ocLazyLoad.load(['src/js/controllers/app/manage/teacher.js']);
                                 }
                             ]
                         }

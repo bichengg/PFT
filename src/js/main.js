@@ -12,7 +12,7 @@ app
 
             // config
             $scope.app = {
-                name: '哈尔滨反恐系统',
+                name: '学生体测管理',
                 version: '1.0.0',
                 // for chart colors
                 color: {
@@ -92,15 +92,31 @@ app
                 'child': [
                     //     {
                     //     'key': 'supervise',
-                    //     'name': '任务督办'
+                    //     'name': '任务督办'  任务分配 进度查询 全校成绩导出 系统清理
                     // }, 
                     {
-                        'key': 'speed',
-                        'name': '督办进展'
+                        'key': 'teacher',
+                        'name': '教师管理'
+                    },
+                    {
+                        'key': 'student',
+                        'name': '任务导入'
+                    },
+                    {
+                        'key': 'distribution',
+                        'name': '任务分配'
                     },
                     {
                         'key': 'progress',
-                        'name': '任务进展'
+                        'name': '进度查询'
+                    },
+                    {
+                        'key': 'export',
+                        'name': '全校成绩导出'
+                    },
+                    {
+                        'key': 'clear',
+                        'name': '系统清理'
                     }
                 ]
             }]
