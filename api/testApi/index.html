@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-2.1.1.js"></script>
+    <script src="md5.js"></script>
+</head>
+
+<body>
+    <input type="text" value="6c7fb547-5f96-11e7-b04a-f48e38951c66" name="id">
+    <script>
+        + function () {
+            var sign = hex_md5('6c7fb547-5f96-11e7-b04a-f48e38951c66' + 'User.getInfo');
+
+            function getData() {
+                var data = {};
+                $("input").each(function (index, e) {
+                    if ($.trim(e.value)) {
+                        data[e.name] = e.value;
+                    }
+                });
+                return data;
+            }
+           
+            $.ajax({
+                url: '../Public/PhysicalFitnessTest/?service=User.getInfo',
+                method: 'POST',
+                dataType: 'json',
+                data: getData(),
+                success: function (res) {
+
+                }
+            });
+        }(); +
+        function () {
+            var sign = hex_md5('cc' + 'User.insert' + '1');
+            $.ajax({
+                url: '../Public/PhysicalFitnessTest?service=User.insert',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'name': 'cc',
+                    'type': 1,
+                    'sign': sign
+                },
+                success: function (res) {
+
+                }
+            })
+        }();
+    </script>
+</body>
+
+</html>
