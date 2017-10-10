@@ -12,7 +12,7 @@ return array(
             'host'      => 'localhost',               //数据库域名
             'name'      => 'pft',               //数据库名字
             'user'      => 'root',               //数据库用户名
-            'password'  => '123123',           //数据库密码
+            'password'  => '',           //数据库密码
             'port'      => '3306',               //数据库端口
             'charset'   => 'UTF8',            //数据库字符集
         ),

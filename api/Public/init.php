@@ -40,6 +40,9 @@ DI()->notorm = new PhalApi_DB_NotORM(DI()->config->get('dbs'), DI()->debug);
 // 翻译语言包设定
 SL('zh_cn');
 
+
+//跨域
+DI()->response->addHeaders('Access-Control-Allow-Origin', '*');
 /** ---------------- 定制注册 可选服务组件 ---------------- **/
 
 

@@ -51,7 +51,7 @@ app
     .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
         // We configure ocLazyLoad to use the lib script.js as the async loader
         $ocLazyLoadProvider.config({
-            debug: true,
+            debug: false,
             events: true,
             //cssFilesInsertBefore: 'ng_load_plugins_before',
             modules: [{
@@ -84,14 +84,14 @@ app
             }, {
                 name: 'angularBootstrapNavTree',
                 files: [
-                    'http://58.220.249.173:7777/CaseWeb/lib/angular-bootstrap-nav-tree/abn_tree_directive.js',
-                    'http://58.220.249.173:7777/CaseWeb/lib/angular-bootstrap-nav-tree/abn_tree.css'
+                    'libs/angular-bootstrap-nav-tree/abn_tree_directive.js',
+                    'libs/angular-bootstrap-nav-tree/abn_tree.css'
                 ]
             }, {
                 name: 'toaster',
                 files: [
-                    'vendor/modules/angularjs-toaster/toaster.js',
-                    'vendor/modules/angularjs-toaster/toaster.css'
+                    'libs/angularjs-toaster/toaster.js',
+                    'libs/angularjs-toaster/toaster.css'
                 ]
             }, {
                 name: 'textAngular',

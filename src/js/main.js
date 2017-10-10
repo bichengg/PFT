@@ -88,12 +88,9 @@ app
             $scope.nav = [{
                 'key': 'manage',
                 'name': '管理平台',
-                'icon': 'fa-user-circle',
+                'icon': 'fa-cubes',
                 'child': [
-                    //     {
-                    //     'key': 'supervise',
-                    //     'name': '任务督办'  任务分配 进度查询 全校成绩导出 系统清理
-                    // }, 
+
                     {
                         'key': 'teacher',
                         'name': '教师管理'

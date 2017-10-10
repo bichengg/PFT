@@ -60,7 +60,8 @@ class Api_User extends PhalApi_Api {
             'name'  => $this->name,
             'type'  => $this->type
         );
-        $rs   = DI()->notorm->user->insert($data);               
+        $rs   = DI()->notorm->user->insert($data);    
+        $rs['msg'] = T('user not exists');           
         return $rs['id'];  
     }
 }

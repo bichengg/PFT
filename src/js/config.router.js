@@ -20,7 +20,14 @@ app
                     .state('app', {
                         abstract: true,
                         url: '/app',
-                        templateUrl: 'tpl/app.html'
+                        templateUrl: 'tpl/app.html',
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load('toaster');
+                                }
+                            ]
+                        }
                     })
 
                     //管理平台
@@ -31,7 +38,7 @@ app
                     })
                     .state('app.manage.teacher', {
                         url: '/teacher',
-                        templateUrl: 'tpl/manage/teacher.html',
+                        templateUrl: 'tpl/manage/teacher/list.html',
                         controller: 'TeacherCtrl',
                         resolve: {
                             deps: ['$ocLazyLoad',

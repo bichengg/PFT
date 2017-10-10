@@ -74,6 +74,7 @@ class Api_Default extends PhalApi_Api {
             'name'  => $this->name
         );
         $rs   = DI()->notorm->user->insert($data);                  //执行数据库操作user代表的是表,返回结果是插入成功的值
+       
         return $rs['id'];                                           //返回插入的id
     }
 }

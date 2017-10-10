@@ -6,7 +6,6 @@
  */
 
 class Model_Default {
-
 	public function getByUserId($userId)
     {
         return DI()->notorm->user->select('*')->where('id = ?', $userId)->fetch();

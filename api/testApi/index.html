@@ -11,10 +11,10 @@
 </head>
 
 <body>
-    <input type="text" value="6c7fb547-5f96-11e7-b04a-f48e38951c66" name="id">
+    <input type="text" value="773f3864-ad5d-11e7-8b84-9" name="id">
     <script>
         + function () {
-            var sign = hex_md5('6c7fb547-5f96-11e7-b04a-f48e38951c66' + 'User.getInfo');
+            var sign = hex_md5('1b523ab6-ad5d-11e7-8b84-9' + 'Teacher.getInfo');
 
             function getData() {
                 var data = {};
@@ -25,27 +25,26 @@
                 });
                 return data;
             }
-           
+
             $.ajax({
-                url: '../Public/PhysicalFitnessTest/?service=User.getInfo',
-                method: 'POST',
+                url: '../Public/PhysicalFitnessTest/?service=Teacher.getInfo',
+                method: 'GET',
                 dataType: 'json',
-                data: getData(),
                 success: function (res) {
 
                 }
             });
         }(); +
         function () {
-            var sign = hex_md5('cc' + 'User.insert' + '1');
             $.ajax({
-                url: '../Public/PhysicalFitnessTest?service=User.insert',
+                url: '../Public/PhysicalFitnessTest/?service=Teacher.insert',
                 type: 'POST',
                 dataType: 'json',
                 data: {
+                    'num': 1111,
+                    'pwd': '1123123123',
                     'name': 'cc',
-                    'type': 1,
-                    'sign': sign
+                    'time': Date()
                 },
                 success: function (res) {
 
