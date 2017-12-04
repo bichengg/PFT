@@ -8,7 +8,7 @@ app
         $scope.getList = function () {
             var promise = $http({
                 method: "get",
-                url: "http://127.0.0.1:81/PFT/api/Public/PhysicalFitnessTest/?service=Teacher.getInfo"　　　　　　　　
+                url: $scope.app.baseurl + '?service=Teacher.getInfo'　　　　　　　
             }).success(function (res) {
                 $scope.teacherList = res.data.info;
             }).error(function (res) {
@@ -58,7 +58,7 @@ app.controller('TeacherAddCtrl', ['$scope', '$modalInstance', '$http', 'toaster'
             toaster.pop('error', '失败', '请补全所有信息！');
         } else {
             $http({
-                url: 'http://127.0.0.1:81/PFT/api/Public/PhysicalFitnessTest/?service=Teacher.insert',
+                url: $scope.app.baseurl + '?service=Teacher.insert',
                 method: 'post',
                 data: $scope.teacher
             }).success(function (res) {
