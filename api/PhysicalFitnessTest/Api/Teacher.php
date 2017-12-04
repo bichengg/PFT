@@ -17,6 +17,12 @@ class Api_Teacher extends PhalApi_Api {
                 'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '教师姓名'),
                 'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
             ),
+            'update' => array(
+                'teacherId' => array('name' => 'id', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '教师工号'),   
+                'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '教师姓名'),
+                'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
+            ),
         );
 	}
 	
@@ -37,7 +43,7 @@ class Api_Teacher extends PhalApi_Api {
             
         }
         else{
-            $info = DI()->notorm->user->select('*')->where('id = ?', $teacherId)->fetchRow();
+            $info = DI()->notorm->teacher->select('*')->where('id = ?', $this->teacherId)->fetchRow();
         }
 
 
@@ -59,7 +65,6 @@ class Api_Teacher extends PhalApi_Api {
 	 * @return  id
 	 */
     public function insert(){
-        $data = $_POST;
         $data = array(
             'id' => new NotORM_Literal('uuid()'),
             'num'  => $this->num,                                            
@@ -68,7 +73,24 @@ class Api_Teacher extends PhalApi_Api {
             'time'  => date('Y-m-d H:i:s')
         );
         $rs   = DI()->notorm->teacher->insert($data);    
-        $rs['msg'] = T('user not exists');           
+        $rs['msg'] = T('add ok');           
         return $rs['id'];  
+    }
+    /**
+	 * 教师更改
+     * @desc 
+	 * @return  id
+	 */
+    public function update(){
+        $data = array(
+            'num'  => $this->num,                                            
+            'name'  => $this->name,
+            'pwd'  => $this->pwd,
+            'time'  => date('Y-m-d H:i:s')
+        );
+        $rs   = DI()->notorm->teacher->where('id', $this->teacherId)->update($data);
+        if($rs === false){
+            throw new PhalApi_Exception_BadRequest('修改数据失败');
+        }
     }
 }

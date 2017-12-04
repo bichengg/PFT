@@ -37,7 +37,7 @@
                       <th>教师名</th>
                       <th>账号（教工号）</th>
                       <th>密码</th>
-                      <th>创建时间</th>
+                      <th>最后修改时间</th>
                       <th>操作</th>
                     </tr>
                   </thead>
@@ -49,7 +49,7 @@
                       <td>{{v.pwd}}</td>
                       <td>{{v.time}}</td>
                       <td>
-                        <a>编辑</a>
+                        <a ng-click="update(v.id)">编辑</a>
                       </td>
                     </tr>
                   </tbody>

@@ -42,6 +42,22 @@ app
             });
 
         };
+        $scope.update = function (teacherId, size) {
+            var modalInstance = $modal.open({
+                templateUrl: 'tpl/manage/teacher/update.html',
+                controller: 'TeacherUpdateCtrl',
+                size: size,
+                resolve: {
+                    teacherId: function () {
+                        return teacherId;
+                    }
+                }
+            });
+            modalInstance.result.then(function (res) {
+                $scope.getList();
+            });
+
+        };
 
 
 
@@ -59,6 +75,48 @@ app.controller('TeacherAddCtrl', ['$scope', '$modalInstance', '$http', 'toaster'
         } else {
             $http({
                 url: $scope.app.baseurl + '?service=Teacher.insert',
+                method: 'post',
+                data: $scope.teacher
+            }).success(function (res) {
+                toaster.pop('success', '成功', '成功添加教师！');
+                $modalInstance.close();
+            }).error(function (res) {
+                toaster.pop('error', '失败', '添加教师失败，请联系管理员');
+            });
+        }
+
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+}]);
+
+
+app.controller('TeacherUpdateCtrl', ['$scope', '$modalInstance', '$http', 'toaster', 'teacherId', function ($scope, $modalInstance, $http, toaster, teacherId) {
+    $scope.teacher = {
+        id: teacherId,
+        num: null,
+        name: '',
+        pwd: ''
+    };
+    $http({
+        method: "get",
+        url: $scope.app.baseurl + '?service=Teacher.getInfo',
+        params: {
+            id: teacherId
+        }　　　　　　　
+    }).success(function (res) {
+        $scope.teacher = res.data.info;
+    }).error(function (res) {
+        console.log(res)
+    });
+    $scope.ok = function () {
+        if (!$scope.teacher.num || !$scope.teacher.name || !$scope.teacher.pwd) {
+            toaster.pop('error', '失败', '请补全所有信息！');
+        } else {
+            $http({
+                url: $scope.app.baseurl + '?service=Teacher.update',
                 method: 'post',
                 data: $scope.teacher
             }).success(function (res) {
