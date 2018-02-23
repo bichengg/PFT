@@ -10,14 +10,15 @@ app
             currentPage: 1,
             size: 10
         };
-        $scope.getList = function () {
+        $scope.getList = function (teacherName) {
             var promise = $http({
                 method: "get",
                 url: $scope.app.baseurl + '?service=Teacher.getInfo',
                 params: {
                     token: $scope.app.token,
                     current: $scope.page.currentPage,
-                    size: $scope.page.size
+                    size: $scope.page.size,
+                    name: $scope.teacherName
                 }　　　　　　
             }).success(function (res) {
                 if (res.data)
