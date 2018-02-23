@@ -10,4 +10,9 @@ class Model_Default {
     {
         return DI()->notorm->user->select('*')->where('id = ?', $userId)->fetch();
     }
+
+    public function checkAdminId($userId)
+    {
+        return DI()->notorm->admin->select('id')->where('id = ?', $userId)->fetchOne();
+    }
 }

@@ -4,7 +4,6 @@ var app = angular.module('app', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngTouch',
     'ngStorage',
     'ui.router',
     'ui.bootstrap',

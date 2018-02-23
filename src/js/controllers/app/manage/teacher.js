@@ -15,11 +15,13 @@ app
                 method: "get",
                 url: $scope.app.baseurl + '?service=Teacher.getInfo',
                 params: {
+                    token: $scope.app.token,
                     current: $scope.page.currentPage,
                     size: $scope.page.size
                 }　　　　　　
             }).success(function (res) {
-                $scope.teacherList = res.data.info;
+                if (res.data)
+                    $scope.teacherList = res.data.info;
             }).error(function (res) {
                 console.log(res)
             });
@@ -74,6 +76,7 @@ app
     }]);
 app.controller('TeacherAddCtrl', ['$scope', '$modalInstance', '$http', 'toaster', function ($scope, $modalInstance, $http, toaster) {
     $scope.teacher = {
+        token: $scope.app.token,
         num: null,
         name: '',
         pwd: ''
@@ -104,6 +107,7 @@ app.controller('TeacherAddCtrl', ['$scope', '$modalInstance', '$http', 'toaster'
 
 app.controller('TeacherUpdateCtrl', ['$scope', '$modalInstance', '$http', 'toaster', 'teacherId', function ($scope, $modalInstance, $http, toaster, teacherId) {
     $scope.teacher = {
+        token: $scope.app.token,
         id: teacherId,
         num: null,
         name: '',
@@ -113,6 +117,7 @@ app.controller('TeacherUpdateCtrl', ['$scope', '$modalInstance', '$http', 'toast
         method: "get",
         url: $scope.app.baseurl + '?service=Teacher.getInfo',
         params: {
+            token: $scope.app.token,
             id: teacherId
         }　　　　　　　
     }).success(function (res) {

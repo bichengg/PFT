@@ -9,6 +9,7 @@ app
             version: '1.0.0',
             nav: [],
             baseurl: 'http://127.0.0.1/PFT/api/Public/PhysicalFitnessTest/',
+            token: '167ab0a0-d8b0-3333-8a83-94de807c8dff',
             settings: {
                 themeID: 1,
                 navbarHeaderColor: 'bg-black',
