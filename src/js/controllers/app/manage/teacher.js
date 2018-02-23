@@ -5,10 +5,19 @@
 app
     .controller('TeacherCtrl', ['$scope', '$modal', 'toaster', '$http', function ($scope, $modal, toaster, $http) {
         //教师列表
+        $scope.page = {
+            totalItems: 100,
+            currentPage: 1,
+            size: 10
+        };
         $scope.getList = function () {
             var promise = $http({
                 method: "get",
-                url: $scope.app.baseurl + '?service=Teacher.getInfo'　　　　　　　
+                url: $scope.app.baseurl + '?service=Teacher.getInfo',
+                params: {
+                    current: $scope.page.currentPage,
+                    size: $scope.page.size
+                }　　　　　　
             }).success(function (res) {
                 $scope.teacherList = res.data.info;
             }).error(function (res) {

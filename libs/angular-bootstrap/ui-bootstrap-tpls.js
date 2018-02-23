@@ -2277,8 +2277,8 @@ angular.module('ui.bootstrap.pagination', [])
   boundaryLinks: false,
   directionLinks: true,
   firstText: 'First',
-  previousText: 'Previous',
-  nextText: 'Next',
+  previousText: '上一页',
+  nextText: '下一页',
   lastText: 'Last',
   rotate: true
 })
