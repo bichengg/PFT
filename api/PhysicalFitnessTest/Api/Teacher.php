@@ -11,6 +11,9 @@ class Api_Teacher extends PhalApi_Api {
         return array(
             'getInfo' => array(
                 'teacherId' => array('name' => 'id', 'source' => 'get', 'type' => 'string', 'require' => false),
+                'current' => array('name' => 'current', 'source' => 'get', 'type' => 'int', 'require' => false),
+                'size' => array('name' => 'size', 'source' => 'get', 'type' => 'int', 'require' => false),
+                'teacherName' => array('name' => 'name', 'source' => 'get', 'type' => 'string', 'require' => false)
             ),
             'insert' => array(
                 'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '教师工号'),   
@@ -18,7 +21,7 @@ class Api_Teacher extends PhalApi_Api {
                 'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
             ),
             'update' => array(
-                'teacherId' => array('name' => 'id', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'teacherId' => array('name' => 'id', 'source' => 'post', 'type' => 'string', 'require' => true),
                 'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '教师工号'),   
                 'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '教师姓名'),
                 'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
@@ -36,17 +39,25 @@ class Api_Teacher extends PhalApi_Api {
 
         
         $info = array();
+        $current=$this->current;
+        $size=$this->size?$this->size:10;
 
-        
-        if (!$this->teacherId) {
-            $info = DI()->notorm->teacher->select('*')->order("time desc")->fetchRows();
-            
+        if($current<=1){
+            $current=0;
+        }else{
+            $current=($current-1)*$size;
+        }
+
+        $teachers=DI()->notorm->teacher->select('*');
+        if ($this->teacherId) {
+            $info = $teachers->where('id = ?', $this->teacherId)->order('time desc')->fetchRow();
+        }
+        else if($this->teacherName) {
+            $info = $teachers->where('name like ?', '%'.$this->teacherName.'%')->limit($current, $size)->order('time desc')->fetchRows();
         }
         else{
-            $info = DI()->notorm->teacher->select('*')->where('id = ?', $this->teacherId)->fetchRow();
+            $info = $teachers->order("time desc")->limit($current, $size)->order('time desc')->fetchRows();
         }
-
-
         if (empty($info)) {
             DI()->logger->debug('user not found', $this->teacherId);
 
