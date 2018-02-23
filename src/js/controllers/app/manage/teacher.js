@@ -120,10 +120,10 @@ app.controller('TeacherUpdateCtrl', ['$scope', '$modalInstance', '$http', 'toast
                 method: 'post',
                 data: $scope.teacher
             }).success(function (res) {
-                toaster.pop('success', '成功', '成功添加教师！');
+                toaster.pop('success', '成功', '成功编辑教师！');
                 $modalInstance.close();
             }).error(function (res) {
-                toaster.pop('error', '失败', '添加教师失败，请联系管理员');
+                toaster.pop('error', '失败', '编辑教师失败，请联系管理员');
             });
         }
 
