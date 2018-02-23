@@ -9,10 +9,10 @@ return array(
      */
     'servers' => array(
         'db_physicalfitnesstest' => array(                   //服务器标记
-            'host'      => 'localhost',               //数据库域名
-            'name'      => 'pft',               //数据库名字
-            'user'      => 'root',               //数据库用户名
-            'password'  => '',           //数据库密码
+            'host'      => '218.244.144.48',               //数据库域名
+            'name'      => 'yzshcscom',               //数据库名字
+            'user'      => 'yzshcscom',               //数据库用户名
+            'password'  => 'dlSdrs7V5A',           //数据库密码
             'port'      => '3306',               //数据库端口
             'charset'   => 'UTF8',            //数据库字符集
         ),
