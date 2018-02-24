@@ -10,7 +10,6 @@ app
         for (var i = 0; i < 5; i++) {
             $scope.years.push($scope.year - i)
         };
-        console.log($scope.years)
         $scope.getSubjectList = function () {
             var promise = $http({
                 method: "get",
