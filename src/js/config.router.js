@@ -48,9 +48,17 @@ app
                             ]
                         }
                     })
-                    .state('app.manage.speed', {
-                        url: '/speed',
-                        templateUrl: 'tpl/manage/speed.html'
+                    .state('app.manage.score', {
+                        url: '/score',
+                        templateUrl: 'tpl/manage/score/list.html',
+                        controller: 'ScoreCtrl',
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['src/js/controllers/app/manage/score.js']);
+                                }
+                            ]
+                        }
                     })
 
 

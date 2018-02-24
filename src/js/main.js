@@ -50,7 +50,7 @@ app
                         'name': '进度查询'
                     },
                     {
-                        'key': 'export',
+                        'key': 'score',
                         'name': '全校成绩导出'
                     },
                     {

@@ -64,7 +64,7 @@ gulp.task('serve', ['styles', 'scripts'], function () {
         server: "./"
     });
 
-    gulp.watch(['*.html',['tpl/**/*.html']]).on('change', browserSync.reload);
+    gulp.watch(['*.html',['tpl/*/*.html','tpl/*/*/*.html']]).on('change', browserSync.reload);
     gulp.watch('src/css/less/*.less', ['styles']);
     gulp.watch('src/js/**/*.js', ['scripts']);
 });
