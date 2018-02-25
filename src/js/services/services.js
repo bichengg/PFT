@@ -1,5 +1,5 @@
 app
-  .service('$subject', ['APP', '$http', '$q', function (APP, $http, $q) {
+  .service('Subject', ['APP', '$http', '$q', function (APP, $http, $q) {
     // 转换体侧项目 英文-》中文
     this.transCn = function (en, arrs) {
       var cn = '';

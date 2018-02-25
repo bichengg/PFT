@@ -3,7 +3,7 @@
 /* Controllers */
 
 app
-    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$subject', '$q', function (APP, $scope, $modal, toaster, $http, $subject, $q) {
+    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject', '$q', function (APP, $scope, $modal, toaster, $http, Subject, $q) {
         var dates = new Date();
         $scope.year = dates.getFullYear();
         $scope.years = [];
@@ -15,7 +15,7 @@ app
         $scope.getList = function () {
             var deferred = $q.defer();
             var promise = deferred.promise;
-            $subject.getList().then(function (res) {
+            Subject.getList().then(function (res) {
                 $scope.resSubjectList = res.data.info;
                 $http({
                     method: "get",
@@ -87,7 +87,7 @@ app
                             k_nickname = '家庭住址';
                             break;
                         default:
-                            k_nickname = $subject.transCn(k, subjectList);
+                            k_nickname = Subject.transCn(k, subjectList);
                             break;
                     }
                     keyMap.push(k);
