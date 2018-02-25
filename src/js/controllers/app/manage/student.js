@@ -13,7 +13,7 @@ app
             for (var i = 0; i < arr.length; i++) {
                 var ele = {
                     token: APP.token,
-                    school_year: $scope.year,
+                    school_year: $scope.student.year,
                     grade_num: arr[i]['年级编号'],
                     class_num: arr[i]['班级编号'],
                     class_name: arr[i]['班级名称'],
