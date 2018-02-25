@@ -3,29 +3,30 @@
 /* Controllers */
 
 app
-    .run(['$rootScope', function ($rootScope) {
-        $rootScope.app = {
-            name: '学生体测管理',
-            version: '1.0.0',
-            nav: [],
-            baseurl: 'http://127.0.0.1/PFT/api/Public/PhysicalFitnessTest/',
-            token: '167ab0a0-d8b0-3333-8a83-94de807c8dff',
-            settings: {
-                themeID: 1,
-                navbarHeaderColor: 'bg-black',
-                navbarCollapseColor: 'bg-white-only',
-                asideColor: 'bg-black',
-                headerFixed: true,
-                asideFixed: false,
-                asideFolded: false,
-                asideDock: false,
-                container: false
-            },
-        }
-    }])
-    .controller('AppCtrl', ['$scope', '$localStorage', '$window',
-        function ($scope, $translate, $localStorage, $window) {
+    .constant('APP', {
+        name: '学生体测管理',
+        version: '1.0.0',
+        nav: [],
+        baseurl: 'http://127.0.0.1/PFT/api/Public/PhysicalFitnessTest/',
+        token: '167ab0a0-d8b0-3333-8a83-94de807c8dff',
+        settings: {
+            themeID: 1,
+            navbarHeaderColor: 'bg-black',
+            navbarCollapseColor: 'bg-white-only',
+            asideColor: 'bg-black',
+            headerFixed: true,
+            asideFixed: true,
+            asideFolded: false,
+            asideDock: false,
+            container: false
+        },
+        hideAside: false,
+        hideFooter: true
+    })
 
+    .controller('AppCtrl', ['APP', '$scope', '$localStorage', '$window',
+        function (APP, $scope, $translate, $localStorage, $window) {
+            $scope.app = APP;
             //菜单数据
             $scope.nav = [{
                 'key': 'manage',

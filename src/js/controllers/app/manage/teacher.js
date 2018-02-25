@@ -3,7 +3,7 @@
 /* Controllers */
 
 app
-    .controller('TeacherCtrl', ['$scope', '$modal', 'toaster', '$http', function ($scope, $modal, toaster, $http) {
+    .controller('TeacherCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', function (APP, $scope, $modal, toaster, $http) {
         //教师列表
         $scope.page = {
             totalItems: 50,
@@ -13,13 +13,13 @@ app
         $scope.getList = function () {
             var promise = $http({
                 method: "get",
-                url: $scope.app.baseurl + '?service=Teacher.getInfo',
+                url: APP.baseurl + '?service=Teacher.getInfo',
                 params: {
-                    token: $scope.app.token,
+                    token: APP.token,
                     current: $scope.page.currentPage,
                     size: $scope.page.size,
                     name: $scope.keyword
-                }　　　　　　
+                }
             }).success(function (res) {
                 if (res.data)
                     $scope.teacherList = res.data.info;
@@ -75,9 +75,8 @@ app
 
 
     }]);
-app.controller('TeacherAddCtrl', ['$scope', '$modalInstance', '$http', 'toaster', function ($scope, $modalInstance, $http, toaster) {
+app.controller('TeacherAddCtrl', ['APP', '$scope', '$modalInstance', '$http', 'toaster', function (APP, $scope, $modalInstance, $http, toaster) {
     $scope.teacher = {
-        token: $scope.app.token,
         num: null,
         name: '',
         pwd: ''
@@ -87,9 +86,9 @@ app.controller('TeacherAddCtrl', ['$scope', '$modalInstance', '$http', 'toaster'
             toaster.pop('error', '失败', '请补全所有信息！');
         } else {
             $http({
-                url: $scope.app.baseurl + '?service=Teacher.insert',
+                url: APP.baseurl + '?service=Teacher.insert',
                 method: 'post',
-                data: $scope.teacher
+                data: angular.extend({}, $scope.teacher, { token: APP.token })
             }).success(function (res) {
                 toaster.pop('success', '成功', '成功添加教师！');
                 $modalInstance.close();
@@ -106,9 +105,8 @@ app.controller('TeacherAddCtrl', ['$scope', '$modalInstance', '$http', 'toaster'
 }]);
 
 
-app.controller('TeacherUpdateCtrl', ['$scope', '$modalInstance', '$http', 'toaster', 'teacherId', function ($scope, $modalInstance, $http, toaster, teacherId) {
+app.controller('TeacherUpdateCtrl', ['APP', '$scope', '$modalInstance', '$http', 'toaster', 'teacherId', function (APP, $scope, $modalInstance, $http, toaster, teacherId) {
     $scope.teacher = {
-        token: $scope.app.token,
         id: teacherId,
         num: null,
         name: '',
@@ -116,11 +114,11 @@ app.controller('TeacherUpdateCtrl', ['$scope', '$modalInstance', '$http', 'toast
     };
     $http({
         method: "get",
-        url: $scope.app.baseurl + '?service=Teacher.getInfo',
+        url: APP.baseurl + '?service=Teacher.getInfo',
         params: {
-            token: $scope.app.token,
+            token: APP.token,
             id: teacherId
-        }　　　　　　　
+        }
     }).success(function (res) {
         $scope.teacher = res.data.info;
     }).error(function (res) {
@@ -131,14 +129,17 @@ app.controller('TeacherUpdateCtrl', ['$scope', '$modalInstance', '$http', 'toast
             toaster.pop('error', '失败', '请补全所有信息！');
         } else {
             $http({
-                url: $scope.app.baseurl + '?service=Teacher.update',
+                url: APP.baseurl + '?service=Teacher.update',
                 method: 'post',
-                data: $scope.teacher
+                data: angular.extend({}, $scope.teacher, { token: APP.token })
             }).success(function (res) {
-                toaster.pop('success', '成功', '成功编辑教师！');
+                if (res.ret == 200)
+                    toaster.pop('success', '成功', '成功编辑教师！');
+                else
+                    toaster.pop('error', '失败', res.msg);
                 $modalInstance.close();
             }).error(function (res) {
-                toaster.pop('error', '失败', '编辑教师失败，请联系管理员');
+                toaster.pop('error', '失败', res);
             });
         }
 

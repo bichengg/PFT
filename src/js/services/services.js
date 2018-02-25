@@ -1,34 +1,28 @@
 app
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: '毕诚',
-    lastText: 'You on your way?',
-    face: 'http://www.angularui.cn/bbs/uploads/avatar/2/02/2_big.png'
-  }, {
-    id: 1,
-    name: '毕诚',
-    lastText: 'Hey, it\'s me',
-    face: 'http://www.angularui.cn/bbs/uploads/avatar/2/02/2_big.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+  .service('$subject', ['APP', '$http', function (APP, $http) {
+    // 转换体侧项目 英文-》中文
+    this.transCn = function (en, arrs) {
+      var cn = '';
+      for (var i = 0; i < arrs.length; i++) {
+        if (arrs[i].column_name == en) {
+          cn = arrs[i].column_comment;
         }
       }
-      return null;
-    }
-  };
-});
+      return cn;
+    };
+    //返回体侧项目列表
+    this.getList = function () {
+      var promise = $http({
+        method: "get",
+        url: APP.baseurl + '?service=Subject.getInfo',
+        params: {
+          token: APP.token
+        }
+      }).success(function (res) {
+        if (res.data)
+          return res.data.info;
+      }).error(function (res) {
+        console.log(res)
+      });
+    };
+  }]);

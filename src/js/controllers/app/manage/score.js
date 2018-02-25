@@ -3,35 +3,22 @@
 /* Controllers */
 
 app
-    .controller('ScoreCtrl', ['$scope', '$modal', 'toaster', '$http', function ($scope, $modal, toaster, $http) {
+    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$subject', function (APP, $scope, $modal, toaster, $http, $subject) {
         var dates = new Date();
         $scope.year = dates.getFullYear();
         $scope.years = [];
         for (var i = 0; i < 5; i++) {
             $scope.years.push($scope.year - i)
         };
-        $scope.getSubjectList = function () {
-            var promise = $http({
-                method: "get",
-                url: $scope.app.baseurl + '?service=Subject.getInfo',
-                params: {
-                    token: $scope.app.token
-                }
-            }).success(function (res) {
-                if (res.data)
-                    $scope.resSubjectList = res.data.info;
-            }).error(function (res) {
-                console.log(res)
-            });
-            return promise;
-        };
+        $scope.resSubjectList = $subject.getList();
+
         $scope.status = 0;
         $scope.getList = function () {
             var promise = $http({
                 method: "get",
-                url: $scope.app.baseurl + '?service=Student.getInfo',
+                url: APP.baseurl + '?service=Student.getInfo',
                 params: {
-                    token: $scope.app.token,
+                    token: APP.token,
                     year: $scope.year,
                     status: $scope.status
                 }
@@ -60,6 +47,7 @@ app
             var tmpdata = json[0];
             json.unshift({});
             var keyMap = []; //获取keys
+            var subjectList = angular.copy($scope.resSubjectList);
             for (var k in tmpdata) {
                 if (k != 'id' && k != 'teacher_id' && k != 'teacher_class' && k != 'school_year' && k != 'status') {
                     var k_nickname = '';
@@ -92,7 +80,7 @@ app
                             k_nickname = '家庭住址';
                             break;
                         default:
-                            k_nickname = subjectTrans(k);
+                            k_nickname = $subject.transCn(k, subjectList);
                             break;
                     }
                     keyMap.push(k);
@@ -153,16 +141,6 @@ app
             }
             return s
         }
-        // 转换测试项目 英文-》中文
-        function subjectTrans(en) {
-            var resSubjectList = angular.copy($scope.resSubjectList);
-            var cn = '';
-            for (var i = 0; i < resSubjectList.length; i++) {
-                if (resSubjectList[i].column_name == en) {
-                    cn = resSubjectList[i].column_comment;
-                }
-            }
-            return cn;
-        }
+
 
     }]);
