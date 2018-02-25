@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2018-02-25 12:11:08
+Date: 2018-02-25 12:48:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,39 +95,47 @@ INSERT INTO `pft_score` VALUES ('42', '1114', '10', '55', null);
 -- ----------------------------
 DROP TABLE IF EXISTS `pft_student`;
 CREATE TABLE `pft_student` (
-  `id` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `id` varchar(100) NOT NULL,
   `grade_num` int(100) DEFAULT NULL,
   `class_num` int(100) DEFAULT NULL,
-  `class_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `class_name` varchar(255) DEFAULT NULL,
   `student_code` int(30) NOT NULL,
   `nation` int(10) DEFAULT NULL,
-  `name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
   `sex` int(5) DEFAULT NULL,
-  `born` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
-  `address` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `teacher_id` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
-  `teacher_class` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `school_year` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `born` varchar(100) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `teacher_id` varchar(100) DEFAULT NULL,
+  `teacher_class` varchar(255) DEFAULT NULL,
+  `school_year` varchar(100) DEFAULT NULL,
   `status` int(5) DEFAULT '0',
-  `test_height` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '身高',
-  `test_weight` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT '体重',
+  `test_height` varchar(20) DEFAULT NULL COMMENT '身高',
+  `test_weight` varchar(20) DEFAULT NULL COMMENT '体重',
+  `test_lung` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '肺活量',
+  `test_50m` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '50米跑',
+  `test_jump` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '立定跳远',
+  `test_sr` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '坐位体前屈',
+  `test_800` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '800米跑',
+  `test_1000` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '1000米跑',
+  `test_situp` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '一分钟仰卧起坐',
+  `test_pullup` varchar(20) CHARACTER SET gb2312 DEFAULT '0' COMMENT '引体向上',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pft_student
 -- ----------------------------
-INSERT INTO `pft_student` VALUES ('1111', '41', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'bbbb', '周一34', '2014', '0', '111', '1');
-INSERT INTO `pft_student` VALUES ('1112', '42', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'aaaa', '周三34', '2015', '0', '123', '3');
-INSERT INTO `pft_student` VALUES ('1113', '43', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'bbbb', '周四56', '2016', '0', '3213', null);
-INSERT INTO `pft_student` VALUES ('1114', '44', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'aaaa', '周四78', '2017', '0', '123123', '1');
-INSERT INTO `pft_student` VALUES ('2222', '44', '111', null, '111', '1', '李老三', '1', '1996/12/11', '11111', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周五34', '2018', '0', '23', '1');
-INSERT INTO `pft_student` VALUES ('3333', '41', '1', '1', '1', '1', '1', '1', '1', '1', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周一12', '2018', '0', null, null);
-INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81111', '41', '22615043', '计算机', '222222', '1', '李四三', '1', '1996/12/11', '江苏省淮安市', '94de807c8dff', '周一34', '2013', '0', '111', null);
-INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81112', '42', '22615043', '计算机', '222222', '1', '李四三', '1', '1996/12/11', '江苏省淮安市', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周二12', '2014', '0', '1231', '1');
-INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81113', '43', null, '计算机', '222222', '1', '李四三', '1', '1996/12/11', '江苏省淮安市', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周五12', '2015', '0', '123', '12');
-INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81114', '44', '11111', '计算机', '222222', '1', '李四三', '1', '1996/12/11', '江苏省淮安市', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周五34', '2018', '0', '123', '123');
-INSERT INTO `pft_student` VALUES ('967ab0a0-d8b0-11e7-8a83-94de807c8dff', '41', '11615043', '车辆1163', '1161504338', '1', '陈三', '1', '1996/12/11', '江苏省淮安市', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周一12', '2013', '0', '123', '123');
+INSERT INTO `pft_student` VALUES ('1111', '41', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'bbbb', '周一34', '2014', '0', '111', '1', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('1112', '42', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'aaaa', '周三34', '2015', '0', '123', '3', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('1113', '43', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'bbbb', '周四56', '2016', '0', '3213', null, '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('1114', '44', '11413161', '物联网1141', '1141316128', '1', '曹司令', '1', '1995/11/17', '江苏省淮安市', 'aaaa', '周四78', '2017', '0', '123123', '1', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('2222', '44', '111', null, '111', '1', '李老三', '1', '1996/12/11', '11111', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周五34', '2018', '0', '23', '1', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('3333', '41', '1', '1', '1', '1', '1', '1', '1', '1', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周一12', '2018', '0', null, null, '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81111', '41', '22615043', '计算机', '222222', '1', '李四三', '1', '1996/12/11', '江苏省淮安市', '94de807c8dff', '周一34', '2013', '0', '111', null, '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81112', '42', '22615043', '计算机', '222222', '1', '李四三', '1', '1996/12/11', '江苏省淮安市', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周二12', '2014', '0', '1231', '1', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81113', '43', null, '计算机', '222222', '1', '李四三', '1', '1996/12/11', '江苏省淮安市', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周五12', '2015', '0', '123', '12', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('3bf2a3c9-d8b2-11e7-8a83-94de807c81114', '44', '11111', '计算机', '222222', '1', '张静雅', '1', '1996/12/11', '江苏省淮安市1111', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周五34', '2018', '1', '123', '123', '0', '0', '0', '99', '0', '0', '0', '0');
+INSERT INTO `pft_student` VALUES ('967ab0a0-d8b0-11e7-8a83-94de807c8dff', '41', '11615043', '车辆1163', '1161504338', '1', '陈三', '1', '1996/12/11', '江苏省淮安市', '6eb84f7c-d8c4-11e7-8a83-94de807c8dff', '周一12', '2013', '0', '123', '123', '0', '0', '0', '0', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for pft_subject

@@ -13,7 +13,7 @@ class Api_Student extends PhalApi_Api {
             'getInfo' => array(
                 'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => true),
                 'studentId' => array('name' => 'id', 'source' => 'get', 'type' => 'string', 'require' => false),
-                'current' => array('name' => 'current', 'source' => 'get', 'type' => 'int', 'require' => false),
+                'current' => array('name' => 'current', 'source' => 'get', 'type' => 'int', 'require' => false, 'default'=>1),
                 'size' => array('name' => 'size', 'source' => 'get', 'type' => 'int', 'require' => false),
                 'studentName' => array('name' => 'name', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'year' => array('name' => 'year', 'source' => 'get', 'type' => 'string', 'require' => false),
@@ -50,7 +50,7 @@ class Api_Student extends PhalApi_Api {
 
         
         $info = array();
-        $current=$this->current?$this->current:1;
+        $current=$this->current;
         $size=$this->size;
 
         if($current<=1){
@@ -68,10 +68,10 @@ class Api_Student extends PhalApi_Api {
                 $info = $info->where('name like ?', '%'.$this->studentName.'%');
             }
             if($this->year) {
-                $info = $info->where('school_year = ?', $this->year);
+                $info = $info->where('school_year', $this->year);
             }
-            if($this->status) {
-                $info = $info->where('status = ?', $this->status);
+            if($this->status != null) {
+                $info = $info->where('status', $this->status);
             }
             $info = $info->order("school_year desc");
             if($size) {

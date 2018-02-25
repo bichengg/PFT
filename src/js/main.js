@@ -62,6 +62,10 @@ app
 
             $scope.statusList = [
                 {
+                    key: '全部',
+                    val: ''
+                },
+                {
                     key: '有成绩',
                     val: 0
                 },
