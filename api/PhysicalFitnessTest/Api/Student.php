@@ -21,9 +21,16 @@ class Api_Student extends PhalApi_Api {
             ),
             'insert' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
-                'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '学生工号'),   
-                'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '学生姓名'),
-                'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
+                'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),  
+                'grade_num'  => array('name' => 'grade_num', 'type' => 'int', 'source' => 'post', 'require' => false),   
+                'class_num'  => array('name' => 'class_num','type' => 'string', 'source' => 'post', 'require' => false),
+                'class_name'  => array('name' => 'class_name', 'type' => 'string', 'source' => 'post', 'require' => false),   
+                'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'nation'  => array('name' => 'nation', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'name'  => array('name' => 'name', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'sex'  => array('name' => 'sex', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'born'  => array('name' => 'born', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'address'  => array('name' => 'address', 'type' => 'string', 'source' => 'post', 'require' => false),  
             ),
             'update' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -61,7 +68,7 @@ class Api_Student extends PhalApi_Api {
 
         $info=DI()->notorm->student->select('*');
         if ($this->studentId) {
-            $info = $info->where('id = ?', $this->studentId)->order('school_year desc');
+            $info = $info->where('id = ?', $this->studentId)->order('student_code desc');
         }
         else{
             if($this->studentName) {
@@ -73,7 +80,7 @@ class Api_Student extends PhalApi_Api {
             if($this->status != null) {
                 $info = $info->where('status', $this->status);
             }
-            $info = $info->order("school_year desc");
+            $info = $info->order("student_code desc");
             if($size) {
                 $info = $info->limit($current, $size);
             }
@@ -83,7 +90,7 @@ class Api_Student extends PhalApi_Api {
             DI()->logger->debug('students not found', $this->studentId);
 
             $rs['code'] = 1;
-            $rs['msg'] = T('user not exists');
+            $rs['msg'] = T('students not exists');
             return $rs;
         }
 
@@ -104,9 +111,16 @@ class Api_Student extends PhalApi_Api {
         }
         $data = array(
             'id' => new NotORM_Literal('uuid()'),
-            'num'  => $this->num,                                            
+            'school_year' => $this->school_year,   
+            'grade_num'  => $this->grade_num,                                            
+            'class_num'  => $this->class_num,
+            'class_name'  => $this->class_name,
+            'student_code'  => $this->student_code,
+            'nation'  => $this->nation,
             'name'  => $this->name,
-            'pwd'  => $this->pwd,
+            'sex'  => $this->sex,
+            'born'  => $this->born,
+            'address'  => $this->address,
             'time'  => date('Y-m-d H:i:s')
         );
         $rs   = DI()->notorm->student->insert($data);    

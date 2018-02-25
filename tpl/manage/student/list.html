@@ -8,11 +8,11 @@
         <div class="btn-group pull-right">
         </div>
         <div class="m-l-n-xs">
-          <button class="btn btn-sm btn-primary" type="button" ng-click="downloadExl()">
-            <i class="fa fa-share-square-o"></i> 导出</button>
-          <a href="" download="全员成绩.xlsx" id="hf"></a>
-          <button class="btn btn-sm btn-default" type="button" ng-click="refreshList()">
-            <i class="fa fa-refresh text-primary"></i> 刷新</button>
+          <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
+            ng-model="jsonStudent" />
+
+          <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()">
+            <i class="fa fa-upload"></i> 导入{{count}}</button>
           <select class="input-sm form-control w-xs inline v-middle" ng-model="year" ng-change="getList()">
             <option ng-value="v" ng-repeat="v in years track by $index">{{v}}</option>
           </select>

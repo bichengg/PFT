@@ -3430,6 +3430,9 @@ a.text-black:hover {
   padding-left: 20px;
   padding-right: 20px;
 }
+.padder-xs {
+  padding: 3px !important;
+}
 .padder {
   padding-left: 15px;
   padding-right: 15px;

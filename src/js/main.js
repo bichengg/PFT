@@ -26,7 +26,15 @@ app
 
     .controller('AppCtrl', ['APP', '$scope', '$localStorage', '$window',
         function (APP, $scope, $translate, $localStorage, $window) {
+            //配置项赋值
             $scope.app = APP;
+            //学年时间
+            var dates = new Date();
+            $scope.year = dates.getFullYear();
+            $scope.years = [];
+            for (var i = 0; i < 5; i++) {
+                $scope.years.push($scope.year - i)
+            };
             //菜单数据
             $scope.nav = [{
                 'key': 'manage',

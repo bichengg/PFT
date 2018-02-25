@@ -46,9 +46,9 @@ gulp.task('scripts', function () {
             mangle: { except: ['require', 'exports', 'module', '$'] }//排除混淆关键字
         }))
         .pipe(gulp.dest('dist/js/'))
-        .pipe(notify({
-            message: 'Scripts task complete'
-        }))
+        // .pipe(notify({
+        //     message: 'Scripts task complete'
+        // }))
         .pipe(browserSync.stream());
 });
 

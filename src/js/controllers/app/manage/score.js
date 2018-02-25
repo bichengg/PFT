@@ -4,12 +4,7 @@
 
 app
     .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject', '$q', function (APP, $scope, $modal, toaster, $http, Subject, $q) {
-        var dates = new Date();
-        $scope.year = dates.getFullYear();
-        $scope.years = [];
-        for (var i = 0; i < 5; i++) {
-            $scope.years.push($scope.year - i)
-        };
+        
 
         $scope.status = 0;
         $scope.getList = function () {
