@@ -6,7 +6,7 @@ app
     .controller('TeacherCtrl', ['$scope', '$modal', 'toaster', '$http', function ($scope, $modal, toaster, $http) {
         //教师列表
         $scope.page = {
-            totalItems: 100,
+            totalItems: 50,
             currentPage: 1,
             size: 10
         };

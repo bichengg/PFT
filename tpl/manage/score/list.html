@@ -22,6 +22,8 @@
           <select class="input-sm form-control w-xs inline v-middle" ng-model="year" ng-change="getList()">
             <option ng-value="v" ng-repeat="v in years track by $index">{{v}}</option>
           </select>
+          <select class="input-sm form-control w-xs inline v-middle" ng-model="status" ng-options="v.val as v.key for v in statusList" ng-change="getList()">
+          </select>
         </div>
       </div>
       <div class="row-row">
@@ -41,7 +43,7 @@
                       <th>性别</th>
                       <th>出生日期</th>
                       <th>家庭住址</th>
-                      <th ng-repeat="v in resSubjectList track by $index">{{v.name}}</th>
+                      <th ng-repeat="v in resSubjectList track by $index">{{v.column_comment}}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,7 +57,7 @@
                       <td>{{v.sex}}</td>
                       <td>{{v.born}}</td>
                       <td>{{v.address}}</td>
-                      <td ng-repeat="vv in resSubjectList track by $index">{{v[vv.name]}}</td>
+                      <td ng-repeat="vv in resSubjectList track by $index">{{v[vv.column_name]}}</td>
                     </tr>
                   </tbody>
                 </table>

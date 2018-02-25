@@ -16,7 +16,7 @@ app
                 url: $scope.app.baseurl + '?service=Subject.getInfo',
                 params: {
                     token: $scope.app.token
-                }　　　　　　
+                }
             }).success(function (res) {
                 if (res.data)
                     $scope.resSubjectList = res.data.info;
@@ -25,14 +25,16 @@ app
             });
             return promise;
         };
+        $scope.status = 0;
         $scope.getList = function () {
             var promise = $http({
                 method: "get",
-                url: $scope.app.baseurl + '?service=Score.getInfo',
+                url: $scope.app.baseurl + '?service=Student.getInfo',
                 params: {
                     token: $scope.app.token,
-                    year: $scope.year
-                }　　　　　　
+                    year: $scope.year,
+                    status: $scope.status
+                }
             }).success(function (res) {
                 if (res.data)
                     $scope.resList = res.data.info;
@@ -59,7 +61,7 @@ app
             json.unshift({});
             var keyMap = []; //获取keys
             for (var k in tmpdata) {
-                if (k != '$$hashKey') {
+                if (k != 'id' && k != 'teacher_id' && k != 'teacher_class' && k != 'school_year' && k != 'status') {
                     var k_nickname = '';
                     switch (k) {
                         case 'grade_num':
@@ -90,7 +92,7 @@ app
                             k_nickname = '家庭住址';
                             break;
                         default:
-                            k_nickname = k;
+                            k_nickname = subjectTrans(k);
                             break;
                     }
                     keyMap.push(k);
@@ -116,13 +118,13 @@ app
                 }
             };
             tmpDown = new Blob([s2ab(XLSX.write(tmpWB, {
-                    bookType: (type == undefined ? 'xlsx' : type),
-                    bookSST: false,
-                    type: 'binary'
-                } //这里的数据是用来定义导出的格式类型
+                bookType: (type == undefined ? 'xlsx' : type),
+                bookSST: false,
+                type: 'binary'
+            } //这里的数据是用来定义导出的格式类型
             ))], {
-                type: ""
-            }); //创建二进制对象写入转换好的字节流
+                    type: ""
+                }); //创建二进制对象写入转换好的字节流
             var href = URL.createObjectURL(tmpDown); //创建对象超链接
             document.getElementById("hf").href = href; //绑定a标签
             document.getElementById("hf").click(); //模拟点击实现下载
@@ -151,6 +153,16 @@ app
             }
             return s
         }
-
+        // 转换测试项目 英文-》中文
+        function subjectTrans(en) {
+            var resSubjectList = angular.copy($scope.resSubjectList);
+            var cn = '';
+            for (var i = 0; i < resSubjectList.length; i++) {
+                if (resSubjectList[i].column_name == en) {
+                    cn = resSubjectList[i].column_comment;
+                }
+            }
+            return cn;
+        }
 
     }]);

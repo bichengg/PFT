@@ -14,22 +14,22 @@ class Api_Subject extends PhalApi_Api {
             ),
             'insert' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
-                'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '成绩工号'),   
-                'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '成绩姓名'),
+                'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '项目工号'),   
+                'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '项目姓名'),
                 'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
             ),
             'update' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
                 'subjectId' => array('name' => 'id', 'source' => 'post', 'type' => 'string', 'require' => true),
-                'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '成绩工号'),   
-                'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '成绩姓名'),
+                'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '项目工号'),   
+                'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '项目姓名'),
                 'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
             ),
         );
 	}
 	
     /**
-	 * 成绩信息获取 无id 返回列表
+	 * 项目信息获取
 	 * @return 
 	 */
     public function getInfo(){
@@ -45,19 +45,19 @@ class Api_Subject extends PhalApi_Api {
         $info = array();
 
 
-        $subjects=DI()->notorm->subject->select('*');
-        // if ($this->subjectId) {
-        //     $info = $subjects->where('id = ?', $this->subjectId)->order('time desc')->fetchRow();
-        // }
-        // else if($this->subjectName) {
-        //     $info = $subjects->where('name like ?', '%'.$this->subjectName.'%')->limit($current, $size)->order('time desc')->fetchRows();
-        // }
-        // else{
-            $info = $subjects->order("id asc")->fetchRows();
-        // }
+        $sql ="SELECT
+                    column_name,
+                    column_comment
+                FROM
+                    information_schema. COLUMNS
+                WHERE
+                    column_name LIKE 'test_%'
+                AND table_name = 'pft_student'";
+
+        $info= DI()->notorm->example->queryAll($sql);
         
         if (empty($info)) {
-            DI()->logger->debug('user not found', $this->subjectId);
+            DI()->logger->debug('subject not found', $this->subjectId);
 
             $rs['code'] = 1;
             $rs['msg'] = T('user not exists');
@@ -69,7 +69,7 @@ class Api_Subject extends PhalApi_Api {
         return $rs;
     }
     /**
-	 * 成绩新增
+	 * 项目新增
      * @desc 
 	 * @return  id
 	 */
@@ -91,7 +91,7 @@ class Api_Subject extends PhalApi_Api {
         return $rs['id'];  
     }
     /**
-	 * 成绩更改
+	 * 项目更改
      * @desc 
 	 * @return  id
 	 */

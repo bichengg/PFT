@@ -58,7 +58,22 @@ app
                         'name': '系统清理'
                     }
                 ]
-            }]
+            }];
+
+            $scope.statusList = [
+                {
+                    key: '有成绩',
+                    val: 0
+                },
+                {
+                    key: '有备注',
+                    val: 1
+                },
+                {
+                    key: '无结果',
+                    val: 2
+                }
+            ];
 
 
         }
