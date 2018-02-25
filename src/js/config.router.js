@@ -48,6 +48,18 @@ app
                             ]
                         }
                     })
+                    .state('app.manage.student', {
+                        url: '/student',
+                        templateUrl: 'tpl/manage/student/list.html',
+                        controller: 'StudentCtrl',
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['src/js/controllers/app/manage/student.js']);
+                                }
+                            ]
+                        }
+                    })
                     .state('app.manage.score', {
                         url: '/score',
                         templateUrl: 'tpl/manage/score/list.html',
