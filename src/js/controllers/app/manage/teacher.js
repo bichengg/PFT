@@ -90,10 +90,13 @@ app.controller('TeacherAddCtrl', ['APP', '$scope', '$modalInstance', '$http', 't
                 method: 'post',
                 data: angular.extend({}, $scope.teacher, { token: APP.token })
             }).success(function (res) {
-                toaster.pop('success', '成功', '成功添加教师！');
+                if (res.ret == 200)
+                    toaster.pop('success', '成功', '成功添加教师！');
+                else
+                    toaster.pop('error', '失败', res.msg);
                 $modalInstance.close();
             }).error(function (res) {
-                toaster.pop('error', '失败', '添加教师失败，请联系管理员');
+                toaster.pop('error', '失败', res);
             });
         }
 
