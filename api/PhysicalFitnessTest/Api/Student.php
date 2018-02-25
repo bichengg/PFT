@@ -31,6 +31,7 @@ class Api_Student extends PhalApi_Api {
                 'sex'  => array('name' => 'sex', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'born'  => array('name' => 'born', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'address'  => array('name' => 'address', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'score'  => array('name' => 'score', 'type' => 'string', 'source' => 'post', 'require' => false), 
             ),
             'update' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -123,6 +124,9 @@ class Api_Student extends PhalApi_Api {
             'address'  => $this->address,
             'time'  => date('Y-m-d H:i:s')
         );
+        if($this->score){
+            $data = array_merge($data ,json_decode($this->score, true));
+        }
         $rs   = DI()->notorm->student->insert($data);    
         $rs['msg'] = T('add ok');           
         return $rs['id'];  

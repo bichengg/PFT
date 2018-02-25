@@ -3,40 +3,10 @@
 /* Controllers */
 
 app
-    .controller('StudentCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject', '$q', function (APP, $scope, $modal, toaster, $http, Subject, $q) {
-        var dates = new Date();
-        $scope.year = dates.getFullYear();
-        $scope.years = [];
-        for (var i = 0; i < 5; i++) {
-            $scope.years.push($scope.year - i)
-        };
+    .controller('StudentCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', function (APP, $scope, $modal, toaster, $http) {
+        $scope.getStudentList();
 
-        $scope.status = 0;
-        $scope.getList = function () {
-            var deferred = $q.defer();
-            var promise = deferred.promise;
-            Subject.getList().then(function (res) {
-                $scope.resSubjectList = res.data.info;
-                $http({
-                    method: "get",
-                    url: APP.baseurl + '?service=Student.getInfo',
-                    params: {
-                        token: APP.token,
-                        year: $scope.year,
-                        status: $scope.status
-                    }
-                }).success(function (res) {
-                    deferred.resolve(res);
-                    if (res.data)
-                        $scope.resList = res.data.info;
-                }).error(function (res) {
-                    deferred.reject(res);
-                    console.log(res)
-                });
 
-            });
-            return promise;
-        };
         $scope.count = 0;
         $scope.importStudent = function () {
             var arr = $scope.jsonStudent;
@@ -52,7 +22,8 @@ app
                     name: arr[i]['姓名'],
                     sex: arr[i]['性别'],
                     born: arr[i]['出生日期'],
-                    address: arr[i]['家庭住址']
+                    address: arr[i]['家庭住址'],
+                    //score: '{"test_height": 100,"test_weight": 99}'
                 }
                 //上传
                 $http({
@@ -66,7 +37,7 @@ app
                         toaster.pop('error', '失败', res.msg);
                     //最后一步刷新列表
                     if ($scope.count == arr.length) {
-                        $scope.getList();
+                        $scope.getStudentList();
                     }
                 }).error(function (res) {
                     toaster.pop('error', '失败', res);

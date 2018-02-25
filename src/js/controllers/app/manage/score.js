@@ -3,37 +3,12 @@
 /* Controllers */
 
 app
-    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject', '$q', function (APP, $scope, $modal, toaster, $http, Subject, $q) {
+    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject',  function (APP, $scope, $modal, toaster, $http, Subject) {
         
-
-        $scope.status = 0;
-        $scope.getList = function () {
-            var deferred = $q.defer();
-            var promise = deferred.promise;
-            Subject.getList().then(function (res) {
-                $scope.resSubjectList = res.data.info;
-                $http({
-                    method: "get",
-                    url: APP.baseurl + '?service=Student.getInfo',
-                    params: {
-                        token: APP.token,
-                        year: $scope.year,
-                        status: $scope.status
-                    }
-                }).success(function (res) {
-                    deferred.resolve(res);
-                    if (res.data)
-                        $scope.resList = res.data.info;
-                }).error(function (res) {
-                    deferred.reject(res);
-                    console.log(res)
-                });
-
-            });
-            return promise;
-        };
+        $scope.getStudentList();
+        
         $scope.refreshList = function () {
-            var promise = $scope.getList();
+            var promise = $scope.getStudentList();
             promise.then(function (res) {
                 if (res.data.code == 0) {
                     toaster.pop('success', '成功', '成功刷新列表！')

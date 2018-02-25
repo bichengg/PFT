@@ -1,6 +1,4 @@
-<div class="hbox hbox-auto-xs bg-light" ng-init="
-  getList();
-  ">
+<div class="hbox hbox-auto-xs bg-light">
   <!-- column -->
   <div class="col">
     <div class="vbox">
@@ -13,11 +11,11 @@
           <a href="" download="全员成绩.xlsx" id="hf"></a>
           <button class="btn btn-sm btn-default" type="button" ng-click="refreshList()">
             <i class="fa fa-refresh text-primary"></i> 刷新</button>
-          <select class="input-sm form-control w-xs inline v-middle" ng-model="year" ng-change="getList()">
-            <option ng-value="v" ng-repeat="v in years track by $index">{{v}}</option>
+          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getStudentList()">
+            <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
           </select>
-          <select class="input-sm form-control w-xs inline v-middle" ng-model="status" ng-options="v.val as v.key for v in statusList"
-            ng-change="getList()">
+          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.status" ng-options="v.val as v.key for v in student.statusList"
+            ng-change="getStudentList()">
           </select>
         </div>
       </div>

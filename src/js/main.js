@@ -24,16 +24,63 @@ app
         hideFooter: true
     })
 
-    .controller('AppCtrl', ['APP', '$scope', '$localStorage', '$window',
-        function (APP, $scope, $translate, $localStorage, $window) {
+    .controller('AppCtrl', ['APP', '$scope', 'Subject', '$q', '$http',
+        function (APP, $scope, Subject, $q, $http) {
             //配置项赋值
             $scope.app = APP;
-            //学年时间
             var dates = new Date();
-            $scope.year = dates.getFullYear();
-            $scope.years = [];
+            //
+            $scope.student = {
+                year: dates.getFullYear(),
+                years: [],
+                status: 0,
+                statusList: [
+                    {
+                        key: '全部',
+                        val: ''
+                    },
+                    {
+                        key: '有成绩',
+                        val: 0
+                    },
+                    {
+                        key: '有备注',
+                        val: 1
+                    },
+                    {
+                        key: '无结果',
+                        val: 2
+                    }
+                ]
+            };
             for (var i = 0; i < 5; i++) {
-                $scope.years.push($scope.year - i)
+                $scope.student.years.push($scope.student.year - i)
+            };
+            //
+            $scope.getStudentList = function () {
+                var deferred = $q.defer();
+                var promise = deferred.promise;
+                Subject.getList().then(function (res) {
+                    $scope.resSubjectList = res.data.info;
+                    $http({
+                        method: "get",
+                        url: APP.baseurl + '?service=Student.getInfo',
+                        params: {
+                            token: APP.token,
+                            year: $scope.student.year,
+                            status: $scope.student.status
+                        }
+                    }).success(function (res) {
+                        deferred.resolve(res);
+                        if (res.data)
+                            $scope.resList = res.data.info;
+                    }).error(function (res) {
+                        deferred.reject(res);
+                        console.log(res)
+                    });
+
+                });
+                return promise;
             };
             //菜单数据
             $scope.nav = [{
@@ -69,24 +116,7 @@ app
                 ]
             }];
 
-            $scope.statusList = [
-                {
-                    key: '全部',
-                    val: ''
-                },
-                {
-                    key: '有成绩',
-                    val: 0
-                },
-                {
-                    key: '有备注',
-                    val: 1
-                },
-                {
-                    key: '无结果',
-                    val: 2
-                }
-            ];
+
 
 
         }

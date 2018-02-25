@@ -1,6 +1,4 @@
-<div class="hbox hbox-auto-xs bg-light" ng-init="
-  getList();
-  ">
+<div class="hbox hbox-auto-xs bg-light">
   <!-- column -->
   <div class="col">
     <div class="vbox">
@@ -12,12 +10,12 @@
             ng-model="jsonStudent" />
 
           <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()">
-            <i class="fa fa-upload"></i> 导入{{count}}</button>
-          <select class="input-sm form-control w-xs inline v-middle" ng-model="year" ng-change="getList()">
-            <option ng-value="v" ng-repeat="v in years track by $index">{{v}}</option>
+            <i class="fa fa-upload"></i> 导入{{count}}</button>{{year}}
+          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getStudentList()">
+            <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
           </select>
-          <select class="input-sm form-control w-xs inline v-middle" ng-model="status" ng-options="v.val as v.key for v in statusList"
-            ng-change="getList()">
+          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.status" ng-options="v.val as v.key for v in student.statusList"
+            ng-change="getStudentList()">
           </select>
         </div>
       </div>
@@ -38,6 +36,7 @@
                       <th>性别</th>
                       <th>出生日期</th>
                       <th>家庭住址</th>
+                      <th ng-repeat="v in resSubjectList track by $index">{{v.column_comment}}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -51,6 +50,9 @@
                       <td>{{v.sex}}</td>
                       <td>{{v.born}}</td>
                       <td>{{v.address}}</td>
+                      <td ng-repeat="vv in resSubjectList track by $index">
+                        {{v[vv.column_name]}}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
