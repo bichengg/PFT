@@ -3,37 +3,44 @@
 /* Controllers */
 
 app
-    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$subject', function (APP, $scope, $modal, toaster, $http, $subject) {
+    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$subject', '$q', function (APP, $scope, $modal, toaster, $http, $subject, $q) {
         var dates = new Date();
         $scope.year = dates.getFullYear();
         $scope.years = [];
         for (var i = 0; i < 5; i++) {
             $scope.years.push($scope.year - i)
         };
-        $scope.resSubjectList = $subject.getList();
 
         $scope.status = 0;
         $scope.getList = function () {
-            var promise = $http({
-                method: "get",
-                url: APP.baseurl + '?service=Student.getInfo',
-                params: {
-                    token: APP.token,
-                    year: $scope.year,
-                    status: $scope.status
-                }
-            }).success(function (res) {
-                if (res.data)
-                    $scope.resList = res.data.info;
-            }).error(function (res) {
-                console.log(res)
+            var deferred = $q.defer();
+            var promise = deferred.promise;
+            $subject.getList().then(function (res) {
+                $scope.resSubjectList = res.data.info;
+                $http({
+                    method: "get",
+                    url: APP.baseurl + '?service=Student.getInfo',
+                    params: {
+                        token: APP.token,
+                        year: $scope.year,
+                        status: $scope.status
+                    }
+                }).success(function (res) {
+                    deferred.resolve(res);
+                    if (res.data)
+                        $scope.resList = res.data.info;
+                }).error(function (res) {
+                    deferred.reject(res);
+                    console.log(res)
+                });
+
             });
             return promise;
         };
         $scope.refreshList = function () {
             var promise = $scope.getList();
             promise.then(function (res) {
-                if (res.data.data.code == 0) {
+                if (res.data.code == 0) {
                     toaster.pop('success', '成功', '成功刷新列表！')
                 } else {
                     toaster.pop('error', '错误', '刷新列表失败！')
