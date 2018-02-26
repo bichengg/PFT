@@ -59,13 +59,12 @@ app
                 $scope.student.years.push($scope.student.year - i);
             };
             //
-            $scope.getStudentScroeList = function () {
+            $scope.getScroeList = function () {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
                 Subject.getList().then(function (res) {
                     $scope.resSubjectList = res.data.info;
                     deferred.resolve(res);
-                    $scope.getStudentList();
 
                 });
                 return promise;

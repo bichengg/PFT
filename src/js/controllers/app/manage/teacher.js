@@ -29,6 +29,7 @@ app
             });
             return promise;
         };
+        $scope.getList();
         $scope.refreshList = function () {
             var promise = $scope.getList();
             promise.then(function (res) {

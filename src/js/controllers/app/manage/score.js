@@ -7,10 +7,12 @@ app
 
         $scope.student.status = 0;
         $scope.student.size = 0;
-        $scope.getStudentScroeList();
+        $scope.getScroeList().then(function(){
+            $scope.getStudentList();
+        });
 
         $scope.refreshList = function () {
-            var promise = $scope.getStudentScroeList();
+            var promise = $scope.getScroeList();
             promise.then(function (res) {
                 if (res.data.code == 0) {
                     toaster.pop('success', '成功', '成功刷新列表！')
