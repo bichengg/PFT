@@ -14,7 +14,8 @@ class Api_Teacher extends PhalApi_Api {
                 'teacherId' => array('name' => 'id', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'current' => array('name' => 'current', 'source' => 'get', 'type' => 'int', 'require' => false),
                 'size' => array('name' => 'size', 'source' => 'get', 'type' => 'int', 'require' => false),
-                'teacherName' => array('name' => 'name', 'source' => 'get', 'type' => 'string', 'require' => false)
+                'teacherName' => array('name' => 'name', 'source' => 'get', 'type' => 'string', 'require' => false),
+                'year' => array('name' => 'year', 'source' => 'get', 'type' => 'string', 'require' => false)
             ),
             'insert' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -56,16 +57,34 @@ class Api_Teacher extends PhalApi_Api {
             $current=($current-1)*$size;
         }
 
-        $teachers=DI()->notorm->teacher->select('*');
+        // $teachers=DI()->notorm->teacher->select('*');
+        // if ($this->teacherId) {
+        //     $info = $teachers->where('id = ?', $this->teacherId)->order('time desc')->fetchRow();
+        // }
+        // else if($this->teacherName) {
+        //     $info = $teachers->where('name like ?', '%'.$this->teacherName.'%')->limit($current, $size)->order('time desc')->fetchRows();
+        // }
+        // else{
+        //     $info = $teachers->order("time desc")->limit($current, $size)->order('time desc')->fetchRows();
+        // }
+        $info = DI()->notorm->teacher->select('*');
         if ($this->teacherId) {
-            $info = $teachers->where('id = ?', $this->teacherId)->order('time desc')->fetchRow();
-        }
-        else if($this->teacherName) {
-            $info = $teachers->where('name like ?', '%'.$this->teacherName.'%')->limit($current, $size)->order('time desc')->fetchRows();
+            $info = $info->where('id = ?', $this->teacherId)->order('time desc')->fetchRow();
         }
         else{
-            $info = $teachers->order("time desc")->limit($current, $size)->order('time desc')->fetchRows();
+            if($this->teacherName) {
+                $info = $info->where('name like ?', '%'.$this->teacherName.'%');
+            }
+            if($this->year) {
+                $info = $info->where('school_year', $this->year);
+            }
+            $info = $info->order("time desc");
+            if($size) {
+                $info = $info->limit($current, $size);
+            }
+            $info = $info->fetchRows();
         }
+
         if (empty($info)) {
             DI()->logger->debug('user not found', $this->teacherId);
 

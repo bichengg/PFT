@@ -69,7 +69,7 @@ class Api_Student extends PhalApi_Api {
 
         $info=DI()->notorm->student->select('*');
         if ($this->studentId) {
-            $info = $info->where('id = ?', $this->studentId)->order('student_code desc');
+            $info = $info->where('id = ?', $this->studentId)->order('student_code desc')->fetchRow();
         }
         else{
             if($this->studentName) {
