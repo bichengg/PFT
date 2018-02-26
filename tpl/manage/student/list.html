@@ -36,7 +36,6 @@
                       <th>性别</th>
                       <th>出生日期</th>
                       <th>家庭住址</th>
-                      <th ng-repeat="v in resSubjectList track by $index">{{v.column_comment}}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -50,9 +49,6 @@
                       <td>{{v.sex}}</td>
                       <td>{{v.born}}</td>
                       <td>{{v.address}}</td>
-                      <td ng-repeat="vv in resSubjectList track by $index">
-                        {{v[vv.column_name]}}
-                      </td>
                     </tr>
                   </tbody>
                 </table>

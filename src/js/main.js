@@ -59,33 +59,42 @@ app
                 $scope.student.years.push($scope.student.year - i);
             };
             //
-            $scope.getStudentList = function () {
+            $scope.getStudentScroeList = function () {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
                 Subject.getList().then(function (res) {
                     $scope.resSubjectList = res.data.info;
-                    $http({
-                        method: "get",
-                        url: APP.baseurl + '?service=Student.getInfo',
-                        params: {
-                            token: APP.token,
-                            year: $scope.student.year,
-                            status: $scope.student.status,
-                            size: $scope.student.size,
-                            current: $scope.student.current
-                        }
-                    }).success(function (res) {
-                        deferred.resolve(res);
-                        if (res.data)
-                            $scope.resList = res.data.info;
-                    }).error(function (res) {
-                        deferred.reject(res);
-                        console.log(res)
-                    });
+                    deferred.resolve(res);
+                    $scope.getStudentList();
 
                 });
                 return promise;
             };
+            $scope.getStudentList = function () {
+                var deferred = $q.defer();
+                var promise = deferred.promise;
+                $http({
+                    method: "get",
+                    url: APP.baseurl + '?service=Student.getInfo',
+                    params: {
+                        token: APP.token,
+                        year: $scope.student.year,
+                        status: $scope.student.status,
+                        size: $scope.student.size,
+                        current: $scope.student.current
+                    }
+                }).success(function (res) {
+                    deferred.resolve(res);
+                    if (res.data)
+                        $scope.resList = res.data.info;
+                }).error(function (res) {
+                    deferred.reject(res);
+                    console.log(res)
+                });
+                return promise;
+            };
+
+
             //菜单数据
             $scope.nav = [{
                 'key': 'manage',

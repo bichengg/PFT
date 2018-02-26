@@ -84,7 +84,6 @@ app.controller('TeacherAddCtrl', ['APP', '$scope', '$modalInstance', '$http', 't
         year: (new Date()).getFullYear()
     };
     $scope.ok = function () {
-        console.log($scope.student)
         if (!$scope.teacher.num || !$scope.teacher.name || !$scope.teacher.pwd) {
             toaster.pop('error', '失败', '请补全所有信息！');
         } else {

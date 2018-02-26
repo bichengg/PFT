@@ -6,11 +6,11 @@ app
     .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject', function (APP, $scope, $modal, toaster, $http, Subject) {
 
         $scope.student.status = 0;
-        $scope.student.size = 10;
-        $scope.getStudentList();
+        $scope.student.size = 0;
+        $scope.getStudentScroeList();
 
         $scope.refreshList = function () {
-            var promise = $scope.getStudentList();
+            var promise = $scope.getStudentScroeList();
             promise.then(function (res) {
                 if (res.data.code == 0) {
                     toaster.pop('success', '成功', '成功刷新列表！')
