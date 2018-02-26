@@ -34,8 +34,7 @@ app
                 year: dates.getFullYear(),
                 years: [],
                 status: 0,
-                statusList: [
-                    {
+                statusList: [{
                         key: '全部',
                         val: ''
                     },
@@ -51,10 +50,13 @@ app
                         key: '无结果',
                         val: 2
                     }
-                ]
+                ],
+                size: 0,
+                pages: 50,
+                current: 1
             };
             for (var i = 0; i < 5; i++) {
-                $scope.student.years.push($scope.student.year - i)
+                $scope.student.years.push($scope.student.year - i);
             };
             //
             $scope.getStudentList = function () {
@@ -68,7 +70,9 @@ app
                         params: {
                             token: APP.token,
                             year: $scope.student.year,
-                            status: $scope.student.status
+                            status: $scope.student.status,
+                            size: $scope.student.size,
+                            current: $scope.student.current
                         }
                     }).success(function (res) {
                         deferred.resolve(res);

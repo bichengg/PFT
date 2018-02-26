@@ -4,6 +4,10 @@
 
 app
     .controller('StudentCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', function (APP, $scope, $modal, toaster, $http) {
+        
+        $scope.student.status = 0;
+        $scope.student.size = 10;
+
         $scope.getStudentList();
 
 
@@ -89,6 +93,3 @@ app
         }
 
     }]);
-
-
-

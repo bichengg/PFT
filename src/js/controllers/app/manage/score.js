@@ -3,10 +3,12 @@
 /* Controllers */
 
 app
-    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject',  function (APP, $scope, $modal, toaster, $http, Subject) {
-        
+    .controller('ScoreCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', 'Subject', function (APP, $scope, $modal, toaster, $http, Subject) {
+
+        $scope.student.status = 0;
+        $scope.student.size = 10;
         $scope.getStudentList();
-        
+
         $scope.refreshList = function () {
             var promise = $scope.getStudentList();
             promise.then(function (res) {
@@ -83,13 +85,13 @@ app
                 }
             };
             tmpDown = new Blob([s2ab(XLSX.write(tmpWB, {
-                bookType: (type == undefined ? 'xlsx' : type),
-                bookSST: false,
-                type: 'binary'
-            } //这里的数据是用来定义导出的格式类型
+                    bookType: (type == undefined ? 'xlsx' : type),
+                    bookSST: false,
+                    type: 'binary'
+                } //这里的数据是用来定义导出的格式类型
             ))], {
-                    type: ""
-                }); //创建二进制对象写入转换好的字节流
+                type: ""
+            }); //创建二进制对象写入转换好的字节流
             var href = URL.createObjectURL(tmpDown); //创建对象超链接
             document.getElementById("hf").href = href; //绑定a标签
             document.getElementById("hf").click(); //模拟点击实现下载
