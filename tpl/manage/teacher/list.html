@@ -18,6 +18,9 @@
             <i class="fa fa-plus"></i> 新增教师</button>
           <button class="btn btn-sm btn-default" type="button" ng-click="refreshList()">
             <i class="fa fa-refresh text-primary"></i> 刷新</button>
+          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getList()">
+            <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
+          </select>
         </div>
       </div>
       <div class="row-row">

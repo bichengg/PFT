@@ -21,7 +21,8 @@ class Api_Teacher extends PhalApi_Api {
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
                 'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '教师工号'),   
                 'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '教师姓名'),
-                'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
+                'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),
+                'year' => array('name' => 'year', 'source' => 'post', 'type' => 'string', 'require' => false)   
             ),
             'update' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -113,6 +114,7 @@ class Api_Teacher extends PhalApi_Api {
             'num'  => $this->num,                                            
             'name'  => $this->name,
             'pwd'  => $this->pwd,
+            'school_year' => $this->year,
             'time'  => date('Y-m-d H:i:s')
         );
         $rs   = DI()->notorm->teacher->insert($data);    

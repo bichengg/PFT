@@ -16,6 +16,7 @@ app
                 url: APP.baseurl + '?service=Teacher.getInfo',
                 params: {
                     token: APP.token,
+                    year: $scope.student.year,
                     current: $scope.page.currentPage,
                     size: $scope.page.size,
                     name: $scope.keyword
@@ -79,16 +80,20 @@ app.controller('TeacherAddCtrl', ['APP', '$scope', '$modalInstance', '$http', 't
     $scope.teacher = {
         num: null,
         name: '',
-        pwd: ''
+        pwd: '',
+        year: (new Date()).getFullYear()
     };
     $scope.ok = function () {
+        console.log($scope.student)
         if (!$scope.teacher.num || !$scope.teacher.name || !$scope.teacher.pwd) {
             toaster.pop('error', '失败', '请补全所有信息！');
         } else {
             $http({
                 url: APP.baseurl + '?service=Teacher.insert',
                 method: 'post',
-                data: angular.extend({}, $scope.teacher, { token: APP.token })
+                data: angular.extend({}, $scope.teacher, {
+                    token: APP.token
+                })
             }).success(function (res) {
                 if (res.ret == 200)
                     toaster.pop('success', '成功', '成功添加教师！');
@@ -134,7 +139,9 @@ app.controller('TeacherUpdateCtrl', ['APP', '$scope', '$modalInstance', '$http',
             $http({
                 url: APP.baseurl + '?service=Teacher.update',
                 method: 'post',
-                data: angular.extend({}, $scope.teacher, { token: APP.token })
+                data: angular.extend({}, $scope.teacher, {
+                    token: APP.token
+                })
             }).success(function (res) {
                 if (res.ret == 200)
                     toaster.pop('success', '成功', '成功编辑教师！');
