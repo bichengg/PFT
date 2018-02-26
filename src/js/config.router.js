@@ -60,6 +60,18 @@ app
                             ]
                         }
                     })
+                    .state('app.manage.allot', {
+                        url: '/allot',
+                        templateUrl: 'tpl/manage/allot/list.html',
+                        controller: 'AllotCtrl',
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['src/js/controllers/app/manage/allot.js']);
+                                }
+                            ]
+                        }
+                    })
                     .state('app.manage.score', {
                         url: '/score',
                         templateUrl: 'tpl/manage/score/list.html',

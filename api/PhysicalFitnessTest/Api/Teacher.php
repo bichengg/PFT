@@ -49,8 +49,8 @@ class Api_Teacher extends PhalApi_Api {
 
         
         $info = array();
-        $current=$this->current;
-        $size=$this->size?$this->size:10;
+        $current = $this->current;
+        $size = $this->size;
 
         if($current<=1){
             $current=0;
