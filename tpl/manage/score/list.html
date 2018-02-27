@@ -40,7 +40,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="v in resList">
+                    <tr ng-repeat="v in resList track by $index" ng-if="$index<=20">
                       <td>{{v.grade_num}}</td>
                       <td>{{v.class_num}}</td>
                       <td>{{v.class_name}}</td>

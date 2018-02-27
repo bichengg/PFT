@@ -26,7 +26,7 @@
           <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
             ng-model="jsonStudent" />
           <i class="fa fa-angle-double-right m-l-xs m-r-xs"></i>
-          <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()">
+          <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()" ng-disabled="student.jsonReady">
             <i class="fa fa-upload"></i> 导入{{count}}
           </button>
         </div>
@@ -37,7 +37,7 @@
             <div class="bg-white h-full">
               {{student.year}}
               <br>{{student.teacher}}
-              <br>{{jsonStudent}}
+              <br>{{student.json}}
               <div class="table-responsive">
                 <table class="table table-striped table-bordered b-t b-light m-b-none">
                   <thead>

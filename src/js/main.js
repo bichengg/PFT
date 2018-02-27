@@ -35,25 +35,27 @@ app
                 years: [],
                 status: 0,
                 statusList: [{
-                        key: '全部',
-                        val: ''
-                    },
-                    {
-                        key: '有成绩',
-                        val: 0
-                    },
-                    {
-                        key: '有备注',
-                        val: 1
-                    },
-                    {
-                        key: '无结果',
-                        val: 2
-                    }
+                    key: '全部',
+                    val: ''
+                },
+                {
+                    key: '有成绩',
+                    val: 0
+                },
+                {
+                    key: '有备注',
+                    val: 1
+                },
+                {
+                    key: '无结果',
+                    val: 2
+                }
                 ],
                 size: 0,
                 pages: 50,
-                current: 1
+                current: 1,
+                json: [],
+                jsonReady: true
             };
             for (var i = 0; i < 5; i++) {
                 $scope.student.years.push($scope.student.year - i);
@@ -92,7 +94,7 @@ app
                 });
                 return promise;
             };
-            
+
             $scope.importf = function (obj) { //导入
                 var wb; //读取完成的数据
                 var rABS = false; //是否将文件读取为二进制字符串
@@ -114,7 +116,8 @@ app
                     }
                     //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
                     //wb.Sheets[Sheet名]获取第一个Sheet的数据
-                    $scope.jsonStudent = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                    $scope.student.json = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                    $scope.student.jsonReady = false;
                     $scope.$apply();
                 };
                 if (rABS) {

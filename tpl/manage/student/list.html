@@ -6,19 +6,18 @@
         <div class="btn-group pull-right">
         </div>
         <div class="m-l-n-xs">
-          <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
-            ng-model="jsonStudent" />
-
-          <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()">
-            <i class="fa fa-upload"></i> 导入{{count}}</button>
           <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getStudentList()">
             <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
           </select>
-          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.status" ng-options="v.val as v.key for v in student.statusList"
-            ng-change="getStudentList()">
-          </select>
+          <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
+            ng-model="jsonStudent" />
+
+          <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()" ng-disabled="student.jsonReady">
+            <i class="fa fa-upload"></i> 导入{{count}}</button>
+
         </div>
       </div>
+      {{student.json}}
       <div class="row-row">
         <div class="cell">
           <div class="cell-inner">
