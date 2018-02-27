@@ -54,8 +54,6 @@ app
                     else {
                         $scope.importStudent();
                     }
-
-
                 }
                 else
                     toaster.pop('error', '失败', res.msg);
