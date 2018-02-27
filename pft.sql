@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2018-02-27 22:23:37
+Date: 2018-02-27 22:47:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -108,7 +108,7 @@ CREATE TABLE `pft_student` (
   `teacher_id` varchar(100) DEFAULT NULL,
   `teacher_class` varchar(255) DEFAULT NULL,
   `school_year` varchar(100) DEFAULT NULL,
-  `status` int(5) DEFAULT '0',
+  `status` int(5) DEFAULT NULL,
   `time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `test_height` varchar(20) DEFAULT '0' COMMENT '身高',
   `test_weight` varchar(20) DEFAULT '0' COMMENT '体重',
