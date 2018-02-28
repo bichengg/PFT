@@ -35,24 +35,25 @@ app
                 years: [],
                 status: 0,
                 statusList: [{
-                    key: '全部',
-                    val: ''
-                },
-                {
-                    key: '有成绩',
-                    val: 0
-                },
-                {
-                    key: '有备注',
-                    val: 1
-                },
-                {
-                    key: '无结果',
-                    val: 2
-                }
+                        key: '全部',
+                        val: ''
+                    },
+                    {
+                        key: '有成绩',
+                        val: 0
+                    },
+                    {
+                        key: '有备注',
+                        val: 1
+                    },
+                    {
+                        key: '无结果',
+                        val: 2
+                    }
                 ],
                 size: 0,
-                pages: 50,
+                pages: 20000,
+                maxSize: 6,
                 current: 1,
                 json: [],
                 jsonReady: true

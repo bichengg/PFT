@@ -30,7 +30,7 @@
             4、选择学生
           </button>
           <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
-            ng-model="jsonStudent" />
+            ng-model="student.json" />
           <i class="fa fa-angle-double-right m-l-xs m-r-xs"></i>
           <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()" ng-disabled="student.jsonReady">
             <i class="fa fa-upload"></i> 分配 {{count}}
@@ -85,7 +85,7 @@
                   </div>
                   <div class="col-sm-4 text-center"></div>
                   <div class="col-sm-4 text-right text-center-xs">
-                    <pagination total-items="student.pages" ng-model="student.current" ng-change="getStudentList()" class="m-t-none m-b"></pagination>
+                    <pagination total-items="student.pages" max-size="student.maxSize" ng-model="student.current" ng-change="getStudentList()" class="m-t-none m-b"></pagination>
                   </div>
                 </div>
               </footer>

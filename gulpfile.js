@@ -61,7 +61,8 @@ gulp.task('watch', function () {
 });
 gulp.task('serve', ['styles', 'scripts'], function () {
     browserSync.init({
-        server: "./"
+        server: "./",
+        port: 33333
     });
 
     gulp.watch(['*.html',['tpl/*/*.html','tpl/*/*/*.html']]).on('change', browserSync.reload);
