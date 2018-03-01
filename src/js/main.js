@@ -43,20 +43,25 @@ app
                         val: 0
                     },
                     {
-                        key: '有备注',
+                        key: '病假',
                         val: 1
                     },
                     {
-                        key: '无结果',
+                        key: '事假',
                         val: 2
+                    },
+                    {
+                        key: '未参加',
+                        val: 3
                     }
                 ],
                 size: 0,
                 pages: 20000,
                 maxSize: 6,
                 current: 1,
-                json: [],
-                jsonReady: true
+                json: [], //导入的数据json
+                jsonReady: true, //导入的数据json ok
+                resJson: [] //需要导出json
             };
             for (var i = 0; i < 5; i++) {
                 $scope.student.years.push($scope.student.year - i);
@@ -88,7 +93,7 @@ app
                 }).success(function (res) {
                     deferred.resolve(res);
                     if (res.data)
-                        $scope.resList = res.data.info;
+                        $scope.student.resJson = res.data.info;
                 }).error(function (res) {
                     deferred.reject(res);
                     console.log(res)
@@ -138,6 +143,116 @@ app
                 }
             }
 
+            $scope.downloadExl = function (type) {
+                var tmpDown; //导出的二进制对象
+                var json = angular.copy($scope.student.resJson);
+                var tmpdata = json[0];
+                json.unshift({});
+                var keyMap = []; //获取keys
+                var subjectList = angular.copy($scope.resSubjectList);
+                for (var k in tmpdata) {
+                    if (k != 'id' && k != 'teacherId' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'status') {
+                        var k_nickname = '';
+                        switch (k) {
+                            case 'grade_num':
+                                k_nickname = '年级编号';
+                                break;
+                            case 'class_num':
+                                k_nickname = '班级编号';
+                                break;
+                            case 'class_name':
+                                k_nickname = '班级名称';
+                                break;
+                            case 'student_code':
+                                k_nickname = '学籍号';
+                                break;
+                            case 'nation':
+                                k_nickname = '民族代码';
+                                break;
+                            case 'name':
+                                k_nickname = '姓名';
+                                break;
+                            case 'sex':
+                                k_nickname = '性别';
+                                break;
+                            case 'born':
+                                k_nickname = '出生日期';
+                                break;
+                            case 'address':
+                                k_nickname = '家庭住址';
+                                break;
+                            default:
+                                k_nickname = Subject.transCn(k, subjectList);
+                                break;
+                        }
+                        keyMap.push(k);
+                        json[0][k] = k_nickname;
+                    }
+                }
+                var tmpdata = []; //用来保存转换好的json 
+                json.map(function (v, i) {
+                    return keyMap.map(
+                        function (k, j) {
+                            return Object.assign({}, {
+                                v: v[k],
+                                position: (j > 25 ? getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
+                            })
+                        }
+                    )
+                }).reduce(function (prev, next) {
+                    return prev.concat(next);
+                }).forEach(function (v, i) {
+                    return tmpdata[v.position] = {
+                        v: v.v
+                    }
+                });
+                var outputPos = Object.keys(tmpdata); //设置区域,比如表格从A1到D10
+                var tmpWB = {
+                    SheetNames: ['mySheet'], //保存的表标题
+                    Sheets: {
+                        'mySheet': Object.assign({},
+                            tmpdata, //内容
+                            {
+                                '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1] //设置填充区域
+                            })
+                    }
+                };
+                tmpDown = new Blob([s2ab(XLSX.write(tmpWB, {
+                        bookType: (type == undefined ? 'xlsx' : type),
+                        bookSST: false,
+                        type: 'binary'
+                    } //这里的数据是用来定义导出的格式类型
+                ))], {
+                    type: ""
+                }); //创建二进制对象写入转换好的字节流
+                var href = URL.createObjectURL(tmpDown); //创建对象超链接
+                document.getElementById("hf").href = href; //绑定a标签
+                document.getElementById("hf").click(); //模拟点击实现下载
+                setTimeout(function () { //延时释放
+                    URL.revokeObjectURL(tmpDown); //用URL.revokeObjectURL()来释放这个object URL
+                }, 100);
+
+
+                function s2ab(s) { //字符串转字符流
+                    var buf = new ArrayBuffer(s.length);
+                    var view = new Uint8Array(buf);
+                    for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                    return buf;
+                }
+                // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+                function getCharCol(n) {
+                    var temCol = '',
+                        s = '',
+                        m = 0;
+                    while (n > 0) {
+                        m = n % 26 + 1;
+                        s = String.fromCharCode(m + 64) + s;
+                        n = (n - m) / 26;
+                    }
+                    return s;
+                }
+
+            }
             //菜单数据
             $scope.nav = [{
                 'key': 'manage',

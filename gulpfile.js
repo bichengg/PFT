@@ -34,8 +34,8 @@ gulp.task('styles', function () {
 });
 gulp.task('scripts', function () {
     return gulp.src(['src/js/app.js', 'src/js/config.js', 'src/js/config.lazyload.js', 'src/js/config.router.js', 'src/js/main.js', 'src/js/services/*.js', 'src/js/directives/*.js', 'src/js/data/map.js'])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
+        // .pipe(jshint())
+        // .pipe(jshint.reporter('default'))
         .pipe(concat('common.js'))
         //.pipe(gulp.dest('js/common.js'))
         // .pipe(rename({
@@ -43,7 +43,7 @@ gulp.task('scripts', function () {
         // }))
         .pipe(uglify({
             //mangle: true,//类型：Boolean 默认：true 是否修改变量名
-            mangle: { except: ['require', 'exports', 'module', '$'] }//排除混淆关键字
+            mangle: { except: ['require', 'exports', 'module', '$', '=>'] }//排除混淆关键字
         }))
         .pipe(gulp.dest('dist/js/'))
         // .pipe(notify({
