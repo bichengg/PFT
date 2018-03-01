@@ -23,8 +23,7 @@
           <button class="btn btn-sm btn-default" type="button" disabled>
             3、选择课时
           </button>
-          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.teacher_class" ng-options="v.id as v.name for v in teacherList">
-          </select>
+          <input type="text" class="input-sm form-control w-xs inline v-middle" ng-model="student.teacher_class">
           <i class="fa fa-angle-double-right m-l-xs m-r-xs"></i>
           <button class="btn btn-sm btn-default" type="button" disabled>
             4、选择学生
@@ -55,6 +54,7 @@
                       <th>出生日期</th>
                       <th>家庭住址</th>
                       <th>任课老师</th>
+                      <th>课时</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -69,6 +69,7 @@
                       <td>{{v.born}}</td>
                       <td>{{v.address}}</td>
                       <td>{{v.teacherName}}</td>
+                      <td>{{v.teacher_class}}</td>
                     </tr>
                   </tbody>
                 </table>
