@@ -84,6 +84,18 @@ app
                             ]
                         }
                     })
+                    .state('app.manage.progress', {
+                        url: '/progress',
+                        templateUrl: 'tpl/manage/progress/list.html',
+                        controller: 'ProgressCtrl',
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['src/js/controllers/app/manage/progress.js']);
+                                }
+                            ]
+                        }
+                    })
 
 
             }

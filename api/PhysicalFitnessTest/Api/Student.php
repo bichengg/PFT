@@ -41,6 +41,11 @@ class Api_Student extends PhalApi_Api {
                 'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),  
             ),
+            'getProgressInfo' => array(
+                'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => true),
+                'is_submit' => array('name' => 'is_submit', 'source' => 'get', 'type' => 'int', 'require' => false),
+                'teacher_id' => array('name' => 'teacher_id', 'source' => 'get', 'type' => 'string', 'require' => false)
+            ),
         );
 	}
 	
@@ -187,5 +192,47 @@ class Api_Student extends PhalApi_Api {
         if($rs === false){
             throw new PhalApi_Exception_BadRequest('修改数据失败');
         }
+    }
+
+    /**
+	 * 获取老师管理的班级数量
+	 * @return 
+	 */
+    public function getProgressInfo(){
+        $model = new Model_Default();
+        $adminId = $model->checkAdminId($this->token);
+        if (empty($adminId) && empty($this->teacher_id)) {
+            return ;
+        }
+
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());  
+        $info = array();
+     
+
+
+        $sql = 'SELECT
+                    COUNT(*) AS classCount,
+                    teacher_id
+                FROM
+                    pft_student
+                WHERE teacher_id = :teacher_id';
+        if($this->is_submit) {
+            $sql .= ' AND is_submit = :is_submit';
+        }
+        $sql .= ' GROUP BY teacher_class';
+        $params = array(':teacher_id' => $this->teacher_id, ':is_submit' => $this->is_submit);
+        $info = DI()->notorm->example->queryAll($sql,$params);
+
+        if (empty($info)) {
+            DI()->logger->debug('students not found', $this->studentId);
+
+            $rs['code'] = 1;
+            $rs['msg'] = T('students not exists');
+            return $rs;
+        }
+
+        $rs['info'] = $info;
+
+        return $rs;
     }
 }
