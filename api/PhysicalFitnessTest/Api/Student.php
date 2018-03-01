@@ -101,7 +101,12 @@ class Api_Student extends PhalApi_Api {
                 $sql .= ' and s.school_year = :year';
             }
             if($this->status != null) {
-                $sql .= ' and s.status = :status';
+                if($this->status != '-1') {
+                    $sql .= ' and s.status = :status';
+                }
+                if($this->status == '-1') {
+                    $sql .= ' and s.status <>0';
+                }
             }
             $sql .= ' order by s.student_code desc';
             if($size) {
