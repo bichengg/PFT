@@ -11,8 +11,9 @@ class Api_Student extends PhalApi_Api {
         return array(
             
             'getInfo' => array(
-                'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => true),
+                'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'studentId' => array('name' => 'id', 'source' => 'get', 'type' => 'string', 'require' => false),
+                'teacher_id' => array('name' => 'teacher_id', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'current' => array('name' => 'current', 'source' => 'get', 'type' => 'int', 'require' => false, 'default'=>1),
                 'size' => array('name' => 'size', 'source' => 'get', 'type' => 'int', 'require' => false),
                 'studentName' => array('name' => 'name', 'source' => 'get', 'type' => 'string', 'require' => false),
@@ -50,7 +51,7 @@ class Api_Student extends PhalApi_Api {
     public function getInfo(){
         $model = new Model_Default();
         $adminId = $model->checkAdminId($this->token);
-        if (empty($adminId)) {
+        if (empty($adminId) && empty($this->teacher_id)) {
             return ;
         }
 
@@ -108,12 +109,16 @@ class Api_Student extends PhalApi_Api {
                     $sql .= ' and s.status <>0';
                 }
             }
+            if($this->teacher_id) {
+                $sql .= ' and s.teacher_id = :teacher_id';
+            }
             $sql .= ' order by s.student_code desc';
             if($size) {
                 $sql .= ' limit :current,:size';
             }
+
         }
-        $params = array(':studentId' => $this->studentId, ':studentName' => $this->studentName, ':year' => $this->year, ':status' => $this->status, ':size' => $size, ':current' => $current);
+        $params = array(':studentId' => $this->studentId, ':teacher_id' => $this->teacher_id, ':studentName' => $this->studentName, ':year' => $this->year, ':status' => $this->status, ':size' => $size, ':current' => $current);
         $info = DI()->notorm->example->queryAll($sql,$params);
 
         if (empty($info)) {
