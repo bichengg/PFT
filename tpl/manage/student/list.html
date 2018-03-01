@@ -10,7 +10,7 @@
             <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
           </select>
           <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
-            ng-model="jsonStudent" />
+            ng-model="student.json" />
 
           <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()" ng-disabled="student.jsonReady">
             <i class="fa fa-upload"></i> 导入 {{count}}</button>
@@ -37,7 +37,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="v in resList">
+                    <tr ng-repeat="v in student.resJson">
                       <td>{{v.grade_num}}</td>
                       <td>{{v.class_num}}</td>
                       <td>{{v.class_name}}</td>
@@ -63,7 +63,7 @@
                   </div>
                   <div class="col-sm-4 text-center"></div>
                   <div class="col-sm-4 text-right text-center-xs">
-                    <pagination total-items="student.pages" ng-model="student.current" ng-change="getStudentList()" class="m-t-none m-b"></pagination>
+                    <pagination total-items="student.pages" max-size="student.maxSize" ng-model="student.current" ng-change="getStudentList()" class="m-t-none m-b"></pagination>
                   </div>
                 </div>
               </footer>

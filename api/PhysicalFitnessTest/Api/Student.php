@@ -36,6 +36,7 @@ class Api_Student extends PhalApi_Api {
             'update' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
                 'teacher_id' => array('name' => 'teacher_id', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'teacher_class' => array('name' => 'teacher_class', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),  
             ),
@@ -100,7 +101,12 @@ class Api_Student extends PhalApi_Api {
                 $sql .= ' and s.school_year = :year';
             }
             if($this->status != null) {
-                $sql .= ' and s.status = :status';
+                if($this->status != '-1') {
+                    $sql .= ' and s.status = :status';
+                }
+                if($this->status == '-1') {
+                    $sql .= ' and s.status <>0';
+                }
             }
             $sql .= ' order by s.student_code desc';
             if($size) {
@@ -166,6 +172,7 @@ class Api_Student extends PhalApi_Api {
             return ;
         }
         $data = array(
+            'teacher_class'  => $this->teacher_class,  
             'teacher_id'  => $this->teacher_id,                                            
             'student_code'  => $this->student_code,                                          
             'school_year'  => $this->school_year,

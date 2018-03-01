@@ -41,6 +41,8 @@ app
                     $scope.count++;
                     if (i == arr.length - 1) {
                         $scope.getStudentList();
+                        toaster.pop('success', '导入成功', '共导入' + $scope.count + '名学生');
+                        $scope.count = 0;
                         return;
                     }
                     else {

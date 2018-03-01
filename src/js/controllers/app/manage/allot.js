@@ -37,7 +37,8 @@ app
                 token: APP.token,
                 school_year: $scope.student.year,
                 teacher_id: $scope.student.teacher,
-                student_code: arr[i]['student_code']
+                student_code: arr[i]['student_code'],
+                teacher_class: $scope.student.teacher_class
             }
             //上传
             $http({
@@ -49,13 +50,13 @@ app
                     $scope.count++;
                     if (i == arr.length - 1) {
                         $scope.getStudentList();
+                        toaster.pop('success', '分配成功', '共分配' + $scope.count + '名学生');
+                        $scope.count = 0;
                         return;
-                    }
-                    else {
+                    } else {
                         $scope.importStudent();
                     }
-                }
-                else
+                } else
                     toaster.pop('error', '失败', res.msg);
 
             }).error(function (res) {

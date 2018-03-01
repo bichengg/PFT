@@ -23,14 +23,13 @@
           <button class="btn btn-sm btn-default" type="button" disabled>
             3、选择课时
           </button>
-          <select class="input-sm form-control w-xs inline v-middle" ng-model="student.teacher_class" ng-options="v.id as v.name for v in teacherList">
-          </select>
+          <input type="text" class="input-sm form-control w-xs inline v-middle" ng-model="student.teacher_class">
           <i class="fa fa-angle-double-right m-l-xs m-r-xs"></i>
           <button class="btn btn-sm btn-default" type="button" disabled>
             4、选择学生
           </button>
           <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
-            ng-model="jsonStudent" />
+            ng-model="student.json" />
           <i class="fa fa-angle-double-right m-l-xs m-r-xs"></i>
           <button class="btn btn-sm btn-primary" type="button" ng-click="importStudent()" ng-disabled="student.jsonReady">
             <i class="fa fa-upload"></i> 分配 {{count}}
@@ -55,10 +54,11 @@
                       <th>出生日期</th>
                       <th>家庭住址</th>
                       <th>任课老师</th>
+                      <th>课时</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="v in resList">
+                    <tr ng-repeat="v in student.resJson">
                       <td>{{v.grade_num}}</td>
                       <td>{{v.class_num}}</td>
                       <td>{{v.class_name}}</td>
@@ -69,6 +69,7 @@
                       <td>{{v.born}}</td>
                       <td>{{v.address}}</td>
                       <td>{{v.teacherName}}</td>
+                      <td>{{v.teacher_class}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -85,7 +86,7 @@
                   </div>
                   <div class="col-sm-4 text-center"></div>
                   <div class="col-sm-4 text-right text-center-xs">
-                    <pagination total-items="student.pages" ng-model="student.current" ng-change="getStudentList()" class="m-t-none m-b"></pagination>
+                    <pagination total-items="student.pages" max-size="student.maxSize" ng-model="student.current" ng-change="getStudentList()" class="m-t-none m-b"></pagination>
                   </div>
                 </div>
               </footer>
