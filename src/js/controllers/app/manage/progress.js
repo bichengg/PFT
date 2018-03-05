@@ -3,7 +3,7 @@
 /* Controllers */
 
 app
-    .controller('ProgressCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$q', function (APP, $scope, $modal, toaster, $http, $q) {
+    .controller('ProgressCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$q', '$state', function (APP, $scope, $modal, toaster, $http, $q, $state) {
         //教师列表
         $scope.page = {
             totalItems: 50,
@@ -38,7 +38,7 @@ app
                     var teacherList = res.data.info;
                     if (teacherList.length > 0) {
                         for (var i = 0; i < teacherList.length; i++) {
-                            +function (i) {
+                            + function (i) {
                                 $http({
                                     method: "get",
                                     url: APP.baseurl + '?service=Student.getProgressInfo',
@@ -79,8 +79,7 @@ app
                             }(i);
 
                         }
-                    }
-                    else {
+                    } else {
                         $scope.teacherList = [];
                     }
 
@@ -89,4 +88,7 @@ app
 
         }
         $scope.getProgressList();
+        $scope.goTeacher = function (id) {
+            $state.go('app.teacher.list');
+        }
     }]);

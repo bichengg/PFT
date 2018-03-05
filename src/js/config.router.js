@@ -96,8 +96,23 @@ app
                             ]
                         }
                     })
-
-
+                    .state('app.teacher', {
+                        abstract: true,
+                        url: '/teacher',
+                        template: '<div ui-view class="fade-in-left h-full"></div>'
+                    })
+                    .state('app.teacher.list', {
+                        url: '/list',
+                        templateUrl: 'tpl/teacher/list.html',
+                        controller: 'TeacherCtrl',
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['src/js/controllers/app/teacher/teacher.js']);
+                                }
+                            ]
+                        }
+                    })
             }
         ]
     );

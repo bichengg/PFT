@@ -3,12 +3,13 @@
 /* Controllers */
 
 app
-    .controller('StudentCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', function (APP, $scope, $modal, toaster, $http) {
+    .controller('TeacherCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', function (APP, $scope, $modal, toaster, $http) {
 
         $scope.student.status = '';
         $scope.student.size = 10;
-        //$scope.getStudentList();
-        $scope.student.resJson = [];
+        $scope.getScroeList().then(function () {
+            $scope.getStudentList();
+        });
         $scope.student.json = [];
         $scope.student.jsonReady = true;
 
