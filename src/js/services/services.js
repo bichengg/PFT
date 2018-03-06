@@ -10,6 +10,16 @@ app
       }
       return cn;
     };
+    // 转换体侧项目 中文-》英文
+    this.transEn = function (cn, arrs) {
+      var en = '';
+      for (var i = 0; i < arrs.length; i++) {
+        if (arrs[i].column_comment == cn) {
+          en = arrs[i].column_name;
+        }
+      }
+      return en;
+    };
     //返回体侧项目列表
     this.getList = function () {
       var deferred = $q.defer();

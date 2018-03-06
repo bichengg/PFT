@@ -18,7 +18,8 @@ class Api_Student extends PhalApi_Api {
                 'size' => array('name' => 'size', 'source' => 'get', 'type' => 'int', 'require' => false),
                 'studentName' => array('name' => 'name', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'year' => array('name' => 'year', 'source' => 'get', 'type' => 'string', 'require' => false),
-                'status' => array('name' => 'status', 'source' => 'get', 'type' => 'string', 'require' => false)
+                'status' => array('name' => 'status', 'source' => 'get', 'type' => 'string', 'require' => false),
+                'teacherClass' => array('name' => 'teacherClass', 'source' => 'get', 'type' => 'string', 'require' => false)
             ),
             'insert' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -40,6 +41,13 @@ class Api_Student extends PhalApi_Api {
                 'teacher_class' => array('name' => 'teacher_class', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),  
+            ),
+            'updateScore' => array(
+                'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'teacher_id' => array('name' => 'teacher_id', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),  
+                'score'  => array('name' => 'score', 'type' => 'string', 'source' => 'post', 'require' => false)
             ),
             'getProgressInfo' => array(
                 'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => true),
@@ -73,28 +81,6 @@ class Api_Student extends PhalApi_Api {
             $current=($current-1)*$size;
         }
 
-        // $info = DI()->notorm->student->select('*, teacher.*');
-        // if ($this->studentId) {
-        //     $info = $info->where('id = ?', $this->studentId)->order('student_code desc')->fetchRow();
-        // }
-        // else{
-        //     if($this->studentName) {
-        //         $info = $info->where('name like ?', '%'.$this->studentName.'%');
-        //     }
-        //     if($this->year) {
-        //         $info = $info->where('school_year', $this->year);
-        //     }
-        //     if($this->status != null) {
-        //         $info = $info->where('status', $this->status);
-        //     }
-        //     $info = $info->order("student_code desc");
-        //     if($size) {
-        //         $info = $info->limit($current, $size);
-        //     }
-        //     $info = $info->fetchRows();
-        // }
-
-
         $sql='select s.*,t.id as teacherId,t.name as teacherName from pft_student as s left join pft_teacher as t on s.teacher_id=t.id where 1=1';
         if ($this->studentId) {
             $sql .= ' and s.id = :studentId order by s.student_code desc';
@@ -117,13 +103,16 @@ class Api_Student extends PhalApi_Api {
             if($this->teacher_id) {
                 $sql .= ' and s.teacher_id = :teacher_id';
             }
+            if($this->teacherClass) {
+                $sql .= ' and s.teacher_class = :teacherClass';
+            }
             $sql .= ' order by s.student_code desc';
             if($size) {
                 $sql .= ' limit :current,:size';
             }
 
         }
-        $params = array(':studentId' => $this->studentId, ':teacher_id' => $this->teacher_id, ':studentName' => $this->studentName, ':year' => $this->year, ':status' => $this->status, ':size' => $size, ':current' => $current);
+        $params = array(':studentId' => $this->studentId, ':teacher_id' => $this->teacher_id, ':studentName' => $this->studentName,':teacherClass' => $this->teacherClass, ':year' => $this->year, ':status' => $this->status, ':size' => $size, ':current' => $current);
         $info = DI()->notorm->example->queryAll($sql,$params);
 
         if (empty($info)) {
@@ -171,7 +160,7 @@ class Api_Student extends PhalApi_Api {
         return $rs['id'];  
     }
     /**
-	 * 学生更改
+	 * 学生更改 分配老师
      * @desc 
 	 * @return  id
 	 */
@@ -193,7 +182,28 @@ class Api_Student extends PhalApi_Api {
             throw new PhalApi_Exception_BadRequest('修改数据失败');
         }
     }
-
+     /**
+	 * 学生更改 更新成绩
+     * @desc 
+	 * @return  id
+	 */
+    public function updateScore(){
+        $model = new Model_Default();
+        $adminId = $model->checkAdminId($this->token);
+        if (empty($adminId) && empty($this->teacher_id)) {
+            return ;
+        }
+        $data = array(                
+            'time'  => date('Y-m-d H:i:s')
+        );
+        if($this->score){
+            $data = array_merge($data ,json_decode($this->score, true));
+        }
+        $rs   = DI()->notorm->student->where('student_code', $this->student_code)->where('school_year', $this->school_year)->update($data);
+        if($rs === false){
+            throw new PhalApi_Exception_BadRequest('修改数据失败');
+        }
+    }
     /**
 	 * 获取老师管理的班级数量
 	 * @return 

@@ -1015,9 +1015,6 @@ html {
   display: block;
   position: relative;
 }
-.navi ul.nav li.active {
-  background: #f6f8f8;
-}
 .navi ul.nav li li a {
   padding-left: 55px;
 }

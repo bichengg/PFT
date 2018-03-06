@@ -155,7 +155,7 @@ app
                 var keyMap = []; //获取keys
                 var subjectList = angular.copy($scope.resSubjectList);
                 for (var k in tmpdata) {
-                    if (k != 'id' && k != 'teacherId' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'status') {
+                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'status' && k != 'is_submit') {
                         var k_nickname = '';
                         switch (k) {
                             case 'grade_num':

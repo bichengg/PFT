@@ -1,24 +1,28 @@
 <div class="modal-header">
-  <h4 class="modal-title">教师编辑</h4>
+  <h4 class="modal-title">{{stu.name}}-成绩编辑</h4>
 </div>
 <div class="modal-body">
+  <table class="table table-bordered table-striped">
+    <tbody>
+      <tr>
+        <td>姓名</td>
+        <td>{{stu.name}}</td>
+        <td>年级号</td>
+        <td>{{stu.grade_num}}</td>
+      </tr>
+      <tr>
+        <td>学籍号</td>
+        <td>{{stu.student_code}}</td>
+        <td>课程</td>
+        <td>{{stu.teacher_class}}</td>
+      </tr>
+    </tbody>
+  </table>
   <form class="form-horizontal">
-    <div class="form-group">
-      <label class="col-md-2 control-label">教工号</label>
-      <div class="col-md-10">
-        <input type="text" class="form-control" ng-model="teacher.num" maxlength="10">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-md-2 control-label">姓名</label>
-      <div class="col-md-10">
-        <input type="text" class="form-control" ng-model="teacher.name" maxlength="10">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-md-2 control-label">密码</label>
-      <div class="col-md-10">
-        <input type="password" class="form-control" ng-model="teacher.pwd">
+    <div class="form-group" ng-repeat="v in subjectList">
+      <label class="col-md-3 control-label">{{v.column_comment}}</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" ng-model="$parent.stu[v.column_name]" maxlength="10">
       </div>
     </div>
   </form>

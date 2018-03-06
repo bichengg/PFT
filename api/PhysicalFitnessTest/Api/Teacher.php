@@ -31,6 +31,10 @@ class Api_Teacher extends PhalApi_Api {
                 'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '教师姓名'),
                 'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
             ),
+            'getClassInfo' => array(
+                'teacherId' => array('name' => 'teacherId', 'source' => 'get', 'type' => 'string', 'require' => false),
+                'year' => array('name' => 'year', 'source' => 'get', 'type' => 'string', 'require' => false)
+            ),
         );
 	}
 	
@@ -142,5 +146,42 @@ class Api_Teacher extends PhalApi_Api {
         if($rs === false){
             throw new PhalApi_Exception_BadRequest('修改数据失败');
         }
+    }
+
+     /**
+	 * 教师当年的 课程列表
+	 * @return 
+	 */
+    public function getClassInfo(){
+        
+
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        
+        $info = array();
+
+        $sql='SELECT count(*) as stuCount,teacher_class FROM pft_student WHERE 1=1';
+        if($this->year) {
+            $sql .= ' and school_year = :year';
+        }
+        if($this->teacherId) {
+            $sql .= ' and teacher_id = :teacherId';
+        }
+        $sql .= ' GROUP BY teacher_class order by student_code desc';
+        $params = array(':teacherId' => $this->teacherId, ':year' => $this->year);
+        $info = DI()->notorm->example->queryAll($sql,$params);
+        
+
+        if (empty($info)) {
+            DI()->logger->debug('user not found', $this->teacherId);
+
+            $rs['code'] = 1;
+            $rs['msg'] = T('user not exists');
+            return $rs;
+        }
+
+        $rs['info'] = $info;
+
+        return $rs;
     }
 }
