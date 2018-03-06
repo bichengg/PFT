@@ -90,6 +90,8 @@ app
         $scope.getProgressList();
         $scope.goTeacher = function (t) {
             localStorage.setItem('teacher', angular.toJson(t));
-            $state.go('app.teacher.list');
+            setTimeout(function () {
+                $state.go('app.teacher.list');
+            }, 100);
         }
     }]);
