@@ -104,7 +104,7 @@ app
                     .state('app.teacher.list', {
                         url: '/list',
                         templateUrl: 'tpl/teacher/list.html',
-                        controller: 'TeacherCtrl',
+                        controller: 'Teacher2stuCtrl',
                         resolve: {
                             deps: ['$ocLazyLoad',
                                 function ($ocLazyLoad) {

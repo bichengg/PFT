@@ -3,7 +3,7 @@
 /* Controllers */
 
 app
-    .controller('TeacherCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$q', 'Subject', function (APP, $scope, $modal, toaster, $http, $q, Subject) {
+    .controller('Teacher2stuCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$q', 'Subject', function (APP, $scope, $modal, toaster, $http, $q, Subject) {
         $scope.teacher = angular.fromJson(localStorage.getItem('teacher'));
         $scope.student.status = '';
         $scope.student.size = 0;
