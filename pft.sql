@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-03-06 16:42:56
+Date: 2018-03-20 17:45:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `pft_admin`;
 CREATE TABLE `pft_admin` (
-  `id` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `id` varchar(255) CHARACTER SET utf8 NOT NULL,
   `name` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   `password` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -29,7 +29,7 @@ CREATE TABLE `pft_admin` (
 -- ----------------------------
 -- Records of pft_admin
 -- ----------------------------
-INSERT INTO `pft_admin` VALUES ('167ab0a0-d8b0-3333-8a83-94de807c8dff', 'admin3', '123');
+INSERT INTO `pft_admin` VALUES ('cf60fee51a1c17365f9effe51ecb2d4b780ba146bf89eda5bd38dc84fff32d4feff2379c176a00216bcbeb4a2293b2a7e9bb78d9fbee6919db247b16c3374572', 'admin3', '123');
 
 -- ----------------------------
 -- Table structure for pft_score
