@@ -16,9 +16,37 @@ class Api_User extends PhalApi_Api {
                 'name'  => array('name' => 'name', 'source' => 'post', 'require' => false, 'desc' => '用户名称'),
                 'type'  => array('name' => 'type', 'type' => 'int', 'require' => false, 'default'=>'2', 'desc' => '用户类型'),    
             ),
+            'checkLogin' => array(
+                'username' => array('name' => 'username', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'password' => array('name' => 'password', 'source' => 'post', 'type' => 'string', 'require' => false),
+            ),
         );
 	}
-	
+	/**
+	 * 用户信息获取
+	 * @return 
+	 */
+    public function checkLogin(){
+
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        
+        $info = array();
+
+        $info = DI()->notorm->admin->select('*')->where('name = ?', $this->username)->where('password = ?', $this->password)->fetchOne();
+
+        if (empty($info)) {
+            DI()->logger->debug('user not found', $this->username);
+
+            $rs['code'] = 1;
+            $rs['msg'] = T('user not exists');
+            return $rs;
+        }
+
+        $rs['info'] = $info['id'];
+
+        return $rs;
+    }
     /**
 	 * 用户信息获取
 	 * @return 

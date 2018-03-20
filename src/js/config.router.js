@@ -15,8 +15,20 @@ app
             function ($stateProvider, $urlRouterProvider) {
 
                 $urlRouterProvider
-                    .otherwise('/app/manage/teacher');
+                    .otherwise('/login');
                 $stateProvider
+                    .state('login', {
+                        url: '/login',
+                        templateUrl: 'tpl/login.html',
+                        controller: 'LoginCtrl',
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['src/js/controllers/login.js']);
+                                }
+                            ]
+                        }
+                    })
                     .state('app', {
                         abstract: true,
                         url: '/app',
@@ -40,6 +52,7 @@ app
                         url: '/teacher',
                         templateUrl: 'tpl/manage/teacher/list.html',
                         controller: 'TeacherCtrl',
+                        cache: false,
                         resolve: {
                             deps: ['$ocLazyLoad',
                                 function ($ocLazyLoad) {

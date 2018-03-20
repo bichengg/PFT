@@ -8,7 +8,7 @@ app
         version: '1.0.0',
         nav: [],
         baseurl: 'http://127.0.0.1/PFT/api/Public/PhysicalFitnessTest/',
-        token: '167ab0a0-d8b0-3333-8a83-94de807c8dff',
+        token: sessionStorage.getItem('token'),
         settings: {
             themeID: 1,
             navbarHeaderColor: 'bg-black',
@@ -24,8 +24,8 @@ app
         hideFooter: true
     })
 
-    .controller('AppCtrl', ['APP', '$scope', 'Subject', '$q', '$http',
-        function (APP, $scope, Subject, $q, $http) {
+    .controller('AppCtrl', ['APP', '$scope', 'Subject', '$q', '$http', '$state',
+        function (APP, $scope, Subject, $q, $http, $state) {
             //配置项赋值
             $scope.app = APP;
             var dates = new Date();
@@ -291,7 +291,11 @@ app
                 ]
             }];
 
-
+            $scope.logout = function () {
+                localStorage.removeItem('teacher');
+                sessionStorage.removeItem('token');
+                $state.go('login');
+            }
 
 
         }
