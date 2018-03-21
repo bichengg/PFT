@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-03-20 17:45:45
+Date: 2018-03-21 10:51:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,7 +29,7 @@ CREATE TABLE `pft_admin` (
 -- ----------------------------
 -- Records of pft_admin
 -- ----------------------------
-INSERT INTO `pft_admin` VALUES ('cf60fee51a1c17365f9effe51ecb2d4b780ba146bf89eda5bd38dc84fff32d4feff2379c176a00216bcbeb4a2293b2a7e9bb78d9fbee6919db247b16c3374572', 'admin3', '123');
+INSERT INTO `pft_admin` VALUES ('cf60fee51a1c17365f9effe51ecb2d4b780ba146bf89eda5bd38dc84fff32d4feff2379c176a00216bcbeb4a2293b2a7e9bb78d9fbee6919db247b16c3374572', 'admin3', '202cb962ac59075b964b07152d234b70');
 
 -- ----------------------------
 -- Table structure for pft_score

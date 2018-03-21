@@ -21,7 +21,7 @@ app
                     method: 'post',
                     data: {
                         username: $scope.user.name,
-                        password: $scope.user.password
+                        password: md5($scope.user.password)
                     }
                 }).success(function (res) {
                     if (res.data.code == 0) {
