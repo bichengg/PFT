@@ -10,7 +10,7 @@ class Api_Subject extends PhalApi_Api {
 	public function getRules() {
         return array(
             'getInfo' => array(
-                'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => true)
+                'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => false)
             ),
             'insert' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -33,11 +33,11 @@ class Api_Subject extends PhalApi_Api {
 	 * @return 
 	 */
     public function getInfo(){
-        $model = new Model_Default();
-        $adminId = $model->checkAdminId($this->token);
-        if (empty($adminId)) {
-            return ;
-        }
+        // $model = new Model_Default();
+        // $adminId = $model->checkAdminId($this->token);
+        // if (empty($adminId)) {
+        //     return ;
+        // }
 
         $rs = array('code' => 0, 'msg' => '', 'info' => array());
 

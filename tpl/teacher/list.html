@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="m-l-n-xs">
-              <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getStudentList()">
+              <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getStudentListByTeacherId()">
                 <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
               </select>
               <select class="input-sm form-control w-xs inline v-middle" ng-model="teacher.class" ng-change="getStudentListByTeacherId()">

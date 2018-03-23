@@ -20,10 +20,14 @@ class Api_User extends PhalApi_Api {
                 'username' => array('name' => 'username', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'password' => array('name' => 'password', 'source' => 'post', 'type' => 'string', 'require' => false),
             ),
+            'checkLoginTeacher' => array(
+                'username' => array('name' => 'username', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'password' => array('name' => 'password', 'source' => 'post', 'type' => 'string', 'require' => false),
+            ),
         );
 	}
 	/**
-	 * 用户信息获取
+	 * 管理员登录验证
 	 * @return 
 	 */
     public function checkLogin(){
@@ -44,6 +48,31 @@ class Api_User extends PhalApi_Api {
         }
 
         $rs['info'] = $info['id'];
+
+        return $rs;
+    }
+	/**
+	 * 老师登录验证
+	 * @return 
+	 */
+    public function checkLoginTeacher(){
+
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        
+        $info = array();
+
+        $info = DI()->notorm->teacher->select('*')->where('name = ?', $this->username)->where('pwd = ?', $this->password)->fetchOne();
+
+        if (empty($info)) {
+            DI()->logger->debug('user not found', $this->username);
+
+            $rs['code'] = 1;
+            $rs['msg'] = T('teacher not exists');
+            return $rs;
+        }
+
+        $rs['info'] = $info;
 
         return $rs;
     }

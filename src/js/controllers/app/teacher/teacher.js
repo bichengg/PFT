@@ -47,7 +47,7 @@ app
                 deferred.resolve(res);
                 if (res.data) {
                     $scope.classList = res.data.info;
-                    $scope.teacher.class = $scope.classList[0].teacher_class;
+                    $scope.teacher.class = $scope.classList[0] ? $scope.classList[0].teacher_class : 0;
                 }
             }).error(function (res) {
                 deferred.reject(res);
@@ -64,11 +64,14 @@ app
             $scope.getScroeList().then(function () {
                 $scope.getStudentListByTeacherId();
                 ResSubjectList = $scope.resSubjectList;
-                for (var i = 0; i < ResSubjectList.length; i++) {
-                    score[ResSubjectList[i].column_name] = 0;
-                    scoreName[ResSubjectList[i].column_comment] = 0;
+                if (ResSubjectList) {
+                    for (var i = 0; i < ResSubjectList.length; i++) {
+                        score[ResSubjectList[i].column_name] = 0;
+                        scoreName[ResSubjectList[i].column_comment] = 0;
+                    }
                 }
                 console.log(score, scoreName);
+
             });
         });
 
