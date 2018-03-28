@@ -12,8 +12,6 @@
           </div>
         </div>
         <div class="m-l-n-xs">
-          <button class="btn btn-sm btn-primary" type="button" ng-click="add()">
-            <i class="fa fa-plus"></i> 新增教师</button>
           <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getProgressList()">
             <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
           </select>
@@ -29,7 +27,7 @@
                     <tr>
                       <th>教师名</th>
                       <th>账号（教工号）</th>
-                      <th>课时总数</th>
+                      <th>学生总数</th>
                       <th>已提交</th>
                       <th width="20%">进度</th>
                       <th>操作</th>
