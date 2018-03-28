@@ -196,20 +196,20 @@ app.config(
 
         var subjectMaleArr = [{
                 key: 'pullup',
-                name: '引体向上(男)(次)',
+                name: '引体向上(男)/一分钟仰卧起坐(女)(次)',
                 coefficient: 0.1
             }, {
                 key: '1000',
-                name: '1000(男)(分•秒)',
+                name: '1000(男)/800(女)米跑(分•秒)',
                 coefficient: 0.2
             }],
             subjectFemaleArr = [{
                 key: 'situp',
-                name: '一分钟仰卧起坐(女)(次)',
+                name: '引体向上(男)/一分钟仰卧起坐(女)(次)',
                 coefficient: 0.1
             }, {
                 key: '800',
-                name: '800(女)米跑(分•秒)',
+                name: '1000(男)/800(女)米跑(分•秒)',
                 coefficient: 0.2
             }];
 
