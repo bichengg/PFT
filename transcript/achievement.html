@@ -1,3 +1,193 @@
-<ul>
-  <li ng-repeat="v in lists"> {{v | trans2score:41:1:'lung'}}</li>
-</ul>
+<style>
+  .table {
+    margin-bottom: -1px;
+  }
+
+  .card {
+    width: 1200px;
+    height: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 60px;
+    color: #333;
+    font-size: 13px;
+  }
+
+  .card h1 {
+    text-align: center;
+    font-size: 24px;
+  }
+
+  .card h2 {
+    text-align: right;
+    font-size: 14px;
+  }
+
+  .card h2 span:first-child {
+    margin-right: 30%;
+  }
+
+  .card .table-bordered>tbody>tr>td {
+    text-align: center;
+    border-color: #999;
+    padding: 2px 0;
+  }
+</style>
+<div class="card">
+  <h1>《国家学生体质健康标准》登记卡</h1>
+  <h2>学校：淮阴工学院</h2>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>姓　　名</td>
+        <td>{{stu.name}}</td>
+        <td>性　　别</td>
+        <td>{{stu.sex}}</td>
+        <td>学　　号</td>
+        <td>{{stu.student_code}}</td>
+      </tr>
+      <tr>
+        <td>班　　级</td>
+        <td>{{stu.class_name}}</td>
+        <td>民　　族</td>
+        <td>{{stu.nation}}</td>
+        <td>出生日期</td>
+        <td>{{stu.born}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td rowspan="2">单项指标</td>
+        <td colspan="3">大一</td>
+        <td colspan="3">大二</td>
+        <td colspan="3">大三</td>
+        <td colspan="3">大四</td>
+        <td colspan="2">毕业成绩</td>
+      </tr>
+      <tr>
+        <td width="6%">成绩</td>
+        <td width="6%">得分</td>
+        <td width="6%">等级</td>
+        <td width="6%">成绩</td>
+        <td width="6%">得分</td>
+        <td width="6%">等级</td>
+        <td width="6%">成绩</td>
+        <td width="6%">得分</td>
+        <td width="6%">等级</td>
+        <td width="6%">成绩</td>
+        <td width="6%">得分</td>
+        <td width="6%">等级</td>
+        <td width="6%">得分</td>
+        <td width="6%">等级</td>
+      </tr>
+      <tr>
+        <td>体重指数(BMI)(千克/米²)</td>
+        <td>{{info[0].test_weight}}/{{info[0].test_height}}</td>
+        <td>{{info[0].test_weight}}</td>
+        <td>{{info[0].test_weight}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td rowspan="13"></td>
+        <td rowspan="13"></td>
+      </tr>
+      <tr ng-repeat="v in subjectArr">
+        <td>{{v.name}}</td>
+        <td ng-bind="info[0].test_{{v.key}} || 0"></td>
+        <td ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
+        <td ng-bind="info[1].test_{{v.key}} || 0"></td>
+        <td ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
+        <td ng-bind="info[2].test_{{v.key}} || 0"></td>
+        <td ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
+        <td ng-bind="info[3].test_{{v.key}} || 0"></td>
+        <td ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
+      </tr>
+      <tr>
+        <td>标准分</td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td>加分指标</td>
+        <td>成绩</td>
+        <td colspan="2">附加分</td>
+        <td>成绩</td>
+        <td colspan="2">附加分</td>
+        <td>成绩</td>
+        <td colspan="2">附加分</td>
+        <td>成绩</td>
+        <td colspan="2">附加分</td>
+      </tr>
+      <tr ng-repeat="v in subjectAttachArr">
+        <td>{{v.name}}</td>
+        <td ng-bind="info[0].test_{{v.key}} || 0"></td>
+        <td colspan="2" ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+        <td ng-bind="info[1].test_{{v.key}} || 0"></td>
+        <td colspan="2" ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+        <td ng-bind="info[2].test_{{v.key}} || 0"></td>
+        <td colspan="2" ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+        <td ng-bind="info[3].test_{{v.key}} || 0"></td>
+        <td colspan="2" ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+      </tr>
+      <tr>
+        <td>学年总分</td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td>等级评定</td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+      </tr>
+      <tr>
+        <td>体育老师签字</td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>班主任签字</td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>家长签字</td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td colspan="3"></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>
+    <span>学校签章：</span>
+    <span>{{today | date:'yyyy年MM月dd日'}}</span>
+  </h2>
+</div>
