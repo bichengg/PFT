@@ -170,12 +170,17 @@ app.config(
             }
         }
     }])
-    .controller('AchievementCtrl', ['$scope', function ($scope) {
+    .controller('AchievementCtrl', ['$scope', '$filter', function ($scope, $filter) {
 
         $scope.today = new Date();
         $scope.info = angular.fromJson(sessionStorage.getItem('token'));
 
         $scope.stu = $scope.info[0];
+        // for (var i = 0; i < $scope.info.length; i++) {
+        //     const element = $scope.info[i];
+
+        // }
+
         $scope.subjectArr = [{
             key: 'lung',
             name: '肺活量(毫升)',
@@ -220,4 +225,7 @@ app.config(
             $scope.subjectArr = $scope.subjectArr.concat(subjectFemaleArr);
             $scope.subjectAttachArr = subjectFemaleArr;
         }
+
+
+        console.log($filter('trans2score'));
     }]);

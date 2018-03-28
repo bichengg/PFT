@@ -102,7 +102,7 @@
       <tr ng-repeat="v in subjectArr">
         <td>{{v.name}}</td>
         <td ng-bind="info[0].test_{{v.key}} || 0"></td>
-        <td ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td ng-model="vx" ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}'"></td>
         <td ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
         <td ng-bind="info[1].test_{{v.key}} || 0"></td>
         <td ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}'"></td>
@@ -116,7 +116,7 @@
       </tr>
       <tr>
         <td>标准分</td>
-        <td colspan="3"></td>
+        <td colspan="3">{{vx}}</td>
         <td colspan="3"></td>
         <td colspan="3"></td>
         <td colspan="3"></td>
