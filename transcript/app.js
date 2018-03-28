@@ -16,6 +16,8 @@ app
             for (var i = 0; i < arr.length; i++) {
                 if (a >= arr[i].a && a < arr[i + 1].a) {
                     return arr[i].b;
+                } else {
+                    return 0;
                 }
             }
         }
@@ -60,5 +62,5 @@ app
         }
     }])
     .controller('AchievementCtrl', ['$scope', function ($scope) {
-        $scope.lists = [1800, 2566, 333]
+        $scope.lists = [0, -10, 333]
     }]);
