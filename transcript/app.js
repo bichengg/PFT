@@ -13,13 +13,15 @@ app
                 grade_num = 4344
             }
             var arr = eval('trans_' + grade_num + '_' + sex + '_' + test);
-            for (var i = 0; i < arr.length; i++) {
+            var res = 0;
+            for (var i = 0; i < arr.length - 1; i++) {
                 if (a >= arr[i].a && a < arr[i + 1].a) {
-                    return arr[i].b;
-                } else {
-                    return 0;
+                    res = arr[i].b;
+                } else if (a >= arr[i + 1].a) {
+                    res = arr[i + 1].b;
                 }
             }
+            return res;
         }
     })
     .run(
@@ -62,5 +64,5 @@ app
         }
     }])
     .controller('AchievementCtrl', ['$scope', function ($scope) {
-        $scope.lists = [0, -10, 333]
+        $scope.lists = [2000, 3400, 12100]
     }]);
