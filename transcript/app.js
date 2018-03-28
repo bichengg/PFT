@@ -34,6 +34,22 @@ app.config(
         }
 
     }])
+    .filter('trans2sex', function () {
+        return function (a) {
+            if (a == 1)
+                return '男';
+            else if (a == 2)
+                return '女';
+        }
+    })
+    .filter('trans2nation', function () {
+        return function (a) {
+            if (a == 1)
+                return '汉族';
+            else
+                return '其他';
+        }
+    })
     .filter('trans2score', function () {
         return function (a, grade_num, sex, test) {
             if (grade_num == 41 || grade_num == 42) {

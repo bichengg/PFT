@@ -39,18 +39,18 @@
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td>姓　　名</td>
-        <td>{{stu.name}}</td>
-        <td>性　　别</td>
-        <td>{{stu.sex}}</td>
-        <td>学　　号</td>
-        <td>{{stu.student_code}}</td>
+        <td width="16.6%">姓　　名</td>
+        <td width="16.6%">{{stu.name}}</td>
+        <td width="16.6%">性　　别</td>
+        <td width="16.6%">{{stu.sex | trans2sex}}</td>
+        <td width="16.6%">学　　号</td>
+        <td width="16.6%">{{stu.student_code}}</td>
       </tr>
       <tr>
         <td>班　　级</td>
         <td>{{stu.class_name}}</td>
         <td>民　　族</td>
-        <td>{{stu.nation}}</td>
+        <td>{{stu.nation | trans2nation}}</td>
         <td>出生日期</td>
         <td>{{stu.born}}</td>
       </tr>
