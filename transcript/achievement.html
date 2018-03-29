@@ -3,13 +3,21 @@
     margin-bottom: -1px;
   }
 
+
+  .header {
+    width: 1400px;
+    margin: 0 auto;
+    text-align: right;
+    padding: 10px 0;
+  }
+
   .card {
     width: 1400px;
     height: 800px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px 50px;
-    color: #333;
+    color: #000;
     font-size: 12px;
   }
 
@@ -29,10 +37,13 @@
 
   .card .table-bordered>tbody>tr>td {
     text-align: center;
-    border-color: #999;
+    border-color: #333;
     padding: 4px 0;
   }
 </style>
+<div class="header hidden-print">
+  <a ng-click="logout()">退出</a>
+</div>
 <div class="card">
   <h1>《国家学生体质健康标准》登记卡</h1>
   <h2>学校：淮阴工学院</h2>

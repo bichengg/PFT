@@ -226,8 +226,13 @@ app
             }
         }
     }])
-    .controller('AchievementCtrl', ['$scope', '$filter', function ($scope, $filter) {
-
+    .controller('AchievementCtrl', ['$scope', '$filter', '$state', function ($scope, $filter, $state) {
+        if (!sessionStorage.getItem('token'))
+            $state.go('login');
+        $scope.logout = function () {
+            sessionStorage.removeItem('token');
+            $state.go('login');
+        };
         $scope.today = new Date();
         $scope.info = angular.fromJson(sessionStorage.getItem('token'));
 
