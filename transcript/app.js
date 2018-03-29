@@ -43,8 +43,7 @@ app
             } else if (grade_num == 43 || grade_num == 44) {
                 grade_num = 4344
             }
-            //var arr = eval('trans_' + grade_num + '_' + sex + '_' + test);
-            var arr = trans_4142_1_lung;
+            var arr = eval('trans_' + grade_num + '_' + sex + '_' + test);
             var res = 0;
             a = parseFloat(a);
             for (var i = 0; i < arr.length - 1; i++) {
