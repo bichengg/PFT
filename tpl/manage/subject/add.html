@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">新建体测项目</h4>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-md-3 control-label">项目名称</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" ng-model="ccomment" maxlength="20">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-3 control-label">英文别名</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" ng-model="cname" maxlength="20">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()">关闭</button>
+  <button class="btn btn-primary" ng-click="ok()">提交</button>
+</div>

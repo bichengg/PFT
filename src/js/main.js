@@ -285,6 +285,10 @@ app
                         'name': '全校成绩导出'
                     },
                     {
+                        'key': 'subject',
+                        'name': '体测项目管理'
+                    },
+                    {
                         'key': 'clear',
                         'name': '系统清理'
                     }

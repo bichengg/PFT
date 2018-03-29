@@ -14,9 +14,8 @@ class Api_Subject extends PhalApi_Api {
             ),
             'insert' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
-                'num'  => array('name' => 'num', 'type' => 'int', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '项目工号'),   
-                'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '项目姓名'),
-                'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
+                'cname'  => array('name' => 'cname', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'2', 'desc' => '别名'),   
+                'ccomment'  => array('name' => 'ccomment','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '项目名称')
             ),
             'update' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -79,16 +78,9 @@ class Api_Subject extends PhalApi_Api {
         if (empty($adminId)) {
             return ;
         }
-        $data = array(
-            'id' => new NotORM_Literal('uuid()'),
-            'num'  => $this->num,                                            
-            'name'  => $this->name,
-            'pwd'  => $this->pwd,
-            'time'  => date('Y-m-d H:i:s')
-        );
-        $rs   = DI()->notorm->subject->insert($data);    
-        $rs['msg'] = T('add ok');           
-        return $rs['id'];  
+        $sql ="ALTER TABLE pft_student ADD ".$this->cname." VARCHAR (20) DEFAULT 0  COMMENT '".$this->ccomment."'";
+        $rs = DI()->notorm->example->queryAll($sql);
+        $rs['msg'] = T('add ok'); 
     }
     /**
 	 * 项目更改

@@ -109,6 +109,19 @@ app
                             ]
                         }
                     })
+                    .state('app.manage.subject', {
+                        url: '/subject',
+                        templateUrl: 'tpl/manage/subject/list.html',
+                        controller: 'SubjectCtrl',
+                        cache: false,
+                        resolve: {
+                            deps: ['$ocLazyLoad',
+                                function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load(['src/js/controllers/app/manage/subject.js']);
+                                }
+                            ]
+                        }
+                    })
                     .state('app.teacher', {
                         abstract: true,
                         url: '/teacher',

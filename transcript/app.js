@@ -185,7 +185,7 @@ app
 
     }])
     .controller('LoginCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-        if (sessionStorage.getItem('token'))
+        if (sessionStorage.getItem('tokenStudent'))
             $state.go('achievement');
         $scope.app = {
             name: '学生成绩查询'
@@ -207,7 +207,7 @@ app
                     }
                 }).success(function (res) {
                     if (res.data.code == 0) {
-                        sessionStorage.setItem('token', angular.toJson(res.data.info));
+                        sessionStorage.setItem('tokenStudent', angular.toJson(res.data.info));
                         $state.go('achievement');
                     } else {
                         $scope.authError = '账号或密码错误~';
@@ -227,14 +227,14 @@ app
         }
     }])
     .controller('AchievementCtrl', ['$scope', '$filter', '$state', function ($scope, $filter, $state) {
-        if (!sessionStorage.getItem('token'))
+        if (!sessionStorage.getItem('tokenStudent'))
             $state.go('login');
         $scope.logout = function () {
-            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('tokenStudent');
             $state.go('login');
         };
         $scope.today = new Date();
-        $scope.info = angular.fromJson(sessionStorage.getItem('token'));
+        $scope.info = angular.fromJson(sessionStorage.getItem('tokenStudent'));
 
         $scope.stu = $scope.info[0];
         // for (var i = 0; i < $scope.info.length; i++) {
