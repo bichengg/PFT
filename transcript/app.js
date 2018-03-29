@@ -4,21 +4,7 @@ var app = angular.module('app', [
     'ui.router',
 ]);
 
-app.config(
-        ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
-            function ($controllerProvider, $compileProvider, $filterProvider, $provide) {
-
-                // lazy controller, directive and service
-                app.controller = $controllerProvider.register;
-                app.directive = $compileProvider.directive;
-                app.filter = $filterProvider.register;
-                app.factory = $provide.factory;
-                app.service = $provide.service;
-                app.constant = $provide.constant;
-                app.value = $provide.value;
-            }
-        ])
-
+app
     .config(['$httpProvider', function ($httpProvider) {
 
         $httpProvider.defaults.transformRequest = function (obj) {
@@ -71,6 +57,66 @@ app.config(
             return res;
         }
     })
+    .filter('transBMI2score', function () {
+        //a得分; sex性别
+        return function (a, sex) {
+            var res = 0;
+            if (sex == 1) {
+                if (a > 17.9 && a <= 23.9)
+                    res = 100;
+                else if (a <= 17.8)
+                    res = 80;
+                else if (a > 24 && a <= 27.9)
+                    res = 80;
+                else if (a >= 28)
+                    res = 60;
+                else
+                    res = 0;
+            } else {
+                if (a > 17.2 && a <= 23.9)
+                    res = 100;
+                else if (a <= 17.1)
+                    res = 80;
+                else if (a > 24 && a <= 27.9)
+                    res = 80;
+                else if (a >= 28)
+                    res = 60;
+                else
+                    res = 0;
+            }
+            return res;
+        }
+    })
+    .filter('transBMI2level', function () {
+        //a得分; sex性别
+        return function (a, sex) {
+            var res = '';
+            if (sex == 1) {
+                if (a > 17.9 && a <= 23.9)
+                    res = '正常';
+                else if (a <= 17.8)
+                    res = '低体重';
+                else if (a > 24 && a <= 27.9)
+                    res = '超重';
+                else if (a >= 28)
+                    res = '肥胖';
+                else
+                    res = '无';
+            } else {
+                if (a > 17.2 && a <= 23.9)
+                    res = '正常';
+                else if (a <= 17.1)
+                    res = '低体重';
+                else if (a > 24 && a <= 27.9)
+                    res = '超重';
+                else if (a >= 28)
+                    res = '肥胖';
+                else
+                    res = '无';
+            }
+            return res;
+        }
+    })
     .filter('trans2level', function () {
         return function (a) {
             var res = '';
@@ -95,6 +141,15 @@ app.config(
             if (a > 100)
                 res = (a - 100) * c;
             return res;
+        }
+    })
+    .filter('transScore2not100', function () {
+        //a得分
+        return function (a) {
+            if (a >= 100)
+                return 100;
+            else
+                return a;
         }
     })
     .run(
@@ -226,6 +281,39 @@ app.config(
             $scope.subjectAttachArr = subjectFemaleArr;
         }
 
+        setTimeout(function () {
+            var standardScoreArr = [],
+                totalScoreArr = [],
+                totalScoreSum = 0;
+            for (var i = 0; i < 4; i++) {
+                var $dom = $('.4' + (i + 1));
+                var res = 0,
+                    res_attach = 0,
+                    res_total = 0;
+                //标准分
+                for (var j = 0; j < $dom.length; j++) {
+                    res += parseFloat($dom.eq(j).html() * $dom.eq(j).attr('c'));
+                }
+                standardScoreArr.push(res.toFixed(2));
+                $scope.standardScore = standardScoreArr;
+                //附加分
+                var $dom_attach = $('.4' + (i + 1) + '_attach');
+                for (var k = 0; k < $dom_attach.length; k++) {
+                    res_attach += parseFloat($dom_attach.eq(k).html());
+                }
+                //总分=标准分+附加分
+                res_total = res + res_attach;
+                totalScoreArr.push(res_total.toFixed(2));
+                $scope.totalScore = totalScoreArr;
+                if (i <= 3) {
+                    totalScoreSum += res_total / 6;
+                } else {
+                    totalScoreSum += res_total / 2;
+                }
+                $scope.$apply();
+                console.log(totalScoreSum)
+            }
 
-        console.log($filter('trans2score'));
+        }, 100)
+
     }]);

@@ -84,42 +84,42 @@
       </tr>
       <tr>
         <td>体重指数(BMI)(千克/米²)</td>
-        <td>{{info[0].test_weight}}/{{info[0].test_height}}</td>
-        <td>{{info[0].test_weight}}</td>
-        <td>{{info[0].test_weight}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td rowspan="13"></td>
+        <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height)).toFixed(2)}}</td>
+        <td class="41" c="0.15">{{(info[0].test_weight/(info[0].test_height*info[0].test_height)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height)).toFixed(2) | transBMI2level}}</td>
+
+        <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height)).toFixed(2)}}</td>
+        <td class="42" c="0.15">{{(info[1].test_weight/(info[1].test_height*info[1].test_height)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height)).toFixed(2) | transBMI2level}}</td>
+
+        <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height)).toFixed(2)}}</td>
+        <td class="43" c="0.15">{{(info[2].test_weight/(info[2].test_height*info[2].test_height)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height)).toFixed(2) | transBMI2level}}</td>
+
+        <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2)}}</td>
+        <td class="44" c="0.15">{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2) | transBMI2level}}</td>
+        <td rowspan="13">{{}}</td>
         <td rowspan="13"></td>
       </tr>
       <tr ng-repeat="v in subjectArr">
         <td>{{v.name}}</td>
         <td ng-bind="info[0].test_{{v.key}} || 0"></td>
-        <td ng-model="vx" ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td class="41" c="{{v.coefficient}}" ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}' | transScore2not100"></td>
         <td ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
         <td ng-bind="info[1].test_{{v.key}} || 0"></td>
-        <td ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td class="42" c="{{v.coefficient}}" ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}' | transScore2not100"></td>
         <td ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
         <td ng-bind="info[2].test_{{v.key}} || 0"></td>
-        <td ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td class="43" c="{{v.coefficient}}" ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}' | transScore2not100"></td>
         <td ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
         <td ng-bind="info[3].test_{{v.key}} || 0"></td>
-        <td ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}'"></td>
+        <td class="44" c="{{v.coefficient}}" ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}' | transScore2not100"></td>
         <td ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}' | trans2level"></td>
       </tr>
       <tr>
         <td>标准分</td>
-        <td colspan="3">{{vx}}</td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
+        <td colspan="3" ng-repeat="v in standardScore">{{v}}</td>
       </tr>
       <tr>
         <td>加分指标</td>
@@ -135,27 +135,21 @@
       <tr ng-repeat="v in subjectAttachArr">
         <td>{{v.name}}</td>
         <td ng-bind="info[0].test_{{v.key}} || 0"></td>
-        <td colspan="2" ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+        <td class="41_attach" colspan="2" ng-bind="info[0].test_{{v.key}} | trans2score:info[0].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
         <td ng-bind="info[1].test_{{v.key}} || 0"></td>
-        <td colspan="2" ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+        <td class="42_attach" colspan="2" ng-bind="info[1].test_{{v.key}} | trans2score:info[1].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
         <td ng-bind="info[2].test_{{v.key}} || 0"></td>
-        <td colspan="2" ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+        <td class="43_attach" colspan="2" ng-bind="info[2].test_{{v.key}} | trans2score:info[2].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
         <td ng-bind="info[3].test_{{v.key}} || 0"></td>
-        <td colspan="2" ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
+        <td class="44_attach" colspan="2" ng-bind="info[3].test_{{v.key}} | trans2score:info[3].grade_num:stu.sex:'{{v.key}}' | trans2exPoint:{{v.coefficient}}"></td>
       </tr>
       <tr>
         <td>学年总分</td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
+        <td colspan="3" ng-repeat="v in totalScore">{{v}}</td>
       </tr>
       <tr>
         <td>等级评定</td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
-        <td colspan="3"></td>
+        <td colspan="3" ng-repeat="v in totalScore">{{v | trans2level}}</td>
       </tr>
       <tr>
         <td>体育老师签字</td>
