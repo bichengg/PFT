@@ -168,12 +168,12 @@ app
                 $stateProvider
                     .state('login', {
                         url: '/login',
-                        templateUrl: 'login.html',
+                        templateUrl: 'transcript/login.html',
                         controller: 'LoginCtrl',
                     })
                     .state('achievement', {
                         url: '/achievement',
-                        templateUrl: 'achievement.html',
+                        templateUrl: 'transcript/achievement.html',
                         controller: 'AchievementCtrl',
                         cache: false
                     })
@@ -306,7 +306,7 @@ app
                 res_total = res + res_attach;
                 totalScoreArr.push(res_total.toFixed(2));
                 $scope.totalScore = totalScoreArr;
-                if (i <= 3) {
+                if (i < 3) {
                     totalScoreSum += res_total / 6;
                 } else {
                     totalScoreSum += res_total / 2;
