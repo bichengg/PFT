@@ -5,6 +5,23 @@ var app = angular.module('app', [
 ]);
 
 app
+    .filter('trans2score', function () {
+        return function (a, grade_num, sex, test) {
+            if (grade_num == 41 || grade_num == 42) {
+                grade_num = 4142
+            } else if (grade_num == 43 || grade_num == 44) {
+                grade_num = 4344
+            }
+            var arr = eval('trans_' + grade_num + '_' + sex + '_' + test);
+            for (var i = 0; i < arr.length; i++) {
+                if (a >= arr[i].a && a < arr[i + 1].a) {
+                    return arr[i].b;
+                } else {
+                    return 0;
+                }
+            }
+        }
+    })
     .run(
         ['$rootScope', '$state', '$stateParams',
             function ($rootScope, $state, $stateParams) {
@@ -45,5 +62,5 @@ app
         }
     }])
     .controller('AchievementCtrl', ['$scope', function ($scope) {
-        $scope.lists = [6.22, 4.00, 8.55]
+        $scope.lists = [0, -10, 333]
     }]);

@@ -24,6 +24,10 @@ class Api_User extends PhalApi_Api {
                 'username' => array('name' => 'username', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'password' => array('name' => 'password', 'source' => 'post', 'type' => 'string', 'require' => false),
             ),
+            'checkLoginStudent' => array(
+                'username' => array('name' => 'username', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'password' => array('name' => 'password', 'source' => 'post', 'type' => 'string', 'require' => false),
+            ),
         );
 	}
 	/**
@@ -69,6 +73,31 @@ class Api_User extends PhalApi_Api {
 
             $rs['code'] = 1;
             $rs['msg'] = T('teacher not exists');
+            return $rs;
+        }
+
+        $rs['info'] = $info;
+
+        return $rs;
+    }
+	/**
+	 * 学生登录验证
+	 * @return 
+	 */
+    public function checkLoginStudent(){
+
+        $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+        
+        $info = array();
+
+        $info = DI()->notorm->student->select('*')->where('student_code = ?', $this->username)->where('born = ?', $this->password)->order('grade_num asc')->fetchRows();
+
+        if (empty($info)) {
+            DI()->logger->debug('student not found', $this->username);
+
+            $rs['code'] = 1;
+            $rs['msg'] = T('student not exists');
             return $rs;
         }
 

@@ -43,7 +43,9 @@ gulp.task('scripts', function () {
         // }))
         .pipe(uglify({
             //mangle: true,//类型：Boolean 默认：true 是否修改变量名
-            mangle: { except: ['require', 'exports', 'module', '$', '=>'] }//排除混淆关键字
+            mangle: {
+                except: ['require', 'exports', 'module', '$', '=>']
+            } //排除混淆关键字
         }))
         .pipe(gulp.dest('dist/js/'))
         // .pipe(notify({
@@ -51,7 +53,18 @@ gulp.task('scripts', function () {
         // }))
         .pipe(browserSync.stream());
 });
-
+gulp.task('scripts1', function () {
+    return gulp.src(['transcript/app.js'])
+        .pipe(concat('common.js'))
+        .pipe(uglify({
+            //mangle: true,//类型：Boolean 默认：true 是否修改变量名
+            mangle: {
+                except: ['require', 'exports', 'module', '$', '=>']
+            } //排除混淆关键字
+        }))
+        .pipe(gulp.dest('transcript/'))
+        .pipe(browserSync.stream());
+});
 
 
 
@@ -65,9 +78,10 @@ gulp.task('serve', ['styles', 'scripts'], function () {
         port: 33333
     });
 
-    gulp.watch(['*.html',['tpl/*/*.html','tpl/*.html','tpl/*/*/*.html']]).on('change', browserSync.reload);
+    gulp.watch(['*.html', ['tpl/*/*.html', 'tpl/*.html', 'tpl/*/*/*.html', 'transcript/*.html']]).on('change', browserSync.reload);
     gulp.watch('src/css/less/*.less', ['styles']);
     gulp.watch('src/js/**/*.js', ['scripts']);
+    gulp.watch('transcript/app.js', ['scripts1']);
 });
 
 gulp.task('default', ['serve']);
