@@ -186,10 +186,12 @@ app
 
     }])
     .controller('LoginCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+        if (sessionStorage.getItem('token'))
+            $state.go('achievement');
         $scope.app = {
             name: '学生成绩查询'
         }
-        $scope.user = {}
+        $scope.user = {};
         $scope.login = function () {
             if (!$scope.user.name || !$scope.user.password) {
                 $scope.authError = '账号或密码不能为空~';
