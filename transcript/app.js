@@ -310,8 +310,8 @@ app
                 } else {
                     totalScoreSum += res_total / 2;
                 }
+                $scope.totalScoreSum = totalScoreSum.toFixed(2);
                 $scope.$apply();
-                console.log(totalScoreSum)
             }
 
         }, 100)

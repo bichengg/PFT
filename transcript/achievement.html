@@ -99,8 +99,8 @@
         <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2)}}</td>
         <td class="44" c="0.15">{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2) | transBMI2score}}</td>
         <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2) | transBMI2level}}</td>
-        <td rowspan="13">{{}}</td>
-        <td rowspan="13"></td>
+        <td rowspan="13">{{totalScoreSum}}</td>
+        <td rowspan="13">{{totalScoreSum | trans2level}}</td>
       </tr>
       <tr ng-repeat="v in subjectArr">
         <td>{{v.name}}</td>
