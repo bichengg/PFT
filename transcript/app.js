@@ -235,7 +235,7 @@ app
         };
         $scope.today = new Date();
         $scope.info = angular.fromJson(sessionStorage.getItem('tokenStudent'));
-
+        $scope.info.length = 4;
         $scope.stu = $scope.info[0];
         // for (var i = 0; i < $scope.info.length; i++) {
         //     const element = $scope.info[i];

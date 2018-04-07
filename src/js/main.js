@@ -308,10 +308,10 @@ app
                         'key': 'subject',
                         'name': '体测项目管理'
                     },
-                    {
-                        'key': 'clear',
-                        'name': '系统清理'
-                    }
+                    // {
+                    //     'key': 'clear',
+                    //     'name': '系统清理'
+                    // }
                 ]
             }];
 
