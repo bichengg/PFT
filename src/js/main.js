@@ -3,6 +3,26 @@
 /* Controllers */
 
 app
+    .filter('trans2statusText', function () {
+        return function (a) {
+            var res = '';
+            switch (a) {
+                case '1':
+                    res = '病假';
+                    break;
+                case '2':
+                    res = '事假';
+                    break;
+                case '3':
+                    res = '未参加';
+                    break;
+                default:
+                    res = '无';
+                    break;
+            }
+            return res;
+        }
+    })
     .constant('APP', {
         name: '学生体测管理',
         version: '1.0.0',
@@ -46,18 +66,18 @@ app
                         key: '有备注',
                         val: -1
                     },
-                    {
-                        key: '病假',
-                        val: 1
-                    },
-                    {
-                        key: '事假',
-                        val: 2
-                    },
-                    {
-                        key: '未参加',
-                        val: 3
-                    }
+                    // {
+                    //     key: '病假',
+                    //     val: 1
+                    // },
+                    // {
+                    //     key: '事假',
+                    //     val: 2
+                    // },
+                    // {
+                    //     key: '未参加',
+                    //     val: 3
+                    // }
                 ],
                 size: 0,
                 pages: 20000,

@@ -46,7 +46,8 @@ class Api_Student extends PhalApi_Api {
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'teacher_id' => array('name' => 'teacher_id', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
-                'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),  
+                'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),    
+                'status'  => array('name' => 'status', 'type' => 'int', 'source' => 'post', 'require' => false),
                 'score'  => array('name' => 'score', 'type' => 'string', 'source' => 'post', 'require' => false)
             ),
             'getProgressInfo' => array(
@@ -194,7 +195,8 @@ class Api_Student extends PhalApi_Api {
             return ;
         }
         $data = array(                
-            'time'  => date('Y-m-d H:i:s')
+            'time'  => date('Y-m-d H:i:s'),
+            'status' =>$this->status
         );
         if($this->score){
             $data = array_merge($data ,json_decode($this->score, true));

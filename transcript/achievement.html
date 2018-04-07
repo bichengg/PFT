@@ -5,15 +5,13 @@
 
 
   .header {
-    width: 1400px;
+    width: 1300px;
     margin: 0 auto;
-    text-align: right;
     padding: 10px 0;
   }
 
   .card {
-    width: 1400px;
-    height: 800px;
+    width: 1300px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px 50px;
@@ -46,7 +44,9 @@
   }
 </style>
 <div class="header hidden-print">
-  <a ng-click="logout()">退出</a>
+  <a class="btn btn-info" href="javascript:;" onclick="window.print()">打印</a>
+  <span>请使用chrome浏览器，打印时选择【布局】选着 横向，【更多设置】取消页眉页脚！</span>
+  <a class="btn btn-default pull-right" ng-click="logout()">退出</a>
 </div>
 <div class="card">
   <h1>《国家学生体质健康标准》登记卡</h1>
@@ -99,21 +99,21 @@
       </tr>
       <tr>
         <td>体重指数(BMI)(千克/米²)</td>
-        <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height)).toFixed(2)}}</td>
-        <td class="41" c="0.15">{{(info[0].test_weight/(info[0].test_height*info[0].test_height)).toFixed(2) | transBMI2score}}</td>
-        <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height)).toFixed(2) | transBMI2level}}</td>
+        <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height*0.0001)).toFixed(2)}}</td>
+        <td class="41" c="0.15">{{(info[0].test_weight/(info[0].test_height*info[0].test_height*0.0001)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
 
-        <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height)).toFixed(2)}}</td>
-        <td class="42" c="0.15">{{(info[1].test_weight/(info[1].test_height*info[1].test_height)).toFixed(2) | transBMI2score}}</td>
-        <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height)).toFixed(2) | transBMI2level}}</td>
+        <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height*0.0001)).toFixed(2)}}</td>
+        <td class="42" c="0.15">{{(info[1].test_weight/(info[1].test_height*info[1].test_height*0.0001)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
 
-        <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height)).toFixed(2)}}</td>
-        <td class="43" c="0.15">{{(info[2].test_weight/(info[2].test_height*info[2].test_height)).toFixed(2) | transBMI2score}}</td>
-        <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height)).toFixed(2) | transBMI2level}}</td>
+        <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height*0.0001)).toFixed(2)}}</td>
+        <td class="43" c="0.15">{{(info[2].test_weight/(info[2].test_height*info[2].test_height*0.0001)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
 
-        <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2)}}</td>
-        <td class="44" c="0.15">{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2) | transBMI2score}}</td>
-        <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height)).toFixed(2) | transBMI2level}}</td>
+        <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height*0.0001)).toFixed(2)}}</td>
+        <td class="44" c="0.15">{{(info[3].test_weight/(info[3].test_height*info[3].test_height*0.0001)).toFixed(2) | transBMI2score}}</td>
+        <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
         <td rowspan="13">{{totalScoreSum}}</td>
         <td rowspan="13">{{totalScoreSum | trans2level}}</td>
       </tr>
@@ -199,4 +199,27 @@
     <span>学校签章：</span>
     <span>{{today | date:'yyyy年MM月dd日'}}</span>
   </h2>
+</div>
+
+<div class="card hidden-print">
+  <h1>附表：身高体重</h1>
+  <table border="1">
+    <tbody>
+      <tr>
+        <td></td>
+        <td>大一</td>
+        <td>大二</td>
+        <td>大三</td>
+        <td>大四</td>
+      </tr>
+      <tr>
+        <td>身高(cm)</td>
+        <td ng-repeat="v in info">{{v.test_height}}</td>
+      </tr>
+      <tr>
+        <td>体重(kg)</td>
+        <td ng-repeat="v in info">{{v.test_weight}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

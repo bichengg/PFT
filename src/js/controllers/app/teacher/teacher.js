@@ -88,6 +88,24 @@ app
                 teacher_id: $scope.teacher.id,
                 school_year: $scope.student.year,
                 student_code: arr[i]['学籍号'],
+                status: (function (s) {
+                    var res = '';
+                    switch (s) {
+                        case '病假':
+                            res = '1';
+                            break;
+                        case '事假':
+                            res = '2';
+                            break;
+                        case '未参加':
+                            res = '3';
+                            break;
+                        default:
+                            res = '0';
+                            break;
+                    }
+                    return res;
+                })(arr[i]['备注']),
                 score: (function (stuEle) {
                     angular.forEach(scoreName, function (i, k) {
                         var en_k = Subject.transEn(k, $scope.resSubjectList);

@@ -49,6 +49,7 @@
                       <th>出生日期</th>
                       <th>家庭住址</th>
                       <th ng-repeat="v in resSubjectList track by $index">{{v.column_comment}}</th>
+                      <th>备注</th>
                       <th>操作</th>
                     </tr>
                   </thead>
@@ -64,9 +65,10 @@
                       <td>{{v.born}}</td>
                       <td>{{v.address}}</td>
                       <td ng-repeat="vv in resSubjectList track by $index">{{v[vv.column_name]}}</td>
-                      <th>
+                      <th>{{v.status | trans2statusText}}</th>
+                      <td>
                         <a ng-click="updateDetail(v)">编辑成绩</a>
-                      </th>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
