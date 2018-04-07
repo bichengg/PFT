@@ -134,7 +134,7 @@
       </tr>
       <tr>
         <td>标准分</td>
-        <td colspan="3" ng-repeat="v in standardScore">{{v}}</td>
+        <td colspan="3" ng-repeat="v in standardScore track by $index">{{v}}</td>
       </tr>
       <tr>
         <td>加分指标</td>
@@ -160,11 +160,11 @@
       </tr>
       <tr>
         <td>学年总分</td>
-        <td colspan="3" ng-repeat="v in totalScore">{{v}}</td>
+        <td colspan="3" ng-repeat="v in totalScore track by $index">{{v}}</td>
       </tr>
       <tr>
         <td>等级评定</td>
-        <td colspan="3" ng-repeat="v in totalScore">{{v | trans2level}}</td>
+        <td colspan="3" ng-repeat="v in totalScore track by $index">{{v | trans2level}}</td>
       </tr>
       <tr>
         <td>体育老师签字</td>

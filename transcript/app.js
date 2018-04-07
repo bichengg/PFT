@@ -100,7 +100,7 @@ app
                 else if (a >= 28)
                     res = '肥胖';
                 else
-                    res = '无';
+                    res = '';
             } else {
                 if (a > 17.2 && a <= 23.9)
                     res = '正常';
@@ -111,7 +111,7 @@ app
                 else if (a >= 28)
                     res = '肥胖';
                 else
-                    res = '无';
+                    res = '';
             }
             return res;
         }
@@ -119,16 +119,18 @@ app
     .filter('trans2level', function () {
         return function (a) {
             var res = '';
-            if (a <= 10) {
-                res = '未测试'
-            } else if (a > 10 && a <= 59) {
-                res = '不及格'
-            } else if (a > 59 && a <= 79) {
-                res = '及格'
-            } else if (a > 79 && a <= 89) {
-                res = '良好'
-            } else if (a > 89) {
-                res = '优秀'
+            if (!!a) {
+                if (a <= 10) {
+                    res = '未测试'
+                } else if (a > 10 && a <= 59) {
+                    res = '不及格'
+                } else if (a > 59 && a <= 79) {
+                    res = '及格'
+                } else if (a > 79 && a <= 89) {
+                    res = '良好'
+                } else if (a > 89) {
+                    res = '优秀'
+                }
             }
             return res;
         }
@@ -234,13 +236,40 @@ app
             $state.go('login');
         };
         $scope.today = new Date();
-        $scope.info = angular.fromJson(sessionStorage.getItem('tokenStudent'));
-        $scope.info.length = 4;
-        $scope.stu = $scope.info[0];
-        // for (var i = 0; i < $scope.info.length; i++) {
-        //     const element = $scope.info[i];
+        //是否计算总分 0计算 1不计算
+        $scope.isTotalScoreSum = 0;
+        //
+        var info = angular.fromJson(sessionStorage.getItem('tokenStudent'));
+        $scope.stu = info[0];
+        var tempArr = ['41', '42', '43', '44'];
+        var resInfo = [];
+        for (var i = 0; i < tempArr.length; i++) {
+            var resInfoEle = checkStudentInfo(tempArr[i]);
+            if (resInfoEle) {
+                resInfo.push(resInfoEle);
+            } else {
+                resInfo.push({
+                    grade_num: tempArr[i]
+                });
+                $scope.isTotalScoreSum = 1;
+            }
+        }
 
-        // }
+        function checkStudentInfo(num) {
+            var res;
+            for (var i = 0; i < info.length; i++) {
+                if (info[i]['grade_num'] == num) {
+                    res = info[i];
+                    break;
+                } else {
+                    res = false;
+                }
+            }
+            return res;
+        }
+        console.log(resInfo);
+        $scope.info = resInfo;
+
 
         $scope.subjectArr = [{
             key: 'lung',
@@ -311,12 +340,16 @@ app
                 res_total = res + res_attach;
                 totalScoreArr.push(res_total.toFixed(2));
                 $scope.totalScore = totalScoreArr;
-                if (i < 3) {
-                    totalScoreSum += res_total / 6;
+                if ($scope.isTotalScoreSum == 0) {
+                    if (i < 3) {
+                        totalScoreSum += res_total / 6;
+                    } else {
+                        totalScoreSum += res_total / 2;
+                    }
+                    $scope.totalScoreSum = totalScoreSum.toFixed(2);
                 } else {
-                    totalScoreSum += res_total / 2;
+                    $scope.totalScoreSum = '';
                 }
-                $scope.totalScoreSum = totalScoreSum.toFixed(2);
                 $scope.$apply();
             }
 
