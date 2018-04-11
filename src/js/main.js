@@ -44,8 +44,8 @@ app
         hideFooter: true
     })
 
-    .controller('AppCtrl', ['APP', '$scope', 'Subject', '$q', '$http', '$state',
-        function (APP, $scope, Subject, $q, $http, $state) {
+    .controller('AppCtrl', ['APP', '$scope', 'Subject', '$q', '$http', '$state', '$filter',
+        function (APP, $scope, Subject, $q, $http, $state, $filter) {
             //配置项赋值
             $scope.app = APP;
             var dates = new Date();
@@ -170,12 +170,13 @@ app
             $scope.downloadExl = function (type) {
                 var tmpDown; //导出的二进制对象
                 var json = angular.copy($scope.student.resJson);
+                console.log(json)
                 var tmpdata = json[0];
                 json.unshift({});
                 var keyMap = []; //获取keys
                 var subjectList = angular.copy($scope.resSubjectList);
                 for (var k in tmpdata) {
-                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'status' && k != 'is_submit') {
+                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'is_submit') {
                         var k_nickname = '';
                         switch (k) {
                             case 'grade_num':
@@ -205,6 +206,9 @@ app
                             case 'address':
                                 k_nickname = '家庭住址';
                                 break;
+                            case 'status':
+                                k_nickname = '备注';
+                                break;
                             default:
                                 k_nickname = Subject.transCn(k, subjectList);
                                 break;
@@ -215,6 +219,9 @@ app
                 }
                 var tmpdata = []; //用来保存转换好的json 
                 json.map(function (v, i) {
+                    if (i > 0)
+                        v.status = $filter('trans2statusText')(v.status.toString());
+
                     return keyMap.map(
                         function (k, j) {
                             return Object.assign({}, {
@@ -230,6 +237,7 @@ app
                         v: v.v
                     }
                 });
+                console.log(tmpdata)
                 var outputPos = Object.keys(tmpdata); //设置区域,比如表格从A1到D10
                 var tmpWB = {
                     SheetNames: ['mySheet'], //保存的表标题

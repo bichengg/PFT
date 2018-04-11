@@ -70,7 +70,6 @@ app
                         scoreName[ResSubjectList[i].column_comment] = 0;
                     }
                 }
-                console.log(score, scoreName);
 
             });
         });
