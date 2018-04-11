@@ -183,6 +183,7 @@ app.controller('TeacherUpdateStudentScoreDetailCtrl', ['APP', '$scope', '$modalI
             teacher_id: stu.teacher_id,
             school_year: stu.school_year,
             student_code: stu.student_code,
+            status: stu.status,
             score: (function (stuEle) {
                 var score = {};
                 angular.forEach(stuEle, function (i, k) {

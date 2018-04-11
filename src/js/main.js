@@ -170,7 +170,6 @@ app
             $scope.downloadExl = function (type) {
                 var tmpDown; //导出的二进制对象
                 var json = angular.copy($scope.student.resJson);
-                console.log(json)
                 var tmpdata = json[0];
                 json.unshift({});
                 var keyMap = []; //获取keys
@@ -237,7 +236,6 @@ app
                         v: v.v
                     }
                 });
-                console.log(tmpdata)
                 var outputPos = Object.keys(tmpdata); //设置区域,比如表格从A1到D10
                 var tmpWB = {
                     SheetNames: ['mySheet'], //保存的表标题
