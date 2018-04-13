@@ -223,15 +223,24 @@ class Api_Student extends PhalApi_Api {
 
 
         $sql = 'SELECT
-                    COUNT(*) AS classCount,
-                    teacher_id
+                    COUNT(*),
+                    teacher_id,
+                    is_submit,
+                    teacher_class
                 FROM
                     pft_student
                 WHERE teacher_id = :teacher_id';
         if($this->is_submit) {
             $sql .= ' AND is_submit = :is_submit';
         }
-        $sql .= ' GROUP BY teacher_id';
+        $sql .= ' GROUP BY teacher_class';
+
+        $sql = 'SELECT
+                COUNT(*) AS classCount,
+                    teacher_id
+                FROM
+                    ('.$sql.') AS pft_class';
+
         $params = array(':teacher_id' => $this->teacher_id, ':is_submit' => $this->is_submit);
         $info = DI()->notorm->example->queryAll($sql,$params);
 
