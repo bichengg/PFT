@@ -2,8 +2,13 @@
   <!-- column -->
   <div class="col">
     <div class="vbox">
-      <div class="bg-white b-b wrapper-md">
-        <h1 class="m-n font-thin h3">{{teacher.name}} - {{teacher.class}}</h1>
+      <div class="bg-white b-b wrapper-md clearfix">
+        <h1 class="m-n font-thin h3 pull-left">{{teacher.name}} - {{teacher.class.teacher_class}}</h1>
+        <div class="pull-right" ng-if="teacher.class.is_submit==1 && token">
+          <span class="text-danger m-r">【{{teacher.name}} - {{teacher.class.teacher_class}}】的成绩已提交，请管理员谨慎操作 【导入】和【确认提交】功能</span>
+          <button class="btn btn-sm btn-danger" type="button" ng-click="unlock()">
+            <i class="fa fa-unlock"></i> 解锁</button>
+        </div>
       </div>
       <div class="wrapper bg-light lter b-b clearfix">
         <div class="row">
@@ -12,21 +17,29 @@
               <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getStudentListByTeacherId()">
                 <option ng-value="v" ng-repeat="v in student.years track by $index">{{v}}</option>
               </select>
-              <select class="input-sm form-control w-xs inline v-middle" ng-model="teacher.class" ng-change="getStudentListByTeacherId()">
-                <option ng-value="v.teacher_class" ng-repeat="v in classList track by $index">{{v.teacher_class}}</option>
+              <select class="input-sm form-control w-xs inline v-middle" ng-model="teacher.class" ng-options="v as v.teacher_class for v in classList"
+                ng-change="getStudentListByTeacherId()">
               </select>
               <button class="btn btn-sm btn-primary" type="button" ng-click="downloadExl()">
                 <i class="fa fa-download"></i> 导出</button>
-              <a href="" download="{{student.year}}-{{teacher.name}}-{{teacher.class}}.xlsx" id="hf"></a>
+              <a href="" download="{{student.year}}-{{teacher.name}}-{{teacher.class.teacher_class}}.xlsx" id="hf"></a>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" ng-if="teacher.class.is_submit==0 || token">
             <div class="m-l-n-xs">
               <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
                 ng-model="student.json" />
 
               <button class="btn btn-sm btn-primary" type="button" ng-click="updateStudent()" ng-disabled="student.jsonReady">
                 <i class="fa fa-upload"></i> 导入 {{count}}</button>
+
+              <button class="btn btn-sm btn-primary pull-right" type="button" ng-click="submitStudent()">
+                <i class="fa fa-warning"></i> 确认提交</button>
+            </div>
+          </div>
+          <div class="col-md-6" ng-if="teacher.class.is_submit==1 && !token">
+            <div class="btn btn-sm btn-success">
+              已提交，如需修改已提交的成绩请联系管理员！
             </div>
           </div>
         </div>
@@ -50,11 +63,11 @@
                       <th>家庭住址</th>
                       <th ng-repeat="v in resSubjectList track by $index">{{v.column_comment}}</th>
                       <th>备注</th>
-                      <th>操作</th>
+                      <th ng-if="teacher.class.is_submit==0 || token">操作</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="v in student.resJson track by $index" ng-if="$index<=20">
+                    <tr ng-repeat="v in student.resJson track by $index">
                       <td>{{v.grade_num}}</td>
                       <td>{{v.class_num}}</td>
                       <td>{{v.class_name}}</td>
@@ -66,7 +79,7 @@
                       <td>{{v.address}}</td>
                       <td ng-repeat="vv in resSubjectList track by $index">{{v[vv.column_name]}}</td>
                       <th>{{v.status | trans2statusText}}</th>
-                      <td>
+                      <td ng-if="teacher.class.is_submit==0 || token">
                         <a ng-click="updateDetail(v)">编辑成绩</a>
                       </td>
                     </tr>

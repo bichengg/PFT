@@ -45,10 +45,22 @@ class Api_Student extends PhalApi_Api {
             'updateScore' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'teacher_id' => array('name' => 'teacher_id', 'source' => 'post', 'type' => 'string', 'require' => false),
-                'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => true),  
                 'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),    
                 'status'  => array('name' => 'status', 'type' => 'int', 'source' => 'post', 'require' => false),
                 'score'  => array('name' => 'score', 'type' => 'string', 'source' => 'post', 'require' => false)
+            ),
+            'submitScore' => array(
+                'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'teacher_id' => array('name' => 'teacher_id', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),    
+                'teacher_class'  => array('name' => 'teacher_class', 'type' => 'string', 'source' => 'post', 'require' => false)
+            ),
+            'backSubmitScore' => array(
+                'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
+                'teacher_id' => array('name' => 'teacher_id', 'source' => 'post', 'type' => 'string', 'require' => false),
+                'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),    
+                'teacher_class'  => array('name' => 'teacher_class', 'type' => 'string', 'source' => 'post', 'require' => false)
             ),
             'getProgressInfo' => array(
                 'token' => array('name' => 'token', 'source' => 'get', 'type' => 'string', 'require' => true),
@@ -201,9 +213,56 @@ class Api_Student extends PhalApi_Api {
         if($this->score){
             $data = array_merge($data ,json_decode($this->score, true));
         }
-        $rs   = DI()->notorm->student->where('student_code', $this->student_code)->where('school_year', $this->school_year)->update($data);
+
+        $rs = DI()->notorm->student->where('teacher_id', $this->teacher_id)->where('student_code', $this->student_code)->where('school_year', $this->school_year);
+
+        if(empty($adminId)){
+            $rs= $rs->where('is_submit', '0');
+        }
+        $rs=$rs->update($data);
+
         if($rs === false){
             throw new PhalApi_Exception_BadRequest('修改数据失败');
+        }
+    }
+    /**
+    * 学生更改 提交成绩
+    * @desc 
+    * @return  id
+    */
+   public function submitScore(){
+       $model = new Model_Default();
+       $adminId = $model->checkAdminId($this->token);
+       if (empty($adminId) && empty($this->teacher_id)) {
+           return ;
+       }
+       $data = array(                
+           'time'  => date('Y-m-d H:i:s'),
+           'is_submit'  => 1
+       );
+       $rs   = DI()->notorm->student->where('teacher_id', $this->teacher_id)->where('teacher_class', $this->teacher_class)->where('school_year', $this->school_year)->update($data);
+       if($rs === false){
+           throw new PhalApi_Exception_BadRequest('提交成绩数据失败');
+       }
+   }
+   /**
+    * 学生成绩 解锁
+    * @desc 
+    * @return  id
+    */
+    public function backSubmitScore(){
+        $model = new Model_Default();
+        $adminId = $model->checkAdminId($this->token);
+        if (empty($adminId)) {
+            return ;
+        }
+        $data = array(                
+            'time'  => date('Y-m-d H:i:s'),
+            'is_submit'  => 0
+        );
+        $rs = DI()->notorm->student->where('teacher_id', $this->teacher_id)->where('teacher_class', $this->teacher_class)->where('school_year', $this->school_year)->update($data);
+        if($rs === false){
+            throw new PhalApi_Exception_BadRequest('解锁失败');
         }
     }
     /**

@@ -5,6 +5,7 @@
 app
     .controller('Teacher2stuCtrl', ['APP', '$scope', '$modal', 'toaster', '$http', '$q', 'Subject', function (APP, $scope, $modal, toaster, $http, $q, Subject) {
         $scope.teacher = angular.fromJson(localStorage.getItem('teacher'));
+        $scope.token = sessionStorage.getItem('token');
         $scope.student.status = '';
         $scope.student.size = 0;
 
@@ -21,7 +22,7 @@ app
                     status: $scope.student.status,
                     size: $scope.student.size,
                     current: $scope.student.current,
-                    teacherClass: $scope.teacher.class
+                    teacherClass: $scope.teacher.class.teacher_class
                 }
             }).success(function (res) {
                 deferred.resolve(res);
@@ -40,6 +41,7 @@ app
                 method: "get",
                 url: APP.baseurl + '?service=Teacher.getClassInfo',
                 params: {
+                    token: $scope.token || '',
                     teacherId: $scope.teacher.id,
                     year: $scope.student.year
                 }
@@ -47,7 +49,7 @@ app
                 deferred.resolve(res);
                 if (res.data) {
                     $scope.classList = res.data.info;
-                    $scope.teacher.class = $scope.classList[0] ? $scope.classList[0].teacher_class : 0;
+                    $scope.teacher.class = $scope.classList[0] ? $scope.classList[0] : 0;
                 }
             }).error(function (res) {
                 deferred.reject(res);
@@ -84,6 +86,7 @@ app
             var arr = $scope.student.json;
             var i = $scope.count;
             var ele = {
+                token: $scope.token || '',
                 teacher_id: $scope.teacher.id,
                 school_year: $scope.student.year,
                 student_code: arr[i]['学籍号'],
@@ -114,7 +117,6 @@ app
                     return angular.toJson(score);
                 })(arr[i])
             }
-            console.log(ele)
             //上传
             $http({
                 url: APP.baseurl + '?service=Student.updateScore',
@@ -131,6 +133,53 @@ app
                     } else {
                         $scope.updateStudent();
                     }
+                } else
+                    toaster.pop('error', '失败', res.msg);
+
+            }).error(function (res) {
+                toaster.pop('error', '失败', res);
+            });
+        };
+        //
+        $scope.submitStudent = function () {
+            var ele = {
+                teacher_id: $scope.teacher.id,
+                school_year: $scope.student.year,
+                teacher_class: $scope.teacher.class.teacher_class
+            }
+            //上传
+            $http({
+                url: APP.baseurl + '?service=Student.submitScore',
+                method: 'post',
+                data: ele
+            }).success(function (res) {
+                if (res.ret == 200) {
+                    toaster.pop('success', '提交成绩成功', '已提交【' + $scope.teacher.class.teacher_class + '】的成绩');
+                    $scope.teacher.class.is_submit = 1;
+                } else
+                    toaster.pop('error', '失败', res.msg);
+
+            }).error(function (res) {
+                toaster.pop('error', '失败', res);
+            });
+        };
+        //
+        $scope.unlock = function () {
+            var ele = {
+                token: $scope.token || '',
+                teacher_id: $scope.teacher.id,
+                school_year: $scope.student.year,
+                teacher_class: $scope.teacher.class.teacher_class
+            }
+            //上传
+            $http({
+                url: APP.baseurl + '?service=Student.backSubmitScore',
+                method: 'post',
+                data: ele
+            }).success(function (res) {
+                if (res.ret == 200) {
+                    toaster.pop('success', '解锁成功', '【' + $scope.teacher.class.teacher_class + '】的成绩已解锁');
+                    $scope.teacher.class.is_submit = 0;
                 } else
                     toaster.pop('error', '失败', res.msg);
 
@@ -174,12 +223,14 @@ app
 
 
 app.controller('TeacherUpdateStudentScoreDetailCtrl', ['APP', '$scope', '$modalInstance', '$http', 'toaster', 'stu', 'subjectList', function (APP, $scope, $modalInstance, $http, toaster, stu, subjectList) {
-    console.log(stu)
+
     $scope.stu = stu;
     $scope.subjectList = subjectList;
+    $scope.token = sessionStorage.getItem('token');
 
     $scope.ok = function () {
         var ele = {
+            token: $scope.token || '',
             teacher_id: stu.teacher_id,
             school_year: stu.school_year,
             student_code: stu.student_code,

@@ -160,7 +160,7 @@ class Api_Teacher extends PhalApi_Api {
         
         $info = array();
 
-        $sql='SELECT count(*) as stuCount,teacher_class FROM pft_student WHERE 1=1';
+        $sql='SELECT count(*) as stuCount,teacher_class,is_submit FROM pft_student WHERE 1=1';
         if($this->year) {
             $sql .= ' and school_year = :year';
         }
