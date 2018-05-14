@@ -1,9 +1,14 @@
+<style>
+  #scoreTable td span {
+    display: block;
+  }
+</style>
 <div class="hbox hbox-auto-xs bg-light">
   <!-- column -->
   <div class="col">
     <div class="vbox">
       <div class="bg-white b-b wrapper-md clearfix">
-        <h1 class="m-n font-thin h3 pull-left">{{teacher.name}} - {{teacher.class.teacher_class}}</h1>
+        <h1 class="m-n font-thin h3 pull-left">{{teacher.name}} - {{teacher.class.teacher_class}} - <span>通过率 {{POP}}%</span></h1>
         <div class="pull-right" ng-if="teacher.class.is_submit==1 && token">
           <span class="text-danger m-r">【{{teacher.name}} - {{teacher.class.teacher_class}}】的成绩已提交，请管理员谨慎操作 【导入】和【确认提交】功能</span>
           <button class="btn btn-sm btn-danger" type="button" ng-click="unlock()">
@@ -49,19 +54,16 @@
           <div class="cell-inner">
             <div class="bg-white h-full">
               <div class="table-responsive">
-                <table class="table table-striped table-bordered b-t b-light m-b-none">
+                <table class="table table-striped table-bordered b-t b-light m-b-none" id="scoreTable">
                   <thead>
                     <tr>
                       <th>年级编号</th>
-                      <th>班级编号</th>
                       <th>班级名称</th>
                       <th>学籍号</th>
-                      <th>民族代码</th>
                       <th>姓名</th>
                       <th>性别</th>
-                      <th>出生日期</th>
-                      <th>家庭住址</th>
                       <th ng-repeat="v in resSubjectList track by $index">{{v.column_comment}}</th>
+                      <th>总分</th>
                       <th>备注</th>
                       <th ng-if="teacher.class.is_submit==0 || token">操作</th>
                     </tr>
@@ -69,16 +71,47 @@
                   <tbody>
                     <tr ng-repeat="v in student.resJson track by $index">
                       <td>{{v.grade_num}}</td>
-                      <td>{{v.class_num}}</td>
                       <td>{{v.class_name}}</td>
                       <td>{{v.student_code}}</td>
-                      <td>{{v.nation}}</td>
                       <td>{{v.name}}</td>
                       <td>{{v.sex}}</td>
-                      <td>{{v.born}}</td>
-                      <td>{{v.address}}</td>
-                      <td ng-repeat="vv in resSubjectList track by $index">{{v[vv.column_name]}}</td>
-                      <th>{{v.status | trans2statusText}}</th>
+                      <td>{{v.test_height}}
+                        <br>
+                        <span>&nbsp;</span>
+                      </td>
+                      <td>{{v.test_weight}}
+                        <span c="0.15">{{(v.test_weight/(v.test_height*v.test_height*0.0001)).toFixed(2) | transBMI2score:v.sex}}</span>
+                      </td>
+                      <td>{{v.test_lung}}
+                        <span c="0.15">{{v.test_lung | trans2score:v.grade_num:v.sex:'lung' | transScore2not100}}</span>
+                      </td>
+                      <td>{{v.test_50m}}
+                        <span c="0.2">{{v.test_50m | trans2score:v.grade_num:v.sex:'50m' | transScore2not100}}</span>
+                      </td>
+                      <td>{{v.test_jump}}
+                        <span c="0.1">{{v.test_jump | trans2score:v.grade_num:v.sex:'jump' | transScore2not100}}</span>
+                      </td>
+                      <td>{{v.test_sr}}
+                        <span c="0.1">{{v.test_sr | trans2score:v.grade_num:v.sex:'sr' | transScore2not100}}</span>
+                      </td>
+                      <td>{{v.test_800}}
+                        <span c="0.2">{{v.test_800 | trans2score:v.grade_num:v.sex:'800' | transScore2not100}}</span>
+                        <span extra>{{v.test_800 | trans2score:v.grade_num:v.sex:'800' | trans2exPoint:0.2}}</span>
+                      </td>
+                      <td>{{v.test_1000}}
+                        <span c="0.2">{{v.test_1000 | trans2score:v.grade_num:v.sex:'1000' | transScore2not100}}</span>
+                        <span extra>{{v.test_1000 | trans2score:v.grade_num:v.sex:'1000' | trans2exPoint:0.2}}</span>
+                      </td>
+                      <td>{{v.test_situp}}
+                        <span c="0.1">{{v.test_situp | trans2score:v.grade_num:v.sex:'situp' | transScore2not100}}</span>
+                        <span extra>{{v.test_situp | trans2score:v.grade_num:v.sex:'situp' | trans2exPoint:0.1}}</span>
+                      </td>
+                      <td>{{v.test_pullup}}
+                        <span c="0.1">{{v.test_pullup | trans2score:v.grade_num:v.sex:'pullup' | transScore2not100}}</span>
+                        <span extra>{{v.test_pullup | trans2score:v.grade_num:v.sex:'pullup' | trans2exPoint:0.1}}</span>
+                      </td>
+                      <td><span sum></span></td>
+                      <td>{{v.status | trans2statusText}}</td>
                       <td ng-if="teacher.class.is_submit==0 || token">
                         <a ng-click="updateDetail(v)">编辑成绩</a>
                       </td>

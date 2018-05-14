@@ -175,7 +175,7 @@ app
                 var keyMap = []; //获取keys
                 var subjectList = angular.copy($scope.resSubjectList);
                 for (var k in tmpdata) {
-                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'is_submit') {
+                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'is_submit' && k != 'address' && k != 'born' && k != 'nation' && k != 'grade_num' && k != 'class_num') {
                         var k_nickname = '';
                         switch (k) {
                             case 'grade_num':

@@ -8,7 +8,7 @@ app
         $scope.token = sessionStorage.getItem('token');
         $scope.student.status = '';
         $scope.student.size = 0;
-
+        $scope.POP = 0;
 
         $scope.getStudentListByTeacherId = function () {
             var deferred = $q.defer();
@@ -26,8 +26,33 @@ app
                 }
             }).success(function (res) {
                 deferred.resolve(res);
-                if (res.data)
+                if (res.data) {
                     $scope.student.resJson = res.data.info;
+                    //异步算得分
+                    setTimeout(function () {
+                        var passNum = 0;
+                        var $tr = $('#scoreTable tbody tr');
+                        for (var i = 0; i < $tr.length; i++) {
+                            var sum = 0;
+                            var $c = $tr.eq(i).find('[c]');
+                            for (var j = 0; j < $c.length; j++) {
+                                sum += parseInt($c.eq(j).html()) * parseFloat($c.eq(j).attr('c'));
+                            }
+                            var $extra = $tr.eq(i).find('[extra]');
+                            for (var j = 0; j < $extra.length; j++) {
+                                sum += parseInt($extra.eq(j).html());
+                            }
+                            if (sum >= 60) {
+                                passNum += 1;
+                            }
+                            $tr.eq(i).find('[sum]').html(sum);
+                            console.log(sum);
+                        }
+                        $scope.POP = (passNum / $tr.length) * 100
+                        $scope.$apply();
+                    }, 100);
+
+                }
             }).error(function (res) {
                 deferred.reject(res);
                 console.log(res)
