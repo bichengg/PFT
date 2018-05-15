@@ -66,7 +66,7 @@ class Api_User extends PhalApi_Api {
         
         $info = array();
 
-        $info = DI()->notorm->teacher->select('*')->where('name = ?', $this->username)->where('pwd = ?', $this->password)->fetchOne();
+        $info = DI()->notorm->teacher->select('*')->where('num = ?', $this->username)->where('pwd = ?', $this->password)->fetchOne();
 
         if (empty($info)) {
             DI()->logger->debug('user not found', $this->username);
