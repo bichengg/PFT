@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h4 class="modal-title">绑定老师
+  </h4>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal">
+    <div class="form-group" ng-repeat="v in student">
+      <label class="col-md-2 control-label">学籍号</label>
+      <div class="col-md-10">
+        <input type="text" class="form-control" ng-model="v.student_code" maxlength="10">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <a class="btn btn-primary pull-left" ng-click="student.push({'student_code': ''})">新增</a>
+  <button class="btn btn-default" ng-click="cancel()">关闭</button>
+  <button class="btn btn-primary" ng-click="ok()">提交</button>
+</div>

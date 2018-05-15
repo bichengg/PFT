@@ -186,12 +186,16 @@ class Api_Student extends PhalApi_Api {
         $data = array(
             'teacher_class'  => $this->teacher_class,  
             'teacher_id'  => $this->teacher_id,                                            
-            'student_code'  => $this->student_code,                                          
-            'school_year'  => $this->school_year,
+            // 'student_code'  => $this->student_code,                                          
+            // 'school_year'  => $this->school_year,
             'time'  => date('Y-m-d H:i:s')
         );
         $rs   = DI()->notorm->student->where('student_code', $this->student_code)->where('school_year', $this->school_year)->update($data);
-        if($rs === false){
+        if ($rs >= 1) {
+            return $rs;
+        } else if ($rs === 0) {
+            return 0;
+        } else if ($rs === false) {
             throw new PhalApi_Exception_BadRequest('修改数据失败');
         }
     }
