@@ -140,16 +140,10 @@ app
                         score[en_k] = stuEle[k];
                     });
                     //验证
-                    for (var k in score) {
-                        var v = parseFloat(score[k]);
-                        if (v == 0) {
-                            console.log(v);
-                            toaster.pop('error', '失败', '第 ' + ($scope.count + 1) + ' 行导入的数据格式有误');
-                            isGoOn = false;
-                            return false;
-                        }
-                    }
-                    console.log(score);
+                    if (!checkScore(score, arr[i]['性别'])) {
+                        toaster.pop('error', '失败', '第 ' + ($scope.count + 1) + ' 行导入的数据格式有误');
+                        isGoOn = false;
+                    };
                     return angular.toJson(score);
                 })(arr[i])
             }
@@ -180,7 +174,78 @@ app
         };
         //成绩验证
         function checkScore(score, sex) {
+            for (var k in score) {
+                var v = parseFloat(score[k]);
+                if (isNaN(v)) {
+                    return false;
+                }
+                switch (k) {
+                    case 'test_height':
+                        if (v < 50 || v > 250) {
+                            return false;
+                        }
+                        break;
+                    case 'test_weight':
+                        if (v < 15 || v > 300) {
+                            return false;
+                        }
+                        break;
+                    case 'test_lung':
+                        if (v < 500 || v > 9999) {
+                            return false;
+                        }
+                        break;
+                    case 'test_50m':
+                        if (v < 5 || v > 20) {
+                            return false;
+                        }
+                        break;
+                    case 'test_jump':
+                        if (v < 50 || v > 400) {
+                            return false;
+                        }
+                        break;
+                    case 'test_sr':
+                        if (v < 30 || v > 40) {
+                            return false;
+                        }
+                        break;
+                    case 'test_800':
+                        if (sex == 2) {
+                            if (v < 1.3 || v > 10) {
+                                return false;
+                            }
+                        }
+                        break;
+                    case 'test_1000':
+                        if (sex == 1) {
+                            if (v < 1.3 || v > 10) {
+                                return false;
+                            }
+                        }
+                        break;
+                    case 'test_pullup':
+                        if (sex == 1) {
+                            if (v < 0 || v > 99) {
+                                return false;
+                            }
+                        }
+                        break;
+                    case 'test_situp':
+                        if (sex == 2) {
+                            if (v < 0 || v > 99) {
+                                return false;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
+
+            }
+
+            return true;
         }
         //
         $scope.submitStudent = function () {
