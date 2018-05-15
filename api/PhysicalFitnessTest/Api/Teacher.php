@@ -31,6 +31,10 @@ class Api_Teacher extends PhalApi_Api {
                 'name'  => array('name' => 'name','type' => 'string', 'source' => 'post', 'require' => false, 'desc' => '教师姓名'),
                 'pwd'  => array('name' => 'pwd', 'type' => 'string', 'source' => 'post', 'require' => false, 'default'=>'123', 'desc' => '密码'),   
             ),
+            'delete' => array(
+                'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
+                'teacherId' => array('name' => 'id', 'source' => 'post', 'type' => 'string', 'require' => true)
+            ),
             'getClassInfo' => array(
                 'teacherId' => array('name' => 'teacherId', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'year' => array('name' => 'year', 'source' => 'get', 'type' => 'string', 'require' => false)
@@ -148,6 +152,22 @@ class Api_Teacher extends PhalApi_Api {
         }
     }
 
+    /**
+	 * 教师删除
+     * @desc 
+	 * @return  id
+	 */
+    public function delete(){
+        $model = new Model_Default();
+        $adminId = $model->checkAdminId($this->token);
+        if (empty($adminId)) {
+            return ;
+        }
+        $rs   = DI()->notorm->teacher->where('id', $this->teacherId)->delete();
+        if($rs === false){
+            throw new PhalApi_Exception_BadRequest('删除数据失败');
+        }
+    }
      /**
 	 * 教师当年的 课程列表
 	 * @return 

@@ -70,6 +70,25 @@ app
             modalInstance.result.then(function (res) {
                 $scope.getList();
             });
+        };
+        $scope.delete = function (teacherId) {
+            $http({
+                url: APP.baseurl + '?service=Teacher.delete',
+                method: 'post',
+                data: {
+                    token: APP.token,
+                    id: teacherId
+
+                }
+            }).success(function (res) {
+                if (res.ret == 200)
+                    toaster.pop('success', '成功', '成功删除教师！');
+                else
+                    toaster.pop('error', '失败', res.msg);
+                $scope.getList();
+            }).error(function (res) {
+                toaster.pop('error', '失败', res);
+            });
 
         };
 
