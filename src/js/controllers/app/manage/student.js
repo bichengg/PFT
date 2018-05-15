@@ -7,7 +7,7 @@ app
 
         $scope.student.status = '';
         $scope.student.size = 10;
-        //$scope.getStudentList();
+        $scope.getStudentList();
         $scope.student.resJson = [];
         $scope.student.json = [];
         $scope.student.jsonReady = true;
