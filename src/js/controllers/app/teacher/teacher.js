@@ -206,20 +206,20 @@ app
                         }
                         break;
                     case 'test_sr':
-                        if (v < 30 || v > 40) {
+                        if (v < -30 || v > 40) {
                             return false;
                         }
                         break;
                     case 'test_800':
                         if (sex == 2) {
-                            if (v < 1.3 || v > 10) {
+                            if (v < 1.3 || v > 10 || !checkSecond(v)) {
                                 return false;
                             }
                         }
                         break;
                     case 'test_1000':
                         if (sex == 1) {
-                            if (v < 1.3 || v > 10) {
+                            if (v < 1.3 || v > 10 || !checkSecond(v)) {
                                 return false;
                             }
                         }
@@ -247,6 +247,18 @@ app
 
             return true;
         }
+        //checkSecond
+        function checkSecond(time) {
+            console.log(time)
+            var t = time.toString();
+            if (t.indexOf('.') > 0) {
+                if (t.substr(t.indexOf('.') + 1, 1) > 6) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         //
         $scope.submitStudent = function () {
             var ele = {
