@@ -46,7 +46,6 @@ app
                                 passNum += 1;
                             }
                             $tr.eq(i).find('[sum]').html(sum);
-                            console.log(sum);
                         }
                         $scope.POP = (passNum / $tr.length) * 100
                         $scope.$apply();
@@ -110,6 +109,7 @@ app
         $scope.updateStudent = function () {
             var arr = $scope.student.json;
             var i = $scope.count;
+            var isGoOn = true;
             var ele = {
                 token: $scope.token || '',
                 teacher_id: $scope.teacher.id,
@@ -139,32 +139,49 @@ app
                         scoreName[k] = stuEle[k];
                         score[en_k] = stuEle[k];
                     });
+                    //验证
+                    for (var k in score) {
+                        var v = parseFloat(score[k]);
+                        if (v == 0) {
+                            console.log(v);
+                            toaster.pop('error', '失败', '第 ' + ($scope.count + 1) + ' 行导入的数据格式有误');
+                            isGoOn = false;
+                            return false;
+                        }
+                    }
+                    console.log(score);
                     return angular.toJson(score);
                 })(arr[i])
             }
-            //上传
-            $http({
-                url: APP.baseurl + '?service=Student.updateScore',
-                method: 'post',
-                data: ele
-            }).success(function (res) {
-                if (res.ret == 200) {
-                    $scope.count++;
-                    if (i == arr.length - 1) {
-                        $scope.getStudentListByTeacherId();
-                        toaster.pop('success', '更新成绩成功', '共更新' + $scope.count + '条成绩');
-                        $scope.count = 0;
-                        return;
-                    } else {
-                        $scope.updateStudent();
-                    }
-                } else
-                    toaster.pop('error', '失败', res.msg);
+            if (isGoOn) {
+                //上传
+                $http({
+                    url: APP.baseurl + '?service=Student.updateScore',
+                    method: 'post',
+                    data: ele
+                }).success(function (res) {
+                    if (res.ret == 200) {
+                        $scope.count++;
+                        if (i == arr.length - 1) {
+                            $scope.getStudentListByTeacherId();
+                            toaster.pop('success', '更新成绩成功', '共更新' + $scope.count + '条成绩');
+                            $scope.count = 0;
+                            return;
+                        } else {
+                            $scope.updateStudent();
+                        }
+                    } else
+                        toaster.pop('error', '失败', res.msg);
 
-            }).error(function (res) {
-                toaster.pop('error', '失败', res);
-            });
+                }).error(function (res) {
+                    toaster.pop('error', '失败', res);
+                });
+            }
         };
+        //成绩验证
+        function checkScore(score, sex) {
+
+        }
         //
         $scope.submitStudent = function () {
             var ele = {
