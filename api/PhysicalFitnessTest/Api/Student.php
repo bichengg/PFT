@@ -19,7 +19,8 @@ class Api_Student extends PhalApi_Api {
                 'studentName' => array('name' => 'name', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'year' => array('name' => 'year', 'source' => 'get', 'type' => 'string', 'require' => false),
                 'status' => array('name' => 'status', 'source' => 'get', 'type' => 'string', 'require' => false),
-                'teacherClass' => array('name' => 'teacherClass', 'source' => 'get', 'type' => 'string', 'require' => false)
+                'teacherClass' => array('name' => 'teacherClass', 'source' => 'get', 'type' => 'string', 'require' => false),
+                'student_code' => array('name' => 'student_code', 'source' => 'get', 'type' => 'string', 'require' => false)
             ),
             'insert' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
@@ -119,13 +120,16 @@ class Api_Student extends PhalApi_Api {
             if($this->teacherClass) {
                 $sql .= ' and s.teacher_class = :teacherClass';
             }
+            if($this->student_code) {
+                $sql .= ' and s.student_code = :student_code';
+            }
             $sql .= ' order by s.student_code desc';
             if($size) {
                 $sql .= ' limit :current,:size';
             }
 
         }
-        $params = array(':studentId' => $this->studentId, ':teacher_id' => $this->teacher_id, ':studentName' => $this->studentName,':teacherClass' => $this->teacherClass, ':year' => $this->year, ':status' => $this->status, ':size' => $size, ':current' => $current);
+        $params = array(':studentId' => $this->studentId, ':teacher_id' => $this->teacher_id, ':studentName' => $this->studentName,':teacherClass' => $this->teacherClass, ':year' => $this->year, ':status' => $this->status, ':size' => $size, ':current' => $current, ':student_code' => $this->student_code);
         $info = DI()->notorm->example->queryAll($sql,$params);
 
         if (empty($info)) {

@@ -101,7 +101,8 @@ app
                 });
                 return promise;
             };
-            $scope.getStudentList = function () {
+            $scope.getStudentList = function (stuCode) {
+                var stuCode = stuCode ? stuCode : '';
                 var deferred = $q.defer();
                 var promise = deferred.promise;
                 $http({
@@ -112,7 +113,8 @@ app
                         year: $scope.student.year,
                         status: $scope.student.status,
                         size: $scope.student.size,
-                        current: $scope.student.current
+                        current: $scope.student.current,
+                        student_code: stuCode
                     }
                 }).success(function (res) {
                     deferred.resolve(res);
