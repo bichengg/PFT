@@ -47,7 +47,7 @@ app
                             }
                             $tr.eq(i).find('[sum]').html(sum);
                         }
-                        $scope.POP = (passNum / $tr.length) * 100
+                        $scope.POP = (passNum / $tr.length).toFixed(4) * 100
                         $scope.$apply();
                     }, 100);
 
@@ -306,16 +306,6 @@ app
                 toaster.pop('error', '失败', res);
             });
         };
-
-        function transEle(stuEle) {
-            angular.forEach(scoreName, function (i, k) {
-                var en_k = Subject.transEn(k, copyResSubjectList);
-                scoreName[k] = stuEle[k];
-                score[en_k] = stuEle[k];
-            });
-            console.log(score, scoreName)
-        }
-
 
         $scope.updateDetail = function (stu, size) {
             var modalInstance = $modal.open({
