@@ -324,6 +324,7 @@ app
             $scope.logout = function () {
                 localStorage.removeItem('teacher');
                 sessionStorage.removeItem('token');
+                APP.token = '';
                 //$state.go('login');
                 location.href = 'admins.html';
             }
