@@ -43,6 +43,7 @@ SL('zh_cn');
 
 //跨域
 DI()->response->addHeaders('Access-Control-Allow-Origin', '*');
+DI()->response->addHeaders('Access-Control-Allow-Headers', 'Content-Type, x-token');
 /** ---------------- 定制注册 可选服务组件 ---------------- **/
 
 

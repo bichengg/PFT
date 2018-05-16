@@ -1,5 +1,7 @@
-<div class="container w-xxl w-auto-xs" ng-init="app.settings.container = false;">
-  <a href class="navbar-brand block m-t">淮阴工学院《国家学生体质健康标准》测试管理系统</a>
+<div class="form-login">
+  <a class="navbar-brand block m-t m-b">淮阴工学院
+    <br> 《国家学生体质健康标准》
+    <br>测试管理系统</a>
   <div class="m-b-lg">
     <form name="form" class="form-validation">
       <div class="text-danger wrapper text-center" ng-show="authError">
@@ -18,3 +20,16 @@
   </div>
   <div class="text-center" ng-include="'../tpl/blocks/page_footer.html'"></div>
 </div>
+<style>
+  .app:before {
+    background-color: transparent;
+  }
+
+  .app-header-fixed {
+    padding-top: 0;
+  }
+
+  .form-login .navbar-brand {
+    line-height: 1.5
+  }
+</style>
