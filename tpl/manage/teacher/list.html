@@ -54,7 +54,7 @@
               </div>
               <footer class="panel-footer">
                 <div class="row">
-                  <div class="col-sm-4 hidden-xs">
+                  <div class="col-sm-6 hidden-xs">
                     每页显示
                     <select class="input-sm form-control w-xs inline v-middle" ng-model="page.size" ng-change="getList()">
                       <option value="10">10</option>
@@ -62,8 +62,7 @@
                       <option value="30">30</option>
                     </select>
                   </div>
-                  <div class="col-sm-4 text-center"></div>
-                  <div class="col-sm-4 text-right text-center-xs">
+                  <div class="col-sm-6 text-right text-center-xs">
                     <pagination total-items="page.totalItems" ng-model="page.currentPage" ng-change="getList()" class="m-t-none m-b"></pagination>
                   </div>
                 </div>
