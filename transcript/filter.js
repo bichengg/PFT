@@ -135,3 +135,10 @@ app.filter('trans2sex', function () {
                 return a;
         }
     })
+    .filter('toFloat2', function () {
+        //a得分
+        return function (a) {
+            var b = parseFloat(a);
+            return b.toFixed(2);
+        }
+    })

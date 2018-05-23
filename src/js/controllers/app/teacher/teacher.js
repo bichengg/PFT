@@ -141,7 +141,7 @@ app
                     });
                     //验证
                     if (!checkScore(score, arr[i]['性别'])) {
-                        toaster.pop('error', '失败', '第 ' + ($scope.count + 1) + ' 行导入的数据格式有误');
+                        toaster.pop('error', '失败', '第 ' + ($scope.count + 2) + ' 行导入的数据格式有误');
                         isGoOn = false;
                     };
                     return angular.toJson(score);

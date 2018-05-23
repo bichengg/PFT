@@ -85,7 +85,7 @@
                       <td>{{v.test_lung}}
                         <span c="0.15">{{v.test_lung | trans2score:v.grade_num:v.sex:'lung' | transScore2not100}}</span>
                       </td>
-                      <td>{{v.test_50m}}
+                      <td>{{v.test_50m | toFloat2}}
                         <span c="0.2">{{v.test_50m | trans2score:v.grade_num:v.sex:'50m' | transScore2not100}}</span>
                       </td>
                       <td>{{v.test_jump}}
@@ -94,11 +94,11 @@
                       <td>{{v.test_sr}}
                         <span c="0.1">{{v.test_sr | trans2score:v.grade_num:v.sex:'sr' | transScore2not100}}</span>
                       </td>
-                      <td>{{v.test_800}}
+                      <td>{{v.test_800 | toFloat2}}
                         <span c="0.2">{{v.test_800 | trans2score:v.grade_num:v.sex:'800' | transScore2not100}}</span>
                         <span extra>{{v.test_800 | trans2score:v.grade_num:v.sex:'800' | trans2exPoint:0.2}}</span>
                       </td>
-                      <td>{{v.test_1000}}
+                      <td>{{v.test_1000 | toFloat2}}
                         <span c="0.2">{{v.test_1000 | trans2score:v.grade_num:v.sex:'1000' | transScore2not100}}</span>
                         <span extra>{{v.test_1000 | trans2score:v.grade_num:v.sex:'1000' | trans2exPoint:0.2}}</span>
                       </td>
