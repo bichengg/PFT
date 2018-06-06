@@ -72,24 +72,25 @@ app
             });
         };
         $scope.delete = function (teacherId) {
-            $http({
-                url: APP.baseurl + '?service=Teacher.delete',
-                method: 'post',
-                data: {
-                    token: APP.token,
-                    id: teacherId
+            if (window.confirm('确定删除吗？此操作不可逆！')) {
+                $http({
+                    url: APP.baseurl + '?service=Teacher.delete',
+                    method: 'post',
+                    data: {
+                        token: APP.token,
+                        id: teacherId
 
-                }
-            }).success(function (res) {
-                if (res.ret == 200)
-                    toaster.pop('success', '成功', '成功删除教师！');
-                else
-                    toaster.pop('error', '失败', res.msg);
-                $scope.getList();
-            }).error(function (res) {
-                toaster.pop('error', '失败', res);
-            });
-
+                    }
+                }).success(function (res) {
+                    if (res.ret == 200)
+                        toaster.pop('success', '成功', '成功删除教师！');
+                    else
+                        toaster.pop('error', '失败', res.msg);
+                    $scope.getList();
+                }).error(function (res) {
+                    toaster.pop('error', '失败', res);
+                });
+            }
         };
 
 

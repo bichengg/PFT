@@ -58,7 +58,25 @@ app
 
         };
 
-
+        $scope.delete = function () {
+            if (window.confirm('确定删除吗？此操作不可逆')) {
+                $http({
+                    url: APP.baseurl + '?service=Student.deleteAllByYear',
+                    method: 'post',
+                    data: {
+                        token: APP.token,
+                        school_year: $scope.student.year
+                    }
+                }).success(function (res) {
+                    if (res.ret == 200) {
+                        toaster.pop('success', '删除成功', '成功删除【' + $scope.student.year + '】学年的【' + res.data + '】名学生');
+                        $scope.getStudentList();
+                    }
+                }).error(function (res) {
+                    toaster.pop('error', '失败', res);
+                });
+            }
+        };
 
 
 

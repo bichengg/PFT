@@ -43,6 +43,10 @@ class Api_Student extends PhalApi_Api {
                 'student_code'  => array('name' => 'student_code', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false),  
             ),
+            'deleteAllByYear' => array(
+                'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => true),
+                'school_year'  => array('name' => 'school_year', 'type' => 'int', 'source' => 'post', 'require' => false)
+            ),
             'updateScore' => array(
                 'token' => array('name' => 'token', 'source' => 'post', 'type' => 'string', 'require' => false),
                 'teacher_id' => array('name' => 'teacher_id', 'source' => 'post', 'type' => 'string', 'require' => false),
@@ -167,7 +171,8 @@ class Api_Student extends PhalApi_Api {
             'sex'  => $this->sex,
             'born'  => $this->born,
             'address'  => $this->address,
-            'time'  => date('Y-m-d H:i:s')
+            'time'  => date('Y-m-d H:i:s'),
+            'create_time'  => date('Y-m-d H:i:s')
         );
         if($this->score){
             $data = array_merge($data ,json_decode($this->score, true));
@@ -203,6 +208,56 @@ class Api_Student extends PhalApi_Api {
             throw new PhalApi_Exception_BadRequest('修改数据失败');
         }
     }
+
+    
+    /**
+	 * 学生批量删除  根据年份 和 创建时间与当前时间比较 7天内
+     * @desc 
+	 */
+    public function deleteAllByYear(){
+        $model = new Model_Default();
+        $adminId = $model->checkAdminId($this->token);
+        if (empty($adminId)) {
+            return ;
+        }
+        // $rs = array('code' => 0, 'msg' => '', 'info' => array());
+
+
+        // $sql="UPDATE pft_student
+        // SET address = '22222'
+        // WHERE
+        //     TIMESTAMPDIFF(
+        //         DAY,
+        //         pft_student.create_time,
+        //         '2018-6-1'
+        //     ) <= 0 and school_year = :year";
+        
+        // $params = array(':year' => $this->school_year);
+        // $res = DI()->notorm->example->queryAll($sql,$params);
+        
+                
+        // if (empty($info)) {
+        //     DI()->logger->debug('user not found', '');
+
+        //     $rs['code'] = 1;
+        //     $rs['msg'] = T('22222222');
+        //     return $rs;
+        // }
+
+        // $rs['info'] = $info;
+
+        // return $rs;
+
+        $rs = DI()->notorm->student->where("TIMESTAMPDIFF(DAY,create_time, ? ) <= ? AND school_year = ? ", date('Y-m-d'), 7, $this->school_year)->delete();
+        if ($rs >= 1) {
+            return $rs;
+        } else if ($rs === 0) {
+            return 0;
+        } else if ($rs === false) {
+            throw new PhalApi_Exception_BadRequest('修改数据失败');
+        }
+    }
+
      /**
 	 * 学生更改 更新成绩
      * @desc 

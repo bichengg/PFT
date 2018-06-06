@@ -177,7 +177,7 @@ app
                 var keyMap = []; //获取keys
                 var subjectList = angular.copy($scope.resSubjectList);
                 for (var k in tmpdata) {
-                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'is_submit' && k != 'address' && k != 'born' && k != 'nation' && k != 'grade_num' && k != 'class_num') {
+                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'create_time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'is_submit' && k != 'address' && k != 'born' && k != 'nation' && k != 'grade_num' && k != 'class_num') {
                         var k_nickname = '';
                         switch (k) {
                             case 'grade_num':
@@ -219,6 +219,12 @@ app
                     }
                 }
                 var tmpdata = []; //用来保存转换好的json 
+                var optBorder = {
+                    style: 'thin',
+                    color: {
+                        rgb: "33333333"
+                    }
+                };
                 json.map(function (v, i) {
                     if (i > 0)
                         v.status = $filter('trans2statusText')(v.status.toString());
@@ -235,10 +241,20 @@ app
                     return prev.concat(next);
                 }).forEach(function (v, i) {
                     return tmpdata[v.position] = {
-                        v: v.v
+                        v: v.v,
+                        s: {
+                            border: {
+                                top: optBorder,
+                                bottom: optBorder,
+                                left: optBorder,
+                                right: optBorder
+                            }
+                        }
                     }
                 });
                 var outputPos = Object.keys(tmpdata); //设置区域,比如表格从A1到D10
+
+
                 var tmpWB = {
                     SheetNames: ['mySheet'], //保存的表标题
                     Sheets: {

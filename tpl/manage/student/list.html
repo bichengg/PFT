@@ -4,6 +4,7 @@
     <div class="vbox">
       <div class="wrapper bg-light lter b-b">
         <div class="btn-group pull-right">
+          <button class="btn btn-sm btn-danger" type="button" ng-click="delete()">删除{{student.year}}最近一次导入(七日内)</button>
         </div>
         <div class="m-l-n-xs">
           <select class="input-sm form-control w-xs inline v-middle" ng-model="student.year" ng-change="getStudentList()">
@@ -62,7 +63,8 @@
                     </select>
                   </div>
                   <div class="col-sm-6 text-right text-center-xs">
-                    <pagination total-items="student.pages" max-size="student.maxSize" ng-model="student.current" ng-change="getStudentList()" class="m-t-none m-b"></pagination>
+                    <pagination total-items="student.pages" max-size="student.maxSize" ng-model="student.current" ng-change="getStudentList()"
+                      class="m-t-none m-b"></pagination>
                   </div>
                 </div>
               </footer>

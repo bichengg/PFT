@@ -261,26 +261,28 @@ app
 
         //
         $scope.submitStudent = function () {
-            var ele = {
-                teacher_id: $scope.teacher.id,
-                school_year: $scope.student.year,
-                teacher_class: $scope.teacher.class.teacher_class
-            }
-            //上传
-            $http({
-                url: APP.baseurl + '?service=Student.submitScore',
-                method: 'post',
-                data: ele
-            }).success(function (res) {
-                if (res.ret == 200) {
-                    toaster.pop('success', '提交成绩成功', '已提交【' + $scope.teacher.class.teacher_class + '】的成绩');
-                    $scope.teacher.class.is_submit = 1;
-                } else
-                    toaster.pop('error', '失败', res.msg);
+            if (window.confirm('确定提交吗？提交后将不能修改，如需修改请联系管理员！')) {
+                var ele = {
+                    teacher_id: $scope.teacher.id,
+                    school_year: $scope.student.year,
+                    teacher_class: $scope.teacher.class.teacher_class
+                }
+                //上传
+                $http({
+                    url: APP.baseurl + '?service=Student.submitScore',
+                    method: 'post',
+                    data: ele
+                }).success(function (res) {
+                    if (res.ret == 200) {
+                        toaster.pop('success', '提交成绩成功', '已提交【' + $scope.teacher.class.teacher_class + '】的成绩');
+                        $scope.teacher.class.is_submit = 1;
+                    } else
+                        toaster.pop('error', '失败', res.msg);
 
-            }).error(function (res) {
-                toaster.pop('error', '失败', res);
-            });
+                }).error(function (res) {
+                    toaster.pop('error', '失败', res);
+                });
+            }
         };
         //
         $scope.unlock = function () {
