@@ -127,7 +127,7 @@ class Api_Student extends PhalApi_Api {
             if($this->student_code) {
                 $sql .= ' and s.student_code = :student_code';
             }
-            $sql .= ' order by s.student_code desc';
+            $sql .= ' order by s.time desc';
             if($size) {
                 $sql .= ' limit :current,:size';
             }
