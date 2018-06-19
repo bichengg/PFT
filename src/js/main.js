@@ -253,7 +253,11 @@ app
                     }
                 });
                 var outputPos = Object.keys(tmpdata); //设置区域,比如表格从A1到D10
-
+                tmpdata['!cols'] = [{
+                    wpx: 70
+                }, {
+                    wpx: 85
+                }];
 
                 var tmpWB = {
                     SheetNames: ['mySheet'], //保存的表标题
