@@ -45,7 +45,7 @@ app
                             if (sum >= 60) {
                                 passNum += 1;
                             }
-                            $tr.eq(i).find('[sum]').html(sum);
+                            $tr.eq(i).find('[sum]').html(sum.toFixed(2));
                         }
                         $scope.POP = (passNum / $tr.length).toFixed(4) * 100
                         $scope.$apply();
@@ -141,7 +141,7 @@ app
                     });
                     //验证
                     if (!checkScore(score, arr[i]['性别'])) {
-                        toaster.pop('error', '失败', '第 ' + ($scope.count + 2) + ' 行导入的数据格式有误');
+                        toaster.pop('error', '失败', '第 ' + ($scope.count + 2) + ' 行导入的数据格式有误 \n 请检查这行成绩的数据：女生和男生的项目不同 以及 成绩的最小最大值是否合理');
                         isGoOn = false;
                     };
                     return angular.toJson(score);
