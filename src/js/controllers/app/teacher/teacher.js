@@ -242,8 +242,6 @@ app
             });
             modalInstance.result.then(function (res) {
                 $scope.getStudentListByTeacherId();
-            }, function (res) {
-                $scope.getStudentListByTeacherId();
             });
 
         };
