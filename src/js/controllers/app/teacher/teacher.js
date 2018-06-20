@@ -160,6 +160,7 @@ app
                             $scope.getStudentListByTeacherId();
                             toaster.pop('success', '更新成绩成功', '共更新' + $scope.count + '条成绩');
                             $scope.count = 0;
+                            $scope.student.jsonReady = true;
                             return;
                         } else {
                             $scope.updateStudent();
@@ -329,6 +330,9 @@ app
 
         };
 
+        $scope.clearFile = function () {
+            document.getElementById('selectFileInput').value = '';
+        }
 
     }]);
 

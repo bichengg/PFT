@@ -35,9 +35,11 @@
           </div>
           <div class="col-md-6" ng-if="teacher.class.is_submit==0 || token">
             <div class="m-l-n-xs">
-              <input class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
+              <input id="selectFileInput" class="input-sm form-control w inline v-middle padder-xs" type="file" onchange="angular.element(this).scope().importf(this)"
                 ng-model="student.json" />
-
+              <button class="btn btn-sm btn-default" ng-click="clearFile()">
+                <i class="fa fa-refresh"></i>
+              </button>
               <button class="btn btn-sm btn-primary" type="button" ng-click="updateStudent()" ng-disabled="student.jsonReady">
                 <i class="fa fa-upload"></i> 导入 {{count}}</button>
 
