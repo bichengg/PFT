@@ -1,8 +1,8 @@
 app.filter('trans2sex', function () {
         return function (a) {
-            if (a == 1)
+            if (a == 1 || a == '男')
                 return '男';
-            else if (a == 2)
+            else if (a == 2 || a == '女')
                 return '女';
         }
     })
