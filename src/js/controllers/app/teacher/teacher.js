@@ -173,92 +173,8 @@ app
                 });
             }
         };
-        //成绩验证
-        function checkScore(score, sex) {
-            for (var k in score) {
-                var v = parseFloat(score[k]);
-                if (isNaN(v)) {
-                    return false;
-                }
-                switch (k) {
-                    case 'test_height':
-                        if (v < 50 || v > 250) {
-                            return false;
-                        }
-                        break;
-                    case 'test_weight':
-                        if (v < 15 || v > 300) {
-                            return false;
-                        }
-                        break;
-                    case 'test_lung':
-                        if (v < 500 || v > 9999) {
-                            return false;
-                        }
-                        break;
-                    case 'test_50m':
-                        if (v < 5 || v > 20) {
-                            return false;
-                        }
-                        break;
-                    case 'test_jump':
-                        if (v < 50 || v > 400) {
-                            return false;
-                        }
-                        break;
-                    case 'test_sr':
-                        if (v < -30 || v > 40) {
-                            return false;
-                        }
-                        break;
-                    case 'test_800':
-                        if (sex == 2) {
-                            if (v < 1.3 || v > 10 || !checkSecond(v)) {
-                                return false;
-                            }
-                        }
-                        break;
-                    case 'test_1000':
-                        if (sex == 1) {
-                            if (v < 1.3 || v > 10 || !checkSecond(v)) {
-                                return false;
-                            }
-                        }
-                        break;
-                    case 'test_pullup':
-                        if (sex == 1) {
-                            if (v < 0 || v > 99) {
-                                return false;
-                            }
-                        }
-                        break;
-                    case 'test_situp':
-                        if (sex == 2) {
-                            if (v < 0 || v > 99) {
-                                return false;
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
 
 
-            }
-
-            return true;
-        }
-        //checkSecond
-        function checkSecond(time) {
-            console.log(time)
-            var t = time.toString();
-            if (t.indexOf('.') > 0) {
-                if (t.substr(t.indexOf('.') + 1, 1) > 6) {
-                    return false;
-                }
-            }
-            return true;
-        }
 
         //
         $scope.submitStudent = function () {
@@ -360,22 +276,118 @@ app.controller('TeacherUpdateStudentScoreDetailCtrl', ['APP', '$scope', '$modalI
                 return angular.toJson(score);
             })(stu)
         }
-        $http({
-            url: APP.baseurl + '?service=Student.updateScore',
-            method: 'post',
-            data: ele
-        }).success(function (res) {
-            if (res.ret == 200)
-                toaster.pop('success', '成功', '成功编辑成绩！');
-            else
-                toaster.pop('error', '失败', res.msg);
-            $modalInstance.close();
-        }).error(function (res) {
-            toaster.pop('error', '失败', res);
-        });
+        if ($scope.stu.status <= 0 && !checkScore(angular.fromJson(ele.score), stu.sex)) {
+            toaster.pop('error', '失败', '请检查该同学的成绩数据：女生和男生的项目不同 以及 成绩的最小最大值是否合理');
+        } else {
+            $http({
+                url: APP.baseurl + '?service=Student.updateScore',
+                method: 'post',
+                data: ele
+            }).success(function (res) {
+                if (res.ret == 200)
+                    toaster.pop('success', '成功', '成功编辑成绩！');
+                else
+                    toaster.pop('error', '失败', res.msg);
+                $modalInstance.close();
+            }).error(function (res) {
+                toaster.pop('error', '失败', res);
+            });
+
+        }
     };
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
 }]);
+
+
+//成绩验证
+function checkScore(score, sex) {
+    console.log(score)
+    for (var k in score) {
+        var v = parseFloat(score[k]);
+        if (isNaN(v)) {
+            return false;
+        }
+        switch (k) {
+            case 'test_height':
+                if (v < 50 || v > 250) {
+                    return false;
+                }
+                break;
+            case 'test_weight':
+                if (v < 15 || v > 300) {
+                    return false;
+                }
+                break;
+            case 'test_lung':
+                if (v < 500 || v > 9999) {
+                    return false;
+                }
+                break;
+            case 'test_50m':
+                if (v < 5 || v > 20) {
+                    return false;
+                }
+                break;
+            case 'test_jump':
+                if (v < 50 || v > 400) {
+                    return false;
+                }
+                break;
+            case 'test_sr':
+                if (v > 40) {
+                    return false;
+                }
+                break;
+            case 'test_800':
+                if (sex == 2 || sex == '女') {
+                    if (v < 1.3 || v > 10 || !checkSecond(v)) {
+                        return false;
+                    }
+                }
+                break;
+            case 'test_1000':
+                if (sex == 1 || sex == '男') {
+                    if (v < 1.3 || v > 10 || !checkSecond(v)) {
+                        return false;
+                    }
+                }
+                break;
+            case 'test_pullup':
+                if (sex == 1 || sex == '男') {
+                    if (v < 0 || v > 99) {
+                        return false;
+                    }
+                }
+                break;
+            case 'test_situp':
+                if (sex == 2 || sex == '女') {
+                    if (v < 0 || v > 99) {
+                        return false;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    return true;
+}
+
+
+//checkSecond
+function checkSecond(time) {
+    console.log(time)
+    var t = time.toString();
+    if (t.indexOf('.') > 0) {
+        if (t.substr(t.indexOf('.') + 1, 1) > 6) {
+            return false;
+        }
+    }
+    return true;
+}

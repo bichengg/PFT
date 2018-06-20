@@ -175,7 +175,7 @@ app
                 coefficient: 0.2
             }];
 
-        if ($scope.stu.sex == 1) {
+        if ($scope.stu.sex == 1 || $scope.stu.sex == '男') {
             $scope.subjectArr = $scope.subjectArr.concat(subjectMaleArr);
             $scope.subjectAttachArr = subjectMaleArr;
         } else {

@@ -16,6 +16,10 @@ app.filter('trans2sex', function () {
     })
     .filter('trans2score', function () {
         return function (a, grade_num, sex, test) {
+            if (sex == '男')
+                sex = 1;
+            else if (sex == '女')
+                sex = 2;
             if (grade_num == 41 || grade_num == 42) {
                 grade_num = 4142
             } else if (grade_num == 43 || grade_num == 44) {
@@ -42,7 +46,7 @@ app.filter('trans2sex', function () {
         //a得分; sex性别
         return function (a, sex) {
             var res = 0;
-            if (sex == 1) {
+            if (sex == 1 || sex == '男') {
                 if (a > 17.9 && a <= 23.9)
                     res = 100;
                 else if (a <= 17.8)
@@ -72,7 +76,7 @@ app.filter('trans2sex', function () {
         //a得分; sex性别
         return function (a, sex) {
             var res = '';
-            if (sex == 1) {
+            if (sex == 1 || sex == '男') {
                 if (a > 17.9 && a <= 23.9)
                     res = '正常';
                 else if (a <= 17.8)
