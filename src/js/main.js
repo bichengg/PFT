@@ -27,7 +27,7 @@ app
         name: '学生体测管理',
         version: '1.0.0',
         nav: [],
-        baseurl: 'http://127.0.0.1/PFT/api/Public/PhysicalFitnessTest/',
+        baseurl: 'api/Public/PhysicalFitnessTest/',
         token: sessionStorage.getItem('token'),
         settings: {
             themeID: 1,

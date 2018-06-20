@@ -90,8 +90,10 @@ class Api_User extends PhalApi_Api {
 
         
         $info = array();
-
-        $info = DI()->notorm->student->select('*')->where('student_code = ?', $this->username)->where('born = ?', $this->password)->order('grade_num asc')->fetchRows();
+        $sql='select s.*,t.name as teacherName from pft_student as s left join pft_teacher as t on s.teacher_id=t.id where student_code = :student_code and s.born = :born order by s.grade_num asc';
+        //$info = DI()->notorm->student->select('*')->where('student_code = ?', $this->username)->where('born = ?', $this->password)->order('grade_num asc')->fetchRows();
+        $params = array(':student_code' => $this->username,':born' => $this->password);
+        $info = DI()->notorm->example->queryAll($sql,$params);
 
         if (empty($info)) {
             DI()->logger->debug('student not found', $this->username);

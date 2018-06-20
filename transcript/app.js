@@ -68,7 +68,7 @@ app
             } else {
                 $scope.authError = '';
                 $http({
-                    url: 'http://127.0.0.1/PFT/api/Public/PhysicalFitnessTest/?service=User.checkLoginStudent',
+                    url: 'api/Public/PhysicalFitnessTest/?service=User.checkLoginStudent',
                     method: 'post',
                     data: {
                         username: $scope.user.name,
