@@ -33,6 +33,7 @@ class Api_Student extends PhalApi_Api {
                 'name'  => array('name' => 'name', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'sex'  => array('name' => 'sex', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'born'  => array('name' => 'born', 'type' => 'string', 'source' => 'post', 'require' => false),  
+                'id_card'  => array('name' => 'id_card', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'address'  => array('name' => 'address', 'type' => 'string', 'source' => 'post', 'require' => false),  
                 'score'  => array('name' => 'score', 'type' => 'string', 'source' => 'post', 'require' => false), 
             ),
@@ -170,6 +171,7 @@ class Api_Student extends PhalApi_Api {
             'name'  => $this->name,
             'sex'  => $this->sex,
             'born'  => $this->born,
+            'id_card'  => $this->id_card,
             'address'  => $this->address,
             'time'  => date('Y-m-d H:i:s'),
             'create_time'  => date('Y-m-d H:i:s')

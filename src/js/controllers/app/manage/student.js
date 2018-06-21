@@ -28,6 +28,7 @@ app
                 name: arr[i]['姓名'],
                 sex: arr[i]['性别'],
                 born: arr[i]['出生日期'],
+                id_card: arr[i]['身份证号码'],
                 address: arr[i]['家庭住址'],
                 //score: '{"test_height": 100,"test_weight": 99}'
             }
