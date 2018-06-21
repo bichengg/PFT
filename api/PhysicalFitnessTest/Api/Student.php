@@ -112,11 +112,14 @@ class Api_Student extends PhalApi_Api {
                 $sql .= ' and s.school_year = :year';
             }
             if($this->status != null) {
-                if($this->status != '-1') {
-                    $sql .= ' and s.status = :status';
+                if($this->status == '0') {
+                    $sql .= ' and s.status = 0 and s.is_submit = 1';
                 }
-                if($this->status == '-1') {
-                    $sql .= ' and s.status <>0';
+                else if($this->status == '-1') {
+                    $sql .= ' and s.status > 0';
+                }
+                else if($this->status == '-2') {
+                    $sql .= ' and ISNULL(s.teacher_id)';
                 }
             }
             if($this->teacher_id) {
