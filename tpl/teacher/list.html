@@ -9,8 +9,8 @@
     <div class="vbox">
       <div class="bg-white b-b wrapper-md clearfix">
         <h1 class="m-n font-thin h3 pull-left">
-          {{teacher.name}} - {{teacher.class.teacher_class}} -
-          <span>通过率 {{POP}}%</span>
+          {{teacher.name}} - {{teacher.class.teacher_class || '暂无班级'}} -
+          <span>通过率 {{POP || 0}}%</span>
         </h1>
         <div class="pull-right" ng-if="teacher.class.is_submit==1 && token">
           <span class="text-danger m-r">【{{teacher.name}} - {{teacher.class.teacher_class}}】的成绩已提交，请管理员谨慎操作 【导入】和【确认提交】功能</span>
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="padder bg-white clearfix">
+      <div class="padder bg-white b-b clearfix">
         <p class="text-base m-t-sm">
           <i class="fa fa-warning text-danger"></i> 请确保【导入成绩】的格式正确性：
           <span class="text-danger"> 1、请确保各科成绩在合理的范围之内；2、注意男女生科目的不同；3、默认excel没有成绩时请保留单元格的值为 0 ；4、在excel删除行时请选择右键删除，不要选择清除内容</span>

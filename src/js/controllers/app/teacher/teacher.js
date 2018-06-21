@@ -47,7 +47,7 @@ app
                             }
                             $tr.eq(i).find('[sum]').html(sum.toFixed(2));
                         }
-                        $scope.POP = (passNum / $tr.length).toFixed(4) * 100
+                        $scope.POP = (passNum / $tr.length).toFixed(4) * 100;
                         $scope.$apply();
                     }, 100);
 
@@ -178,6 +178,15 @@ app
 
         //
         $scope.submitStudent = function () {
+            var stuArr = $scope.student.resJson;
+            for (var i = 0; i < stuArr.length; i++) {
+                var stuEle = stuArr[i];
+                var score = getScroeFromStu(stuEle);
+                if (stuEle.status == 0 && !checkScore(score, stuEle.sex)) {
+                    toaster.pop('error', '失败', '请检查 ' + stuEle.name + ' 的成绩！');
+                    return false;
+                }
+            }
             if (window.confirm('确定提交吗？提交后将不能修改，如需修改请联系管理员！')) {
                 var ele = {
                     teacher_id: $scope.teacher.id,
@@ -242,6 +251,8 @@ app
             });
             modalInstance.result.then(function (res) {
                 $scope.getStudentListByTeacherId();
+            }, function (res) {
+                $scope.getStudentListByTeacherId();
             });
 
         };
@@ -267,16 +278,11 @@ app.controller('TeacherUpdateStudentScoreDetailCtrl', ['APP', '$scope', '$modalI
             student_code: stu.student_code,
             status: stu.status,
             score: (function (stuEle) {
-                var score = {};
-                angular.forEach(stuEle, function (i, k) {
-                    if (k.indexOf("test_") >= 0) {
-                        score[k] = stuEle[k];
-                    }
-                });
+                var score = getScroeFromStu(stuEle);
                 return angular.toJson(score);
             })(stu)
         }
-        if ($scope.stu.status <= 0 && !checkScore(angular.fromJson(ele.score), stu.sex)) {
+        if ($scope.stu.status == 0 && !checkScore(angular.fromJson(ele.score), stu.sex)) {
             toaster.pop('error', '失败', '请检查该同学的成绩数据：女生和男生的项目不同 以及 成绩的最小最大值是否合理');
         } else {
             $http({
@@ -390,4 +396,15 @@ function checkSecond(time) {
         }
     }
     return true;
+}
+
+
+function getScroeFromStu(stuEle) {
+    var score = {};
+    angular.forEach(stuEle, function (i, k) {
+        if (k.indexOf("test_") >= 0) {
+            score[k] = stuEle[k];
+        }
+    });
+    return score;
 }
