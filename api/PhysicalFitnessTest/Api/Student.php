@@ -116,7 +116,7 @@ class Api_Student extends PhalApi_Api {
                     $sql .= ' and s.status = 0 and s.is_submit = 1';
                 }
                 else if($this->status == '-1') {
-                    $sql .= ' and s.status > 0';
+                    $sql .= ' and s.status > 0 and s.is_submit = 1';
                 }
                 else if($this->status == '-2') {
                     $sql .= ' and ISNULL(s.teacher_id)';
