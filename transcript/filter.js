@@ -86,7 +86,7 @@ app.filter('trans2sex', function () {
                 else if (a >= 28)
                     res = '肥胖';
                 else
-                    res = '';
+                    res = '-';
             } else {
                 if (a > 17.2 && a <= 23.9)
                     res = '正常';
@@ -97,7 +97,7 @@ app.filter('trans2sex', function () {
                 else if (a >= 28)
                     res = '肥胖';
                 else
-                    res = '';
+                    res = '-';
             }
             return res;
         }

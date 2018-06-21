@@ -99,19 +99,31 @@
       </tr>
       <tr>
         <td>体重指数(BMI)(千克/米²)</td>
-        <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height*0.0001)).toFixed(2)}}</td>
+        <td>
+          <span ng-if="info[0].test_height">{{(info[0].test_weight/(info[0].test_height*info[0].test_height*0.0001)).toFixed(2)}}</span>
+          <span ng-if="!info[0].test_height">0</span>
+        </td>
         <td class="41" c="0.15">{{(info[0].test_weight/(info[0].test_height*info[0].test_height*0.0001)).toFixed(2) | transBMI2score:stu.sex}}</td>
         <td>{{(info[0].test_weight/(info[0].test_height*info[0].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
 
-        <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height*0.0001)).toFixed(2)}}</td>
+        <td>
+          <span ng-if="info[1].test_height">{{(info[1].test_weight/(info[1].test_height*info[1].test_height*0.0001)).toFixed(2)}}</span>
+          <span ng-if="!info[1].test_height">0</span>
+        </td>
         <td class="42" c="0.15">{{(info[1].test_weight/(info[1].test_height*info[1].test_height*0.0001)).toFixed(2) | transBMI2score:stu.sex}}</td>
         <td>{{(info[1].test_weight/(info[1].test_height*info[1].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
 
-        <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height*0.0001)).toFixed(2)}}</td>
+        <td>
+          <span ng-if="info[2].test_height">{{(info[2].test_weight/(info[2].test_height*info[2].test_height*0.0001)).toFixed(2)}}</span>
+          <span ng-if="!info[2].test_height">0</span>
+        </td>
         <td class="43" c="0.15">{{(info[2].test_weight/(info[2].test_height*info[2].test_height*0.0001)).toFixed(2) | transBMI2score:stu.sex}}</td>
         <td>{{(info[2].test_weight/(info[2].test_height*info[2].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
 
-        <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height*0.0001)).toFixed(2)}}</td>
+        <td>
+          <span ng-if="info[3].test_height">{{(info[3].test_weight/(info[3].test_height*info[3].test_height*0.0001)).toFixed(2)}}</span>
+          <span ng-if="!info[3].test_height">0</span>
+        </td>
         <td class="44" c="0.15">{{(info[3].test_weight/(info[3].test_height*info[3].test_height*0.0001)).toFixed(2) | transBMI2score:stu.sex}}</td>
         <td>{{(info[3].test_weight/(info[3].test_height*info[3].test_height*0.0001)).toFixed(2) | transBMI2level}}</td>
         <td rowspan="13">{{totalScoreSum}}</td>
