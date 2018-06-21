@@ -169,7 +169,7 @@ app
                 }
             }
 
-            $scope.downloadExl = function (type) {
+            $scope.downloadExl = function (pageName, type) {
                 var tmpDown; //导出的二进制对象
                 var json = angular.copy($scope.student.resJson);
                 var tmpdata = json[0];
@@ -177,45 +177,98 @@ app
                 var keyMap = []; //获取keys
                 var subjectList = angular.copy($scope.resSubjectList);
                 for (var k in tmpdata) {
-                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'create_time' && k != 'teacherName' && k != 'teacher_class' && k != 'school_year' && k != 'is_submit' && k != 'address' && k != 'born' && k != 'nation' && k != 'grade_num' && k != 'class_num') {
-                        var k_nickname = '';
-                        switch (k) {
-                            case 'grade_num':
-                                k_nickname = '年级编号';
-                                break;
-                            case 'class_num':
-                                k_nickname = '班级编号';
-                                break;
-                            case 'class_name':
-                                k_nickname = '班级名称';
-                                break;
-                            case 'student_code':
-                                k_nickname = '学籍号';
-                                break;
-                            case 'nation':
-                                k_nickname = '民族代码';
-                                break;
-                            case 'name':
-                                k_nickname = '姓名';
-                                break;
-                            case 'sex':
-                                k_nickname = '性别';
-                                break;
-                            case 'born':
-                                k_nickname = '出生日期';
-                                break;
-                            case 'address':
-                                k_nickname = '家庭住址';
-                                break;
-                            case 'status':
-                                k_nickname = '备注';
-                                break;
-                            default:
-                                k_nickname = Subject.transCn(k, subjectList);
-                                break;
+                    if (k != 'id' && k != 'teacherId' && k != 'teacher_id' && k != 'time' && k != 'create_time' && k != 'school_year' && k != 'is_submit' && k != 'address' && k != 'born' && k != 'nation' && k != 'grade_num' && k != 'class_num') {
+                        //1 教师导出  有课程  无身份证  无教师名
+                        if (pageName == 1 && k != 'id_card' && k != 'teacherName') {
+                            var k_nickname = '';
+                            switch (k) {
+                                case 'grade_num':
+                                    k_nickname = '年级编号';
+                                    break;
+                                case 'class_num':
+                                    k_nickname = '班级编号';
+                                    break;
+                                case 'class_name':
+                                    k_nickname = '班级名称';
+                                    break;
+                                case 'student_code':
+                                    k_nickname = '学籍号';
+                                    break;
+                                case 'nation':
+                                    k_nickname = '民族代码';
+                                    break;
+                                case 'name':
+                                    k_nickname = '姓名';
+                                    break;
+                                case 'sex':
+                                    k_nickname = '性别';
+                                    break;
+                                case 'born':
+                                    k_nickname = '出生日期';
+                                    break;
+                                case 'teacher_class':
+                                    k_nickname = '课程名称';
+                                    break;
+                                case 'address':
+                                    k_nickname = '家庭住址';
+                                    break;
+                                case 'status':
+                                    k_nickname = '备注';
+                                    break;
+                                default:
+                                    k_nickname = Subject.transCn(k, subjectList);
+                                    break;
+                            }
+                            keyMap.push(k);
+                            json[0][k] = k_nickname;
                         }
-                        keyMap.push(k);
-                        json[0][k] = k_nickname;
+                        //2 全校导出 无课程  有身份证  有教师名
+                        else if (pageName == 2 && k != 'teacher_class') {
+                            var k_nickname = '';
+                            switch (k) {
+                                case 'grade_num':
+                                    k_nickname = '年级编号';
+                                    break;
+                                case 'class_num':
+                                    k_nickname = '班级编号';
+                                    break;
+                                case 'class_name':
+                                    k_nickname = '班级名称';
+                                    break;
+                                case 'student_code':
+                                    k_nickname = '学籍号';
+                                    break;
+                                case 'nation':
+                                    k_nickname = '民族代码';
+                                    break;
+                                case 'name':
+                                    k_nickname = '姓名';
+                                    break;
+                                case 'sex':
+                                    k_nickname = '性别';
+                                    break;
+                                case 'born':
+                                    k_nickname = '出生日期';
+                                    break;
+                                case 'id_card':
+                                    k_nickname = '身份证号码';
+                                    break;
+                                case 'address':
+                                    k_nickname = '家庭住址';
+                                    break;
+                                case 'status':
+                                    k_nickname = '备注';
+                                    break;
+                                case 'teacherName':
+                                    k_nickname = '教师姓名';
+                                    break;
+                                default:
+                                    k_nickname = Subject.transCn(k, subjectList);
+                                    break;
+                            }
+                            keyMap.push(k);
+                            json[0][k] = k_nickname;
+                        }
                     }
                 }
                 var tmpdata = []; //用来保存转换好的json 

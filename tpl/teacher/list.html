@@ -28,7 +28,7 @@
               <select class="input-sm form-control w-sm inline v-middle" ng-model="teacher.class" ng-options="v as v.teacher_class for v in classList"
                 ng-change="getStudentListByTeacherId()">
               </select>
-              <button class="btn btn-sm btn-primary" type="button" ng-click="downloadExl()">
+              <button class="btn btn-sm btn-primary" type="button" ng-click="downloadExl(1)">
                 <i class="fa fa-download"></i> 导出</button>
               <a href="" download="{{student.year}}-{{teacher.name}}-{{teacher.class.teacher_class}}.xlsx" id="hf"></a>
             </div>
