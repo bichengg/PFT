@@ -83,7 +83,7 @@ app
                     //     val: 3
                     // }
                 ],
-                size: 0,
+                size: 10,
                 pages: 20000,
                 maxSize: 6,
                 current: 1,
