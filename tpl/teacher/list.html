@@ -91,7 +91,7 @@
                         <span>&nbsp;</span>
                       </td>
                       <td>{{v.test_weight}}
-                        <span c="0.15">{{(v.test_weight/(v.test_height*v.test_height*0.0001)).toFixed(2) | transBMI2score:v.sex}}</span>
+                        <span c="0.15">{{(v.test_weight/(v.test_height*v.test_height*0.0001)).toFixed(1) | transBMI2score:v.sex}}</span>
                       </td>
                       <td>{{v.test_lung}}
                         <span c="0.15">{{v.test_lung | trans2score:v.grade_num:v.sex:'lung' | transScore2not100}}</span>
