@@ -389,10 +389,9 @@ function checkScore(score, sex) {
 
 //checkSecond
 function checkSecond(time) {
-    console.log(time)
     var t = time.toString();
     if (t.indexOf('.') > 0) {
-        if (t.substr(t.indexOf('.') + 1, 1) > 6) {
+        if (t.substr(t.indexOf('.') + 1, 1) >= 6) {
             return false;
         }
     }
