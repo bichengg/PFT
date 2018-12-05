@@ -36,16 +36,17 @@ app
                             var sum = 0;
                             var $c = $tr.eq(i).find('[c]');
                             for (var j = 0; j < $c.length; j++) {
-                                sum += parseInt($c.eq(j).html()) * parseFloat($c.eq(j).attr('c'));
+                                sum += parseFloat($c.eq(j).html()) * parseFloat($c.eq(j).attr('c'));
                             }
                             var $extra = $tr.eq(i).find('[extra]');
                             for (var j = 0; j < $extra.length; j++) {
-                                sum += parseInt($extra.eq(j).html());
+                                sum += parseFloat($extra.eq(j).html());
                             }
+                            sum = parseFloat(sum.toString().substring(0, sum.toString().lastIndexOf('.') + 3)).toFixed(2);
                             if (sum >= 60) {
                                 passNum += 1;
                             }
-                            $tr.eq(i).find('[sum]').html(sum.toFixed(2));
+                            $tr.eq(i).find('[sum]').html(sum);
                         }
                         $scope.POP = (passNum / $tr.length).toFixed(4) * 100;
                         $scope.$apply();
