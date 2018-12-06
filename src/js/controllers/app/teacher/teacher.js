@@ -111,28 +111,28 @@ app
             var arr = $scope.student.json;
             var i = $scope.count;
             var isGoOn = true;
+            var status = '';
             var ele = {
                 token: $scope.token || '',
                 teacher_id: $scope.teacher.id,
                 school_year: $scope.student.year,
                 student_code: arr[i]['学籍号'],
                 status: (function (s) {
-                    var res = '';
                     switch (s) {
                         case '病假':
-                            res = '1';
+                            status = '1';
                             break;
                         case '事假':
-                            res = '2';
+                            status = '2';
                             break;
                         case '未参加':
-                            res = '3';
+                            status = '3';
                             break;
                         default:
-                            res = '0';
+                            status = '0';
                             break;
                     }
-                    return res;
+                    return status;
                 })(arr[i]['备注']),
                 score: (function (stuEle) {
                     angular.forEach(scoreName, function (i, k) {
@@ -141,7 +141,7 @@ app
                         score[en_k] = stuEle[k];
                     });
                     //验证
-                    if (!checkScore(score, arr[i]['性别'])) {
+                    if (status == 0 && !checkScore(score, arr[i]['性别'])) {
                         toaster.pop('error', '失败', '第 ' + ($scope.count + 2) + ' 行导入的数据格式有误 \n 请检查这行成绩的数据：女生和男生的项目不同 以及 成绩的最小最大值是否合理');
                         isGoOn = false;
                     };
