@@ -48,7 +48,7 @@ app
                             }
                             $tr.eq(i).find('[sum]').html(sum);
                         }
-                        $scope.POP = (passNum / $tr.length).toFixed(4) * 100;
+                        $scope.POP = ((passNum / $tr.length) * 100).toFixed(2);
                         $scope.$apply();
                     }, 100);
 
