@@ -313,7 +313,7 @@ app.controller('TeacherUpdateStudentScoreDetailCtrl', ['APP', '$scope', '$modalI
 function checkScore(score, sex) {
     console.log(score)
     for (var k in score) {
-        var v = parseFloat(score[k]);
+        var v = Number(score[k]);
         if (isNaN(v)) {
             return false;
         }

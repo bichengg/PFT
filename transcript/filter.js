@@ -47,22 +47,22 @@ app.filter('trans2sex', function () {
         return function (a, sex) {
             var res = 0;
             if (sex == 1 || sex == '男') {
-                if (a > 17.9 && a <= 23.9)
+                if (a >= 17.9 && a <= 23.9)
                     res = 100;
                 else if (a <= 17.8)
                     res = 80;
-                else if (a > 24 && a <= 27.9)
+                else if (a >= 24 && a <= 27.9)
                     res = 80;
                 else if (a >= 28)
                     res = 60;
                 else
                     res = 0;
             } else {
-                if (a > 17.2 && a <= 23.9)
+                if (a >= 17.2 && a <= 23.9)
                     res = 100;
                 else if (a <= 17.1)
                     res = 80;
-                else if (a > 24 && a <= 27.9)
+                else if (a >= 24 && a <= 27.9)
                     res = 80;
                 else if (a >= 28)
                     res = 60;
